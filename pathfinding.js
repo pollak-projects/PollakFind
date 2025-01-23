@@ -1,10 +1,10 @@
 // A grid definiálása, ahol az akadályok és szobák vannak
 const grid = [
-    ["aula", "", "", "", "X"], // a cellák nevei, pl. "aula"
-    ["", "X", "X", "", ""],
-    ["", "", "", "mat3", ""],  // mat3 is egy szoba név
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
+    ["cadcam", "X", "mat3", "X", "mat2", "", "", "", "", ""], // a cellák nevei, pl. "aula"
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["toriterem", "X", "X", "X", "X", "", "", "", "", ""],  // mat3 is egy szoba név
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
   ];
   
   const rows = grid.length;
@@ -12,9 +12,9 @@ const grid = [
   
   // Szobák koordinátái (pl. aula, mat3, stb.)
   const rooms = {
-    aula: [0, 1],  // aula koordinátái a gridben
-    mat3: [2, 3],  // mat3 koordinátái a gridben
-    tori: [3, 2],  // mat3 koordinátái a gridben
+    mat2: [0, 4],  // aula koordinátái a gridben
+    mat3: [0, 2],  // mat3 koordinátái a gridben
+    tori: [2, 0],  // mat3 koordinátái a gridben
   };
   
   // Függvény a szoba nevének koordinátává konvertálásához
