@@ -7,6 +7,6 @@
 terv:
 
 - Szintenként lesz ábrázolva a felhasználónak az iskola
-- amint egy emeletet kell lépnie előjön egy ablak ami megkérdezi hogy sikerült e felmenned ha igen nyomd meg a gombot és a program szintet vált a mgefelelőre
+- amint egy emeletet kell lépnie előjön egy ablak ami megkérdezi hogy sikerült e felmenned ha igen, nyomd meg a gombot és a program szintet vált a megfelelőre
 - vonal vezetéssel fogjuk irányítani a felhasználót a mgefelelő tanterembe
 - a termek keresése a Pollák által meghatározott teremnevek alapján történik
