@@ -1,10 +1,10 @@
 // A grid definiálása, ahol az akadályok és szobák vannak
 const grid = [
-    ["X", "X", "", "X", ""], // X jelzi az akadályokat
+    ["aula", "", "", "", "X"], // a cellák nevei, pl. "aula"
+    ["", "X", "X", "", ""],
+    ["", "", "", "mat3", ""],  // mat3 is egy szoba név
     ["", "", "", "", ""],
-    ["", "X", "X", "X", "X"],
-    ["X", "X", "X", "X", "X"],
-    ["X", "X", "X", "X", "X"],
+    ["", "", "", "", ""],
   ];
   
   const rows = grid.length;
@@ -12,9 +12,9 @@ const grid = [
   
   // Szobák koordinátái (pl. aula, mat3, stb.)
   const rooms = {
-    aula: [0, 4],  // aula koordinátái a gridben
-    mat3: [0, 2],  // mat3 koordinátái a gridben
-    toriterem: [2, 0],  // mat3 koordinátái a gridben
+    aula: [0, 1],  // aula koordinátái a gridben
+    mat3: [2, 3],  // mat3 koordinátái a gridben
+    tori: [3, 2],  // mat3 koordinátái a gridben
   };
   
   // Függvény a szoba nevének koordinátává konvertálásához
@@ -101,9 +101,17 @@ const grid = [
       for (let c = 0; c < cols; c++) {
         const cell = document.createElement("div");
         cell.classList.add("cell");
+  
+        // Ha van szoba név a cellában, jelenítse meg
+        if (grid[r][c] !== "X" && grid[r][c] !== "") {
+          cell.textContent = grid[r][c];  // Szoba neve
+        }
+  
+        // Ha akadály (X), akkor a cella háttérszíne fekete
         if (grid[r][c] === "X") {
           cell.classList.add("obstacle");
         }
+  
         gridElement.appendChild(cell);
       }
     }
@@ -148,4 +156,5 @@ const grid = [
   }
   
   // Inicializálás és a grid megjelenítése
-  renderGrid();  
+  renderGrid();
+  
