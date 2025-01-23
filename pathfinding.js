@@ -1,8 +1,8 @@
 // A grid definiálása, ahol az akadályok és szobák vannak
 const grid = [
-    ["cadcam", "X", "mat3", "X", "mat2", "", "", "", "", ""], // a cellák nevei, pl. "aula"
+    ["cad", "X", "mat3", "X", "mat2", "", "", "", "", ""], // a cellák nevei, pl. "aula"
     ["", "", "", "", "", "", "", "", "", ""],
-    ["toriterem", "X", "X", "X", "X", "", "", "", "", ""],  // mat3 is egy szoba név
+    ["tori", "X", "X", "X", "X", "", "", "", "", ""],  // mat3 is egy szoba név
     ["", "", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", "", ""],
   ];
@@ -15,6 +15,7 @@ const grid = [
     mat2: [0, 4],  // aula koordinátái a gridben
     mat3: [0, 2],  // mat3 koordinátái a gridben
     tori: [2, 0],  // mat3 koordinátái a gridben
+    cad: [0, 0],  // mat3 koordinátái a gridben
   };
   
   // Függvény a szoba nevének koordinátává konvertálásához
@@ -93,29 +94,29 @@ const grid = [
     return null;
   }
   
-  // Megjeleníti a gridet és az utat a gridben
-  function renderGrid() {
-    const gridElement = document.getElementById("grid");
-    gridElement.innerHTML = "";
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const cell = document.createElement("div");
-        cell.classList.add("cell");
-  
-        // Ha van szoba név a cellában, jelenítse meg
-        if (grid[r][c] !== "X" && grid[r][c] !== "") {
-          cell.textContent = grid[r][c];  // Szoba neve
-        }
-  
-        // Ha akadály (X), akkor a cella háttérszíne fekete
-        if (grid[r][c] === "X") {
-          cell.classList.add("obstacle");
-        }
-  
-        gridElement.appendChild(cell);
+// Megjeleníti a gridet és az utat a gridben
+function renderGrid() {
+  const gridElement = document.getElementById("grid");
+  gridElement.innerHTML = "";
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+
+      // Ha van szoba név a cellában, jelenítse meg
+      if (grid[r][c] !== "X" && grid[r][c] !== "") {
+        cell.textContent = grid[r][c]; // Szoba neve
       }
+
+      // Ha akadály (X), akkor a cella háttérszíne fekete
+      if (grid[r][c] === "X") {
+        cell.classList.add("obstacle");
+      }
+
+      gridElement.appendChild(cell);
     }
   }
+}
   
   // A pathvizualizálás, az utat jelző cellák színét változtatja
   function updateGrid(path) {
@@ -127,34 +128,69 @@ const grid = [
       });
     }
   }
-  
-  // A funkció, amely futtatja az útvonal keresést
-  function runPathfinding() {
-    const startInput = getRoomCoordinates(document.getElementById("start").value);
-    const endInput = getRoomCoordinates(document.getElementById("end").value);
-  
-    if (!startInput || !endInput) {
-      alert("Érvénytelen szoba");
-      return;
+
+// Egy vonal megrajzolása az útvonalon
+function drawPathLine(path) {
+  const gridElement = document.getElementById("grid");
+  const lineCanvas = document.createElement("canvas");
+  lineCanvas.width = gridElement.offsetWidth;
+  lineCanvas.height = gridElement.offsetHeight;
+  lineCanvas.style.position = "absolute";
+  lineCanvas.style.top = gridElement.offsetTop + "px";
+  lineCanvas.style.left = gridElement.offsetLeft + "px";
+  lineCanvas.style.pointerEvents = "none"; // Az egérrel ne lehessen kiválasztani
+  gridElement.appendChild(lineCanvas);
+
+  const ctx = lineCanvas.getContext("2d");
+  ctx.strokeStyle = "lightgreen";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+
+  path.forEach(([x, y], index) => {
+    const cell = gridElement.children[x * cols + y];
+    const rect = cell.getBoundingClientRect();
+    const gridRect = gridElement.getBoundingClientRect();
+    const cellCenterX = rect.left + rect.width / 2 - gridRect.left;
+    const cellCenterY = rect.top + rect.height / 2 - gridRect.top;
+
+    if (index === 0) {
+      ctx.moveTo(cellCenterX, cellCenterY);
+    } else {
+      ctx.lineTo(cellCenterX, cellCenterY);
     }
-  
-    if (!isStartOrEndValid(startInput[0], startInput[1])) {
-      alert("Helytelen indulási hely");
-      return;
-    }
-    if (!isStartOrEndValid(endInput[0], endInput[1])) {
-      alert("Helytelen cél");
-      return;
-    }
-  
-    const path = findPath(startInput, endInput);
-    if (!path) {
-      alert("Nem található útvonal");
-      return;
-    }
-    updateGrid(path); // Megjeleníti az útvonalat
+  });
+
+  ctx.stroke();
+}
+
+// A funkció, amely futtatja az útvonal keresést
+function runPathfinding() {
+  const startInput = getRoomCoordinates(document.getElementById("start").value);
+  const endInput = getRoomCoordinates(document.getElementById("end").value);
+
+  if (!startInput || !endInput) {
+    alert("Érvénytelen szoba");
+    return;
   }
-  
-  // Inicializálás és a grid megjelenítése
-  renderGrid();
-  
+
+  if (!isStartOrEndValid(startInput[0], startInput[1])) {
+    alert("Helytelen indulási hely");
+    return;
+  }
+  if (!isStartOrEndValid(endInput[0], endInput[1])) {
+    alert("Helytelen cél");
+    return;
+  }
+
+  const path = findPath(startInput, endInput);
+  if (!path) {
+    alert("Nem található útvonal");
+    return;
+  }
+
+  renderGrid(); // A grid újra renderelése
+  drawPathLine(path); // A vonal megrajzolása
+}
+
+// Inicializálás és a grid megjelenítése
+renderGrid();
