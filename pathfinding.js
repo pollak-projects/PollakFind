@@ -1,10 +1,10 @@
 // A grid definiálása, ahol az akadályok és szobák vannak
 const grid = [
-    ["cad", "X", "mat3", "X", "mat2", "", "", "", "", ""], // a cellák nevei, pl. "aula"
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["tori", "X", "X", "X", "X", "", "", "", "", ""],  // mat3 is egy szoba név
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
+    ["X", "info6", "X", "X", "cad", "X", "X", "mat3", "X", "mat2"], // a cellák nevei, pl. "aula"
+    ["lepcso", "", "", "", "", "", "", "", "", ""],
+    ["X", "", "X", "X", "X", "X", "X", "X", "nylab", "X"],  // mat3 is egy szoba név
+    ["HBej", "", "tori", "X", "X", "X", "X", "X", "X", "X"],
+    ["X", "X", "X", "X", "X", "X", "X", "X", "X", "X"],
   ];
   
   const rows = grid.length;
@@ -12,10 +12,13 @@ const grid = [
   
   // Szobák koordinátái (pl. aula, mat3, stb.)
   const rooms = {
-    mat2: [0, 4],  // aula koordinátái a gridben
-    mat3: [0, 2],  // mat3 koordinátái a gridben
-    tori: [2, 0],  // mat3 koordinátái a gridben
-    cad: [0, 0],  // mat3 koordinátái a gridben
+    info6: [0, 1],  // aula koordinátái a gridben
+    cad: [0, 4],  // mat3 koordinátái a gridben
+    mat3: [0, 7],  // mat3 koordinátái a gridben
+    mat2: [0, 9],  // mat3 koordinátái a gridben
+    nylab: [2, 8],  // mat3 koordinátái a gridben
+    tori: [3, 2],  // mat3 koordinátái a gridben
+    lepcso: [1, 0],  // mat3 koordinátái a gridben
   };
   
   // Függvény a szoba nevének koordinátává konvertálásához
