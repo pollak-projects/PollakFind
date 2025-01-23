@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PollakFind</title>
     <style>
+      /* Grid stílus */
       .grid {
         display: grid;
-        grid-template-columns: repeat(5, 40px);
+        grid-template-columns: repeat(5, 40px); /* 5 oszlop */
         gap: 5px;
       }
+
+      /* Cellák alap stílusai */
       .cell {
         width: 40px;
         height: 40px;
@@ -18,9 +21,13 @@
         justify-content: center;
         border: 1px solid black;
       }
+
+      /* Obstacle (akadály) stílusa */
       .cell.obstacle {
         background-color: black;
       }
+
+      /* Path (út) stílusa */
       .cell.path {
         background-color: lightgreen;
       }
@@ -28,6 +35,7 @@
   </head>
   <body>
     <h1>PollakFind</h1>
+    <!-- Form, ahol beírhatjuk a start és end szobákat -->
     <div>
       <label for="start">Indulási hely:</label>
       <input type="text" id="start" placeholder="aula" />
@@ -35,7 +43,9 @@
       <input type="text" id="end" placeholder="mat3" />
       <button onclick="runPathfinding()">Tanterem keresése</button>
     </div>
+    <!-- A grid, ami megjeleníti a térképet -->
     <div class="grid" id="grid"></div>
+    <!-- JavaScript fájl beillesztése -->
     <script src="pathfinding.js"></script>
   </body>
 </html>
