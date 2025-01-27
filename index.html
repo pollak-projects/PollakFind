@@ -3,34 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
     <title>PollakFind</title>
-    <style>
-      /* Grid stílus */
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(10, 40px); /* 5 oszlop */
-      }
-
-      /* Cellák alap stílusai */
-      .cell {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 0.5px solid black;
-      }
-
-      /* Obstacle (akadály) stílusa */
-      .cell.obstacle {
-        background-color: black;
-      }
-
-      /* Path (út) stílusa */
-      .cell.path {
-        background-color: lightgreen;
-      }
-    </style>
   </head>
   <body>
     <h1>PollakFind</h1>
