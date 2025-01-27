@@ -11,13 +11,31 @@
     <!-- Form, ahol beírhatjuk a start és end szobákat -->
     <div>
       <label for="start">Indulási hely:</label>
-      <input type="text" id="start" placeholder="aula" />
+      <select id="start">
+        <option value="info6">info6</option>
+        <option value="cad">cad</option>
+        <option value="mat3">mat3</option>
+        <option value="mat2">mat2</option>
+        <option value="nylab">nylab</option>
+        <option value="tori">tori</option>
+        <option value="lepcso">lepcso</option>
+      </select>
       <label for="end">Cél:</label>
-      <input type="text" id="end" placeholder="mat3" />
+      <select id="end">
+        <option value="info6">info6</option>
+        <option value="cad">cad</option>
+        <option value="mat3">mat3</option>
+        <option value="mat2">mat2</option>
+        <option value="nylab">nylab</option>
+        <option value="tori">tori</option>
+        <option value="lepcso">lepcso</option>
+      </select>
       <button onclick="runPathfinding()">Tanterem keresése</button>
     </div>
+
     <!-- A grid, ami megjeleníti a térképet -->
     <div class="grid" id="grid"></div>
+
     <!-- JavaScript fájl beillesztése -->
     <script src="pathfinding.js"></script>
   </body>
