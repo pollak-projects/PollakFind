@@ -10,97 +10,58 @@ body {
     align-items: center;
     min-height: 100vh;
     transition: background-color 0.5s ease;
-  }
-  
-  h1 {
+}
+
+h1 {
     margin: 20px 0;
     color: #2c3e50;
     font-size: 2.5rem;
     animation: fadeIn 1s ease-in-out;
-  }  
-  
-  label {
-    font-weight: bold;
-    margin-right: 10px;
-  }
-  
-  input {
-    padding: 8px;
-    margin: 0 10px 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: transform 0.3s ease;
-  }
-  
-  input:focus {
-    transform: scale(1.05);
-    outline: none;
-    border-color: #3498db;
-  }
-  
-  button {
-    background-color: #3498db;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-  }
-  
-  button:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-  }
-  
-  button:active {
-    transform: translateY(1px);
-  }
-  
-/* Globális stílusok */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(120deg, #f0f4f8, #d9e4f5);
-    color: #333;
+}
+
+/* Select menü elhelyezése a térkép felett */
+.select-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    min-height: 100vh;
-    transition: background-color 0.5s ease;
-  }
-  
-  h1 {
-    margin: 20px 0;
-    color: #2c3e50;
-    font-size: 2.5rem;
-    animation: fadeIn 1s ease-in-out;
-  }
-  
-  label {
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+label {
     font-weight: bold;
     margin-right: 10px;
-  }
-  
-  input {
-    padding: 8px;
-    margin: 0 10px 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+}
+
+select {
+    font-family: Arial, sans-serif;
     font-size: 1rem;
-    transition: transform 0.3s ease;
-  }
-  
-  input:focus {
-    transform: scale(1.05);
-    outline: none;
+    padding: 8px 12px;
+    width: 150px;
+    margin-right: 10px;
+    background-color: white;
+    color: #333;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+}
+
+select:hover {
     border-color: #3498db;
-  }
-  
-  button {
+}
+
+select:focus {
+    border-color: #3498db;
+    outline: none;
+    background-color: #ecf0f1;
+}
+
+select option {
+    background-color: white;
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+button {
     background-color: #3498db;
     color: white;
     padding: 10px 20px;
@@ -109,32 +70,32 @@ body {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #2980b9;
     transform: translateY(-2px);
-  }
-  
-  button:active {
+}
+
+button:active {
     transform: translateY(1px);
-  }
-  
-  /* Grid stílusok */
-  .grid {
+}
+
+/* Grid stílusok */
+.grid {
     display: grid;
     grid-template-columns: repeat(10, 40px);
-    gap: 1px;  /* Kevesebb hézag, jobban kitölti a tért */
-    width: 400px;
-    height: 400px;
+    gap: 1px;
+    width: 410px;
+    height: 225px;
     border: 2px solid #2c3e50;
     background-color: white;
     position: relative;
-    border-radius: 8px; /* Lekerekített sarkok */
+    border-radius: 8px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .grid div {
+}
+
+.grid div {
     height: 40px;
     border: 0.5px solid #bdc3c7;
     background-color: #ecf0f1;
@@ -145,104 +106,55 @@ body {
     text-align: center;
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.2s;
-  }
-  
-  .grid div.start {
+}
+
+.grid div.start {
     background-color: #2ecc71;
     color: white;
-  }
-  
-  .grid div.end {
+}
+
+.grid div.end {
     background-color: #e74c3c;
     color: white;
-  }
-  
-  .grid div.path {
+}
+
+.grid div.path {
     background-color: #f39c12;
     transition: background-color 0.3s ease;
-  }
-  
-  .grid div.obstacle {
+}
+
+.grid div.obstacle {
     background-color: #34495e;
-  }
-  
-  /* Hover animáció a cellákra */
-  .grid div:hover {
+}
+
+.grid div:hover {
     transform: scale(1.1);
     background-color: #d9e4f5;
-  }
-  
-  /* Animációk */
-  @keyframes pathHighlight {
-    from {
-      background-color: lightgreen;
-    }
-    to {
-      background-color: #81c784;
-    }
-  }
-  
-  /* Reszponzív megjelenés */
-  @media (max-width: 600px) {
+}
+
+/* Reszponzív megjelenés */
+@media (max-width: 600px) {
     .grid {
-      grid-template-columns: repeat(5, 40px);
-      gap: 2px;
+        grid-template-columns: repeat(5, 40px);
+        gap: 2px;
     }
-  
+
     button {
-      width: 100%;
-      font-size: 1.1rem;
+        width: 100%;
+        font-size: 1.1rem;
     }
-  
-    input {
-      width: calc(100% - 20px);
-      font-size: 1rem;
-    }
-  
+
     select {
-      width: calc(100% - 20px);
-      font-size: 1.1rem;
+        width: calc(100% - 20px);
+        font-size: 1.1rem;
     }
-  
+
     h1 {
-      font-size: 1.8rem;
-      text-align: center;
+        font-size: 1.8rem;
+        text-align: center;
     }
-  
+
     .grid div {
-      font-size: 0.8rem;
+        font-size: 0.8rem;
     }
-  }
-  
-  /* Reszponzív megjelenés */
-  @media (max-width: 600px) {
-    .grid {
-      grid-template-columns: repeat(5, 40px);
-      gap: 2px;
-    }
-  
-    button {
-      width: 100%;
-      font-size: 1.1rem;
-    }
-  
-    input {
-      width: calc(100% - 20px);
-      font-size: 1rem;
-    }
-  
-    select {
-      width: calc(100% - 20px);
-      font-size: 1.1rem;
-    }
-  
-    h1 {
-      font-size: 1.8rem;
-      text-align: center;
-    }
-  
-    .grid div {
-      font-size: 0.8rem;
-    }
-  }
-  
+}
