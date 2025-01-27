@@ -1,6 +1,6 @@
 // A grid definiálása, ahol az akadályok és szobák vannak
 const grid = [
-  ["X", "info6", "X", "X", "cad", "X", "X", "mat3", "X", "mat2"],
+  ["X", "info6", "X", "X", "cad", "X", "X", "mat3", "X", "mat2", "X", "X", "X", "X","X",],
   ["lepcso", "", "", "", "", "", "", "", "", ""],
   ["X", "", "X", "X", "X", "X", "X", "X", "nylab", "X"],
   ["HBej", "", "tori", "X", "X", "X", "X", "X", "X", "X"],
