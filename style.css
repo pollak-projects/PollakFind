@@ -125,6 +125,9 @@ button:active {
 
 .grid div.obstacle {
     background-color: #34495e;
+    color: transparent;
+    pointer-events: none;
+    user-select: none;
 }
 
 .grid div:hover {
