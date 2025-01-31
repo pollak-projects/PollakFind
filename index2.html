@@ -289,7 +289,12 @@
                     let newRow = current.row + dir[0];
                     let newCol = current.col + dir[1];
 
-                    if (isValidMove(newRow, newCol) && !closedList.some(c => c.row === newRow && c.col === newCol) && !isBlackCell(newRow, newCol)) {
+                    if (isValidMove(newRow, newCol) 
+                    && !closedList.some(c => c.row === newRow 
+                    && c.col === newCol) 
+                    && !isBlackCell(newRow, newCol)
+                    && !notDestinationRoom(newRow, newCol)
+                    )  {
                         const tentativeG = gScore[`${current.row},${current.col}`] + 1;
 
                         if (tentativeG < gScore[`${newRow},${newCol}`]) {
@@ -309,6 +314,12 @@
 
         function isValidMove(row, col) {
             return row >= 0 && col >= 0 && row < grid.length && col < grid[0].length;
+        }
+
+        function notDestinationRoom(row, col){
+            return !grid[row][col].classList.contains("end")
+            && !grid[row][col].classList.contains("start")
+            && grid[row][col].innerHTML !== "";
         }
 
         function isBlackCell(row, col) {
