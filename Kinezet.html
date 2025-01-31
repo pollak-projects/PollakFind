@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>PollakFind</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e7a5f, #2a5d7e);
+            color: white;
+            position: relative;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .left-panel {
+            width: 250px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+        }
+        .select-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        select, button {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        button {
+            background: #27ae60;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #2ecc71;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(20, 50px);
+            gap: 5px;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            margin-left: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            position: absolute; /* Fontos, hogy mozgatható legyen */
+            cursor: grab;
+            top: 20px; /* Rögzített pozíció a kezdéshez */
+            left: 300px; /* Kezdő pozíció */
+            /* Eltávolítottuk a transition-t, hogy azonnali legyen */
+        }        
+        .grid div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            font-weight: bold;
+            padding: 5px;
+            text-align: center;
+            color: black;
+            min-height: 50px;
+        }
+        .grid .obstacle {
+            background: #2c3e50;
+            color: transparent;
+        }
+        .grid .start {
+            background: #27ae60;
+            color: white;
+        }
+        .grid .end {
+            background: #e74c3c;
+            color: white;
+        }
+        .grid .path {
+            background: #f1c40f !important; /* Biztosítsuk, hogy a sárga szín felülírja az esetleges más szabályokat */
+            color: white;
+        }             
+        .grid .black {
+            background: #000;
+            color: transparent;
+        }
+        .reset-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s;
+        }
+        .reset-button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="left-panel">
+        <h1>PollakFind</h1>
+        <div class="select-container">
+            <label for="start">Indulási hely:</label>
+            <select id="start">
+                <option value="info6">info6</option>
+                <option value="cad">cad</option>
+                <option value="mat3">mat3</option>
+                <option value="mat2">mat2</option>
+                <option value="nylab">nylab</option>
+                <option value="tori">tori</option>
+                <option value="lepcso">lepcso</option>
+            </select>
+            <label for="end">Cél:</label>
+            <select id="end">
+                <option value="info6">info6</option>
+                <option value="cad">cad</option>
+                <option value="mat3">mat3</option>
+                <option value="mat2">mat2</option>
+                <option value="nylab">nylab</option>
+                <option value="tori">tori</option>
+                <option value="lepcso">lepcso</option>
+            </select>
+            <button onclick="runPathfinding()">Tanterem keresése</button>
+        </div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <button class="reset-button" onclick="resetGridPosition()">Reset Grid</button>
+
+    <script>
+        const gridSize = 20;
+        const cellNames = {
+            "cell-0-0": "X", "cell-0-1": "X", "cell-0-2": "X", "cell-0-3": "info6", "cell-0-4": "X", 
+            "cell-0-5": "X", "cell-0-6": "cad", "cell-0-7": "X", "cell-0-8": "X", "cell-0-9": "X", 
+            "cell-0-10": "mat3", "cell-0-11": "X", "cell-0-12": "mat2", "cell-0-13": "X", "cell-0-14": "X", 
+            "cell-0-15": "Főbej", "cell-1-17": "Aula", "cell-2-12": "nylab", "cell-2-3": "tori", "cell-2-4": "X", 
+            "cell-2-5": "X", "cell-2-6": "X", "cell-2-7": "X", "cell-2-8": "X", "cell-2-9": "X", 
+            "cell-2-10": "X", "cell-2-11": "X", "cell-2-13": "X", "cell-3-14": "Ebedl", "cell-3-13": "X", 
+            "cell-4-13": "X", "cell-2-0": "HBej", "cell-3-1": "Nwc", "cell-4-1": "X", "cell-3-0": "X", 
+            "cell-4-2": "X", "cell-4-3": "X", "cell-3-3": "X", "cell-3-2": "X", "cell-1-0": "lepcso", "cell-4-0": "X"
+        };
+
+        let grid = [];
+        let gridPosition = { top: 20, left: 300 };
+
+        document.addEventListener("DOMContentLoaded", function() {
+            createGrid(gridSize);
+            addDragEvent();
+        });
+
+        function createGrid(columns) {
+            const gridElement = document.getElementById("grid");
+            gridElement.innerHTML = ''; // Clear existing grid
+
+            grid = [];
+            const rows = Math.ceil(100 / columns);
+
+            for (let row = 0; row < rows; row++) {
+                let rowArray = [];
+                for (let col = 0; col < columns; col++) {
+                    const cell = document.createElement("div");
+                    const cellId = `cell-${row}-${col}`;
+                    cell.id = cellId;
+                    cell.setAttribute("data-row", row);
+                    cell.setAttribute("data-col", col);
+
+                    // Set predefined names
+                    if (cellNames[cellId]) {
+                        const name = cellNames[cellId];
+                        if (name === "X") {
+                            cell.classList.add("black");
+                        } else {
+                            cell.innerText = name;
+                        }
+                    }
+
+                    rowArray.push(cell);
+                    gridElement.appendChild(cell);
+                }
+                grid.push(rowArray);
+            }
+
+            // Set grid position from gridPosition state
+            gridElement.style.top = `${gridPosition.top}px`;
+            gridElement.style.left = `${gridPosition.left}px`;
+        }
+
+        function runPathfinding() {
+            const start = document.getElementById("start").value;
+            const end = document.getElementById("end").value;
+        
+            const startPos = findCellPositionByName(start);
+            const endPos = findCellPositionByName(end);
+        
+            const startCell = grid[startPos.row][startPos.col];
+            const endCell = grid[endPos.row][endPos.col];
+        
+            // Remove any previous path, start, and end cells
+            document.querySelectorAll(".grid div").forEach(cell => {
+                cell.classList.remove("start", "end", "path");
+                cell.style.background = ''; // Reset the background to default
+            });
+        
+            // Set the start and end cells
+            if (startCell) startCell.classList.add("start");
+            if (endCell) endCell.classList.add("end");
+        
+            // Run the pathfinding algorithm
+            const path = aStar(startPos, endPos);
+            if (path.length > 0) {
+                path.forEach(cell => {
+                    cell.classList.add("path");
+                    cell.style.background = '#f1c40f'; // Ensure yellow path color is set
+                });
+            } else {
+                alert("No path found!");
+            }
+        }              
+
+        function findCellPositionByName(name) {
+            for (let row = 0; row < grid.length; row++) {
+                for (let col = 0; col < grid[row].length; col++) {
+                    if (grid[row][col].innerText === name) {
+                        return { row, col };
+                    }
+                }
+            }
+            return null;
+        }
+
+        function addDragEvent() {
+            const gridElement = document.getElementById("grid");
+        
+            let isDragging = false;
+            let offsetX = 0;
+            let offsetY = 0;
+        
+            gridElement.addEventListener("mousedown", function (e) {
+                isDragging = true;
+                offsetX = e.clientX - gridElement.getBoundingClientRect().left;
+                offsetY = e.clientY - gridElement.getBoundingClientRect().top;
+                gridElement.style.cursor = 'grabbing';
+            });
+        
+            document.addEventListener("mousemove", function (e) {
+                if (isDragging) {
+                    const left = e.clientX - offsetX;
+                    const top = e.clientY - offsetY;
+                    gridElement.style.left = `${left}px`;
+                    gridElement.style.top = `${top}px`;
+                }
+            });
+        
+            document.addEventListener("mouseup", function () {
+                if (isDragging) {
+                    isDragging = false;
+                    gridPosition.top = parseInt(gridElement.style.top);
+                    gridPosition.left = parseInt(gridElement.style.left);
+                    gridElement.style.cursor = 'grab';
+                }
+            });
+        }            
+
+        function resetGridPosition() {
+            // Reset grid position to initial values
+            gridPosition = { top: 20, left: 300 };
+            createGrid(gridSize); // Refresh grid to the reset position
+        }
+    </script>
+</body>
+</html>
