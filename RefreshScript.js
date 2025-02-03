@@ -289,10 +289,12 @@ document.addEventListener("DOMContentLoaded", function() {
   });
   document.addEventListener("mousemove", function(event) {
     if (isDragging) {
-      gridElement.style.left = `${event.clientX - offsetX}px`;
+      let newLeft = event.clientX - offsetX;
+      if (newLeft < 300) newLeft = 300; // nem engedjük, hogy 300px alá essen
+      gridElement.style.left = `${newLeft}px`;
       gridElement.style.top = `${event.clientY - offsetY}px`;
     }
-  });
+  });  
   document.addEventListener("mouseup", function() {
     isDragging = false;
     gridElement.style.cursor = "grab";
