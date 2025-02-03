@@ -1,7 +1,120 @@
-// Ezt lehetőleg ne bántsuk mert elcseszi a pathfindingot!
+// Alapadatok
 const gridSize = 20;
-// Cella nevek
-const cellNames = {
+// Ezek a nyilacska emoji-k jelölik a lépcsőket
+const allowedStairs = ["⬇️", "➡️", "⬆️", "⬅️"];
+
+// Emeletek definíciója (példaadatok)
+let cellNames = {
+  "cell-0-0": "X",
+  "cell-0-1": "Chill",
+  "cell-0-2": "",
+  "cell-0-3": "Szekr",
+  "cell-0-4": "",
+  "cell-0-5": "",
+  "cell-0-6": "X",
+  "cell-0-7": "X",
+  "cell-0-8": "X",
+  "cell-0-9": "X",
+  "cell-0-10": "X",
+  "cell-0-11": "X",
+  "cell-0-12": "X",
+  "cell-0-13": "X",
+  "cell-0-14": "X",
+  "cell-0-15": "X",
+  "cell-0-16": "X",
+  "cell-0-17": "SzerT",
+  "cell-0-18": "NőiM",
+  "cell-0-19": "X",
+
+  "cell-1-0": "X",
+  "cell-1-1": "Büfé",
+  "cell-1-2": "",
+  "cell-1-3": "",
+  "cell-1-4": "Aszt",
+  "cell-1-5": "",
+  "cell-1-6": "X",
+  "cell-1-7": "X",
+  "cell-1-8": "X",
+  "cell-1-9": "X",
+  "cell-1-10": "X",
+  "cell-1-11": "X",
+  "cell-1-12": "X",
+  "cell-1-13": "X",
+  "cell-1-14": "X",
+  "cell-1-15": "X",
+  "cell-1-16": "Tört",
+  "cell-1-17": "",
+  "cell-1-18": "",
+  "cell-1-19": "HBej",
+
+  "cell-2-0": "X",
+  "cell-2-1": "X",
+  "cell-2-2": "",
+  "cell-2-3": "",
+  "cell-2-4": "X",
+  "cell-2-5": "",
+  "cell-2-6": "X",
+  "cell-2-7": "X",
+  "cell-2-8": "X",
+  "cell-2-9": "X",
+  "cell-2-10": "X",
+  "cell-2-11": "X",
+  "cell-2-12": "X",
+  "cell-2-13": "X",
+  "cell-2-14": "X",
+  "cell-2-15": "X",
+  "cell-2-16": "X",
+  "cell-2-17": "",
+  "cell-2-18": "",
+  "cell-2-19": "X",
+
+  "cell-3-0": "X",
+  "cell-3-1": "",
+  "cell-3-2": "",
+  "cell-3-3": "",
+  "cell-3-4": "",
+  "cell-3-5": "",
+  "cell-3-6": "",
+  "cell-3-7": "",
+  "cell-3-8": "",
+  "cell-3-9": "",
+  "cell-3-10": "",
+  "cell-3-11": "",
+  "cell-3-12": "",
+  "cell-3-13": "",
+  "cell-3-14": "",
+  "cell-3-15": "",
+  "cell-3-16": "",
+  "cell-3-17": "",
+  "cell-3-18": "",
+  "cell-3-19": "➡️",
+
+  "cell-4-0": "X",
+  "cell-4-1": "⬇️",
+  "cell-4-2": "X",
+  "cell-4-3": "FőBej",
+  "cell-4-4": "X",
+  "cell-4-5": "X",
+  "cell-4-6": "X",
+  "cell-4-7": "Mat2",
+  "cell-4-8": "X",
+  "cell-4-9": "Mat3",
+  "cell-4-10": "X",
+  "cell-4-11": "X",
+  "cell-4-12": "X",
+  "cell-4-13": "X",
+  "cell-4-14": "CadC",
+  "cell-4-15": "X",
+  "cell-4-16": "X",
+  "cell-4-17": "X",
+  "cell-4-18": "Inf-6",
+  "cell-4-19": "X"
+};
+
+// További emeletek (példa: 1. emelet)
+const floors = {
+  0: { ...cellNames },
+  1: {
     "cell-0-0": "X",
     "cell-0-1": "Chill",
     "cell-0-2": "",
@@ -22,7 +135,7 @@ const cellNames = {
     "cell-0-17": "SzerT",
     "cell-0-18": "NőiM",
     "cell-0-19": "X",
-
+  
     "cell-1-0": "X",
     "cell-1-1": "Büfé",
     "cell-1-2": "",
@@ -43,7 +156,7 @@ const cellNames = {
     "cell-1-17": "",
     "cell-1-18": "",
     "cell-1-19": "HBej",
-
+  
     "cell-2-0": "X",
     "cell-2-1": "X",
     "cell-2-2": "",
@@ -64,7 +177,7 @@ const cellNames = {
     "cell-2-17": "",
     "cell-2-18": "",
     "cell-2-19": "X",
-
+  
     "cell-3-0": "X",
     "cell-3-1": "",
     "cell-3-2": "",
@@ -85,7 +198,7 @@ const cellNames = {
     "cell-3-17": "",
     "cell-3-18": "",
     "cell-3-19": "➡️",
-
+  
     "cell-4-0": "X",
     "cell-4-1": "⬇️",
     "cell-4-2": "X",
@@ -104,208 +217,249 @@ const cellNames = {
     "cell-4-15": "X",
     "cell-4-16": "X",
     "cell-4-17": "X",
-    "cell-4-18": "Inf-6",
-    "cell-4-19": "X",
+    "cell-4-18": "LMAO",
+    "cell-4-19": "X"
+  }
 };
 
-document.addEventListener("DOMContentLoaded", function() {
-const gridElement = document.getElementById("grid");
-let isDragging = false;
-let offsetX, offsetY;
+let currentFloor = 0;
+let grid = [];
+// Eltároljuk a jelenlegi útvonalat, hogy minden emelet váltásnál meg tudjuk jeleníteni a megfelelő részt
+let currentPath = [];
 
-gridElement.addEventListener("mousedown", function(event) {
+// Grid létrehozása
+function createGrid(columns) {
+  const gridElement = document.getElementById("grid");
+  gridElement.innerHTML = ""; // Előző grid törlése
+
+  grid = [];
+  const rows = Math.ceil(100 / columns);
+  for (let row = 0; row < rows; row++) {
+    let rowArray = [];
+    for (let col = 0; col < columns; col++) {
+      const cell = document.createElement("div");
+      const cellId = `cell-${row}-${col}`;
+      cell.id = cellId;
+      cell.setAttribute("data-row", row);
+      cell.setAttribute("data-col", col);
+      
+      // A cella tartalmának beállítása az aktuális emelet alapján
+      const key = `cell-${row}-${col}`;
+      if (floors[currentFloor][key]) {
+        const name = floors[currentFloor][key];
+        if (name === "X") {
+          cell.classList.add("black");
+          cell.innerText = "";
+        } else {
+          cell.innerText = name;
+        }
+      }
+      
+      // Ha a jelenlegi útvonal (currentPath) tartalmazza ezt a cellát az aktuális emeleten, jelöljük
+      if (currentPath.some(n => n.floor === currentFloor && n.row === row && n.col === col)) {
+        cell.classList.add("path");
+      }
+      
+      rowArray.push(cell);
+      gridElement.appendChild(cell);
+    }
+    grid.push(rowArray);
+  }
+}
+
+// Emelet váltása dropdown segítségével
+function switchFloor(floor) {
+  if (floors[floor]) {
+    currentFloor = floor;
+    createGrid(gridSize);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  createGrid(gridSize);
+
+  // Drag & drop a grid számára
+  const gridElement = document.getElementById("grid");
+  let isDragging = false, offsetX, offsetY;
+  gridElement.addEventListener("mousedown", function(event) {
     isDragging = true;
     offsetX = event.clientX - gridElement.offsetLeft;
     offsetY = event.clientY - gridElement.offsetTop;
     gridElement.style.cursor = "grabbing";
-});
-
-document.addEventListener("mousemove", function(event) {
+  });
+  document.addEventListener("mousemove", function(event) {
     if (isDragging) {
-        gridElement.style.left = `${event.clientX - offsetX}px`;
-        gridElement.style.top = `${event.clientY - offsetY}px`;
+      gridElement.style.left = `${event.clientX - offsetX}px`;
+      gridElement.style.top = `${event.clientY - offsetY}px`;
     }
-});
-
-document.addEventListener("mouseup", function() {
+  });
+  document.addEventListener("mouseup", function() {
     isDragging = false;
     gridElement.style.cursor = "grab";
-});
+  });
 
-// Reset button to bring the grid back to the original position
-window.resetGridPosition = function() {
+  window.resetGridPosition = function() {
     gridElement.style.left = "300px";
     gridElement.style.top = "20px";
-};
+  };
+
+  // Hozzáadjuk az emeletválasztót a left-panelhez
+  const floorSelector = document.createElement("select");
+  floorSelector.id = "floorSelect";
+  floorSelector.innerHTML = `<option value="0">Földszint</option>
+                             <option value="1">1. Emelet</option>`;
+  floorSelector.addEventListener("change", (e) => switchFloor(parseInt(e.target.value)));
+  document.querySelector(".left-panel").appendChild(floorSelector);
 });
 
-let grid = [];
+// Segédfüggvény: adott emelet, sor, oszlop cellájának tartalma
+function getCell(floor, row, col) {
+  const key = `cell-${row}-${col}`;
+  return floors[floor][key] || "";
+}
 
-document.addEventListener("DOMContentLoaded", function() {
-    createGrid(gridSize);
-});
+// Vizsgáljuk, hogy egy cella akadályként szerepel-e
+function isBlocked(floor, row, col, startName, endName) {
+  const cell = getCell(floor, row, col);
+  if (cell === "X") return true;
+  if (cell !== "" && !allowedStairs.includes(cell) && cell !== startName && cell !== endName) {
+    return true;
+  }
+  return false;
+}
 
-function createGrid(columns) {
-    const gridElement = document.getElementById("grid");
-    gridElement.innerHTML = ''; // Clear any existing grid
-
-    grid = [];
-    // Itt megtudjuk változtatni a sorok számát, több = kevesebb. De pls ne bántsuk még!!
-    const rows = Math.ceil(100 / columns); // Dynamic number of rows based on column count
-
-    for (let row = 0; row < rows; row++) {
-        let rowArray = [];
-        for (let col = 0; col < columns; col++) {
-            const cell = document.createElement("div");
-            const cellId = `cell-${row}-${col}`;
-            cell.id = cellId;
-            cell.setAttribute("data-row", row);
-            cell.setAttribute("data-col", col);
-
-            // Check if the cell has a predefined name
-            if (cellNames[cellId]) {
-                const name = cellNames[cellId];
-                if (name === "X") {
-                    cell.classList.add("black");
-                    cell.innerText = ""; // Empty text when black
-                } else {
-                    cell.innerText = name;
-                }
-            }
-
-            rowArray.push(cell);
-            gridElement.appendChild(cell);
-        }
-        grid.push(rowArray);
+// Generáljuk a szomszédokat (4 irány az aktuális emeleten, majd lépcső mozgás)
+function getNeighbors(node, startName, endName) {
+  const { floor, row, col } = node;
+  const neighbors = [];
+  const directions = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1]
+  ];
+  const rows = Math.ceil(100 / gridSize);
+  const cols = gridSize;
+  // Mozgás ugyanazon emeleten
+  directions.forEach(([dRow, dCol]) => {
+    const nRow = row + dRow;
+    const nCol = col + dCol;
+    if (nRow >= 0 && nRow < rows && nCol >= 0 && nCol < cols) {
+      if (!isBlocked(floor, nRow, nCol, startName, endName)) {
+        neighbors.push({ floor, row: nRow, col: nCol });
+      }
     }
+  });
+  // Ha a jelenlegi cella lépcső, akkor emeletváltás lehetséges
+  if (allowedStairs.includes(getCell(floor, row, col))) {
+    [floor - 1, floor + 1].forEach(newFloor => {
+      if (floors[newFloor] && allowedStairs.includes(getCell(newFloor, row, col))) {
+        neighbors.push({ floor: newFloor, row, col });
+      }
+    });
+  }
+  return neighbors;
 }
 
-function runPathfinding() {
-    const start = document.getElementById("start").value;
-    const end = document.getElementById("end").value;
-
-    const startPos = findCellPositionByName(start);
-    const endPos = findCellPositionByName(end);
-
-    const startCell = grid[startPos.row][startPos.col];
-    const endCell = grid[endPos.row][endPos.col];
-
-    document.querySelectorAll(".grid div").forEach(cell => cell.classList.remove("start", "end", "path"));
-
-    if (startCell) startCell.classList.add("start");
-    if (endCell) endCell.classList.add("end");
-
-    // A* pathfinding logic
-    const path = aStar(startPos, endPos);
-
-    if (path.length > 0) {
-        path.forEach(cell => cell.classList.add("path"));
-    } else {
-        alert("No path found!");
-    }
-}
-
-function findCellPositionByName(name) {
-    for (let row = 0; row < grid.length; row++) {
-        for (let col = 0; col < grid[row].length; col++) {
-            if (grid[row][col].innerText === name) {
-                return { row, col };
-            }
-        }
-    }
-    return null; // No cell with that name
-}
-
-// A* algorithm implementation
-function aStar(startPos, endPos) {
-    const openList = [];
-    const closedList = [];
-    const gScore = [];
-    const fScore = [];
-    const parent = [];
-    const directions = [
-        [-1, 0], // up
-        [1, 0], // down
-        [0, -1], // left
-        [0, 1] // right
-    ];
-
-    // Initialize all scores to infinity
-    for (let row = 0; row < grid.length; row++) {
-        for (let col = 0; col < grid[row].length; col++) {
-            gScore[`${row},${col}`] = Infinity;
-            fScore[`${row},${col}`] = Infinity;
-        }
-    }
-
-    gScore[`${startPos.row},${startPos.col}`] = 0;
-    fScore[`${startPos.row},${startPos.col}`] = heuristic(startPos, endPos);
-
-    openList.push(startPos);
-
-    while (openList.length > 0) {
-        // Get the cell with the lowest fScore
-        let current = openList.reduce((lowest, node) => 
-            fScore[`${node.row},${node.col}`] < fScore[`${lowest.row},${lowest.col}`] ? node : lowest
-        );
-
-        if (current.row === endPos.row && current.col === endPos.col) {
-            return reconstructPath(parent, current);
-        }
-
-        openList.splice(openList.indexOf(current), 1);
-        closedList.push(current);
-
-        for (let dir of directions) {
-            let newRow = current.row + dir[0];
-            let newCol = current.col + dir[1];
-
-            if (isValidMove(newRow, newCol) 
-            && !closedList.some(c => c.row === newRow 
-            && c.col === newCol) 
-            && !isBlackCell(newRow, newCol)
-            && !notDestinationRoom(newRow, newCol)
-            )  {
-                const tentativeG = gScore[`${current.row},${current.col}`] + 1;
-
-                if (tentativeG < gScore[`${newRow},${newCol}`]) {
-                    parent[`${newRow},${newCol}`] = current;
-                    gScore[`${newRow},${newCol}`] = tentativeG;
-                    fScore[`${newRow},${newCol}`] = gScore[`${newRow},${newCol}`] + heuristic({ row: newRow, col: newCol }, endPos);
-                    if (!openList.some(c => c.row === newRow && c.col === newCol)) {
-                        openList.push({ row: newRow, col: newCol });
-                    }
-                }
-            }
-        }
-    }
-
-    return []; // No path found
-}
-
-function isValidMove(row, col) {
-    return row >= 0 && col >= 0 && row < grid.length && col < grid[0].length;
-}
-
-function notDestinationRoom(row, col){
-    return !grid[row][col].classList.contains("end")
-    && !grid[row][col].classList.contains("start")
-    && grid[row][col].innerHTML !== "";
-}
-
-function isBlackCell(row, col) {
-    return grid[row][col].classList.contains("black");
-}
-
+// Heurisztika: Manhattan távolság + emeletkülönbség
 function heuristic(a, b) {
-    return Math.abs(a.row - b.row) + Math.abs(a.col - b.col);
+  return Math.abs(a.row - b.row) + Math.abs(a.col - b.col) + Math.abs(a.floor - b.floor);
+}
+
+// Multi-floor A* algoritmus
+function multiFloorAStar(startPos, endPos, startName, endName) {
+  const openList = [];
+  const closedSet = new Set();
+  const gScore = {};
+  const fScore = {};
+  const parent = {};
+
+  function nodeKey(node) {
+    return `${node.floor}-${node.row}-${node.col}`;
+  }
+
+  const startKey = nodeKey(startPos);
+  gScore[startKey] = 0;
+  fScore[startKey] = heuristic(startPos, endPos);
+  openList.push(startPos);
+
+  while (openList.length) {
+    let current = openList.reduce((best, node) =>
+      fScore[nodeKey(node)] < fScore[nodeKey(best)] ? node : best
+    );
+    if (current.floor === endPos.floor && current.row === endPos.row && current.col === endPos.col) {
+      return reconstructPath(parent, current);
+    }
+    const currentKey = nodeKey(current);
+    openList.splice(openList.indexOf(current), 1);
+    closedSet.add(currentKey);
+
+    const neighbors = getNeighbors(current, startName, endName);
+    neighbors.forEach(neighbor => {
+      const neighborKey = nodeKey(neighbor);
+      if (closedSet.has(neighborKey)) return;
+      const tentativeG = gScore[currentKey] + 1;
+      if (tentativeG < (gScore[neighborKey] || Infinity)) {
+        parent[neighborKey] = current;
+        gScore[neighborKey] = tentativeG;
+        fScore[neighborKey] = tentativeG + heuristic(neighbor, endPos);
+        if (!openList.some(n => nodeKey(n) === neighborKey)) {
+          openList.push(neighbor);
+        }
+      }
+    });
+  }
+  return []; // Útvonal nem található
 }
 
 function reconstructPath(parent, current) {
-    let path = [];
-    while (current) {
-        path.push(grid[current.row][current.col]);
-        current = parent[`${current.row},${current.col}`];
+  const path = [];
+  function nodeKey(node) {
+    return `${node.floor}-${node.row}-${node.col}`;
+  }
+  while (current) {
+    path.push(current);
+    current = parent[nodeKey(current)];
+  }
+  return path.reverse();
+}
+
+// Új, multi-floor pathfinding függvény
+function runPathfinding() {
+  const startName = document.getElementById("start").value;
+  const endName = document.getElementById("end").value;
+
+  // Keresés az összes emeletben
+  function findNodeByName(name) {
+    const rows = Math.ceil(100 / gridSize);
+    const cols = gridSize;
+    for (let fl in floors) {
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          if (getCell(parseInt(fl), row, col) === name) {
+            return { floor: parseInt(fl), row, col };
+          }
+        }
+      }
     }
-    return path.reverse();
+    return null;
+  }
+
+  const startPos = findNodeByName(startName);
+  const endPos = findNodeByName(endName);
+
+  if (!startPos || !endPos) {
+    alert("Nem található az indulási vagy célterem!");
+    return;
+  }
+
+  // Futtatjuk a multi-floor A* algoritmust
+  currentPath = multiFloorAStar(startPos, endPos, startName, endName);
+
+  // Újrageneráljuk a gridet, így a currentPath alapján a megfelelő cellák ki lesznek emelve
+  createGrid(gridSize);
+
+  if (currentPath.length === 0) {
+    alert("Nincs útvonal a kiválasztott pontok között!");
+  }
 }

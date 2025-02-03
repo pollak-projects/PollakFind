@@ -9,17 +9,17 @@ body {
     background-image: radial-gradient(rgba(95, 95, 95, 0.171) 2px, transparent 0);
     background-size: 30px 30px;
     background-position: -5px -5px;
-}
-h1 {
+  }
+  h1 {
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 20px;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
     display: flex;
-    justify-content: center; /* Középre igazítjuk vízszintesen */
-    align-items: center; /* Középre igazítjuk függőlegesen */
-}
-.left-panel {
+    justify-content: center;
+    align-items: center;
+  }
+  .left-panel {
     width: 250px;
     padding: 10px;
     margin: 15px;
@@ -32,50 +32,48 @@ h1 {
     backdrop-filter: blur(4.2px);
     -webkit-backdrop-filter: blur(7.5px);
     border: 1px solid rgba(75, 75, 75, 0.12);
-}
-.select-container {
+  }
+  .select-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
     background: rgba(255, 255, 255, 0.3);
     padding: 15px;
     border-radius: 10px;
-}
-select, button {
+  }
+  select, button {
     padding: 10px;
     border-radius: 5px;
     border: none;
     font-size: 1rem;
     font-weight: 600;
-}
-button {
+  }
+  button {
     background: #27ae60;
     color: white;
     cursor: pointer;
     transition: 0.3s;
-}
-button:hover {
+  }
+  button:hover {
     background: #2ecc71;
-}
-.grid {
+  }
+  .grid {
     display: grid;
     grid-template-columns: repeat(20, 50px);
     gap: 5px;
     padding: 10px;
-    margin-left: 300px;
-    position: absolute; /* Fontos, hogy mozgatható legyen */
+    position: absolute;
     cursor: grab;
-    top: 20px; /* Rögzített pozíció a kezdéshez */
-    left: 300px; /* Kezdő pozíció */
-    /* Eltávolítottuk a transition-t, hogy azonnali legyen */
+    top: 20px;
+    left: 300px;
     background: rgba(45, 45, 45, 0.36);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(4.2px);
     -webkit-backdrop-filter: blur(7.5px);
     border: 1px solid rgba(75, 75, 75, 0.12);
-}        
-.grid div {
+  }        
+  .grid div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,28 +85,24 @@ button:hover {
     color: black;
     min-height: 50px;
     min-width: 50px;
-}
-.grid .obstacle {
-    background: #2c3e50;
-    color: transparent;
-}
-.grid .start {
-    background: #27ae60;
-    color: white;
-}
-.grid .end {
-    background: #e74c3c;
-    color: white;
-}
-.grid .path {
-    background: #f1c40f !important; /* Biztosítsuk, hogy a sárga szín felülírja az esetleges más szabályokat */
-    color: white;
-}             
-.grid .black {
+  }
+  .grid .black {
     background: #000;
     color: transparent;
-}
-.reset-button {
+  }
+  .grid .start {
+    background: #27ae60;
+    color: white;
+  }
+  .grid .end {
+    background: #e74c3c;
+    color: white;
+  }
+  .grid .path {
+    background: #f1c40f !important;
+    color: white;
+  }
+  .reset-button {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -120,7 +114,8 @@ button:hover {
     cursor: pointer;
     border: none;
     transition: background 0.3s;
-}
-.reset-button:hover {
+  }
+  .reset-button:hover {
     background-color: #c0392b;
-}
+  }
+  
