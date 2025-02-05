@@ -3,122 +3,13 @@ const gridSize = 20;
 // Ezek a nyilacska emoji-k jelölik a lépcsőket
 const allowedStairs = ["⬇️", "➡️", "⬆️", "⬅️"];
 
-// Emeletek definíciója (példaadatok)
-let cellNames = {
-  "cell-0-0": "X",
-  "cell-0-1": "Chill",
-  "cell-0-2": "",
-  "cell-0-3": "Szekr",
-  "cell-0-4": "",
-  "cell-0-5": "",
-  "cell-0-6": "X",
-  "cell-0-7": "X",
-  "cell-0-8": "X",
-  "cell-0-9": "X",
-  "cell-0-10": "X",
-  "cell-0-11": "X",
-  "cell-0-12": "X",
-  "cell-0-13": "X",
-  "cell-0-14": "X",
-  "cell-0-15": "X",
-  "cell-0-16": "X",
-  "cell-0-17": "SzerT",
-  "cell-0-18": "NőiM",
-  "cell-0-19": "X",
-
-  "cell-1-0": "X",
-  "cell-1-1": "Büfé",
-  "cell-1-2": "",
-  "cell-1-3": "",
-  "cell-1-4": "Aszt",
-  "cell-1-5": "",
-  "cell-1-6": "X",
-  "cell-1-7": "X",
-  "cell-1-8": "X",
-  "cell-1-9": "X",
-  "cell-1-10": "X",
-  "cell-1-11": "X",
-  "cell-1-12": "X",
-  "cell-1-13": "X",
-  "cell-1-14": "X",
-  "cell-1-15": "X",
-  "cell-1-16": "Tört",
-  "cell-1-17": "",
-  "cell-1-18": "",
-  "cell-1-19": "HBej",
-
-  "cell-2-0": "X",
-  "cell-2-1": "X",
-  "cell-2-2": "",
-  "cell-2-3": "",
-  "cell-2-4": "X",
-  "cell-2-5": "",
-  "cell-2-6": "X",
-  "cell-2-7": "X",
-  "cell-2-8": "X",
-  "cell-2-9": "X",
-  "cell-2-10": "X",
-  "cell-2-11": "X",
-  "cell-2-12": "X",
-  "cell-2-13": "X",
-  "cell-2-14": "X",
-  "cell-2-15": "X",
-  "cell-2-16": "X",
-  "cell-2-17": "",
-  "cell-2-18": "",
-  "cell-2-19": "X",
-
-  "cell-3-0": "X",
-  "cell-3-1": "",
-  "cell-3-2": "",
-  "cell-3-3": "",
-  "cell-3-4": "",
-  "cell-3-5": "",
-  "cell-3-6": "",
-  "cell-3-7": "",
-  "cell-3-8": "",
-  "cell-3-9": "",
-  "cell-3-10": "",
-  "cell-3-11": "",
-  "cell-3-12": "",
-  "cell-3-13": "",
-  "cell-3-14": "",
-  "cell-3-15": "",
-  "cell-3-16": "",
-  "cell-3-17": "",
-  "cell-3-18": "",
-  "cell-3-19": "➡️",
-
-  "cell-4-0": "X",
-  "cell-4-1": "⬇️",
-  "cell-4-2": "X",
-  "cell-4-3": "FőBej",
-  "cell-4-4": "X",
-  "cell-4-5": "X",
-  "cell-4-6": "X",
-  "cell-4-7": "Mat2",
-  "cell-4-8": "X",
-  "cell-4-9": "Mat3",
-  "cell-4-10": "X",
-  "cell-4-11": "X",
-  "cell-4-12": "X",
-  "cell-4-13": "X",
-  "cell-4-14": "CadC",
-  "cell-4-15": "X",
-  "cell-4-16": "X",
-  "cell-4-17": "X",
-  "cell-4-18": "Inf-6",
-  "cell-4-19": "X"
-};
-
 // További emeletek (példa: 1. emelet)
 const floors = {
-  0: { ...cellNames },
-  1: {
+  0: {   
     "cell-0-0": "X",
     "cell-0-1": "Chill",
     "cell-0-2": "",
-    "cell-0-3": "Szekr",
+    "cell-0-3": "",
     "cell-0-4": "",
     "cell-0-5": "",
     "cell-0-6": "X",
@@ -152,7 +43,7 @@ const floors = {
     "cell-1-13": "X",
     "cell-1-14": "X",
     "cell-1-15": "X",
-    "cell-1-16": "Tört",
+    "cell-1-16": "I. Tant.",
     "cell-1-17": "",
     "cell-1-18": "",
     "cell-1-19": "HBej",
@@ -200,8 +91,8 @@ const floors = {
     "cell-3-19": "➡️",
   
     "cell-4-0": "X",
-    "cell-4-1": "⬇️",
-    "cell-4-2": "X",
+    "cell-4-1": "X",
+    "cell-4-2": "⬇️",
     "cell-4-3": "FőBej",
     "cell-4-4": "X",
     "cell-4-5": "X",
@@ -217,7 +108,112 @@ const floors = {
     "cell-4-15": "X",
     "cell-4-16": "X",
     "cell-4-17": "X",
-    "cell-4-18": "LMAO",
+    "cell-4-18": "Info VI", 
+    "cell-4-19": "X" },
+  1: {
+    "cell-0-0": "X",
+    "cell-0-1": "X",
+    "cell-0-2": "X",
+    "cell-0-3": "X",
+    "cell-0-4": "X",
+    "cell-0-5": "X",
+    "cell-0-6": "X",
+    "cell-0-7": "X",
+    "cell-0-8": "X",
+    "cell-0-9": "X",
+    "cell-0-10": "X",
+    "cell-0-11": "X",
+    "cell-0-12": "X",
+    "cell-0-13": "X",
+    "cell-0-14": "X",
+    "cell-0-15": "X",
+    "cell-0-16": "X",
+    "cell-0-17": "X",
+    "cell-0-18": "X",
+    "cell-0-19": "X",
+  
+    "cell-1-0": "X",
+    "cell-1-1": "X",
+    "cell-1-2": "X",
+    "cell-1-3": "X",
+    "cell-1-4": "X",
+    "cell-1-5": "X",
+    "cell-1-6": "X",
+    "cell-1-7": "X",
+    "cell-1-8": "X",
+    "cell-1-9": "X",
+    "cell-1-10": "X",
+    "cell-1-11": "X",
+    "cell-1-12": "X",
+    "cell-1-13": "X",
+    "cell-1-14": "X",
+    "cell-1-15": "X",
+    "cell-1-16": "X",
+    "cell-1-17": "Info II",
+    "cell-1-18": "",
+    "cell-1-19": "X",
+  
+    "cell-2-0": "Igazg.",
+    "cell-2-1": "Titk",
+    "cell-2-2": "Tanári",
+    "cell-2-3": "X",
+    "cell-2-4": "X",
+    "cell-2-5": "Info III",
+    "cell-2-6": "X",
+    "cell-2-7": "X",
+    "cell-2-8": "X",
+    "cell-2-9": "X",
+    "cell-2-10": "X",
+    "cell-2-11": "X",
+    "cell-2-12": "X",
+    "cell-2-13": "X",
+    "cell-2-14": "X",
+    "cell-2-15": "X",
+    "cell-2-16": "X",
+    "cell-2-17": "X",
+    "cell-2-18": "Info I",
+    "cell-2-19": "X",
+  
+    "cell-3-0": "",
+    "cell-3-1": "",
+    "cell-3-2": "",
+    "cell-3-3": "",
+    "cell-3-4": "",
+    "cell-3-5": "",
+    "cell-3-6": "",
+    "cell-3-7": "",
+    "cell-3-8": "",
+    "cell-3-9": "",
+    "cell-3-10": "",
+    "cell-3-11": "",
+    "cell-3-12": "",
+    "cell-3-13": "",
+    "cell-3-14": "",
+    "cell-3-15": "",
+    "cell-3-16": "",
+    "cell-3-17": "",
+    "cell-3-18": "",
+    "cell-3-19": "➡️",
+
+    "cell-4-0": "Nwc1",
+    "cell-4-1": "Fwc1",
+    "cell-4-2": "⬇️",
+    "cell-4-3": "Gaz.ir",
+    "cell-4-4": "V. Tant.",
+    "cell-4-5": "X",
+    "cell-4-6": "Kajtor",
+    "cell-4-7": "X",
+    "cell-4-8": "X",
+    "cell-4-9": "X",
+    "cell-4-10": "Info VII",
+    "cell-4-11": "X",
+    "cell-4-12": "X",
+    "cell-4-13": "X",
+    "cell-4-14": "Info V",
+    "cell-4-15": "X",
+    "cell-4-16": "X",
+    "cell-4-17": "X",
+    "cell-4-18": "Info IV",
     "cell-4-19": "X"
   }
 };
@@ -244,9 +240,14 @@ function createGrid(columns) {
       cell.setAttribute("data-col", col);
       
       // A cella tartalmának beállítása az aktuális emelet alapján
+
+
+
       const key = `cell-${row}-${col}`;
+      
       if (floors[currentFloor][key]) {
         const name = floors[currentFloor][key];
+
         if (name === "X") {
           cell.classList.add("black");
           cell.innerText = "";
@@ -325,7 +326,9 @@ function isBlocked(floor, row, col, startName, endName) {
   const cell = getCell(floor, row, col);
   if (cell === "X") return true;
   if (cell !== "" && !allowedStairs.includes(cell) && cell !== startName && cell !== endName) {
+    
     return true;
+
   }
   return false;
 }
@@ -365,6 +368,7 @@ function getNeighbors(node, startName, endName) {
 
 // Heurisztika: Manhattan távolság + emeletkülönbség
 function heuristic(a, b) {
+
   return Math.abs(a.row - b.row) + Math.abs(a.col - b.col) + Math.abs(a.floor - b.floor);
 }
 
@@ -385,7 +389,7 @@ function multiFloorAStar(startPos, endPos, startName, endName) {
   fScore[startKey] = heuristic(startPos, endPos);
   openList.push(startPos);
 
-  while (openList.length) {
+  while (openList.length) {  
     let current = openList.reduce((best, node) =>
       fScore[nodeKey(node)] < fScore[nodeKey(best)] ? node : best
     );
@@ -415,6 +419,7 @@ function multiFloorAStar(startPos, endPos, startName, endName) {
 }
 
 function reconstructPath(parent, current) {
+
   const path = [];
   function nodeKey(node) {
     return `${node.floor}-${node.row}-${node.col}`;
@@ -431,27 +436,11 @@ function runPathfinding() {
   const startName = document.getElementById("start").value;
   const endName = document.getElementById("end").value;
 
-  // Keresés az összes emeletben
-  function findNodeByName(name) {
-    const rows = Math.ceil(100 / gridSize);
-    const cols = gridSize;
-    for (let fl in floors) {
-      for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < cols; col++) {
-          if (getCell(parseInt(fl), row, col) === name) {
-            return { floor: parseInt(fl), row, col };
-          }
-        }
-      }
-    }
-    return null;
-  }
-
   const startPos = findNodeByName(startName);
   const endPos = findNodeByName(endName);
 
   if (!startPos || !endPos) {
-    alert("Nem található az indulási vagy célterem!");
+    alert("Nem található az indulási vagy célterem! 123");
     return;
   }
 
@@ -465,3 +454,21 @@ function runPathfinding() {
     alert("Nincs útvonal a kiválasztott pontok között!");
   }
 }
+
+
+  // Keresés az összes emeletben
+  function findNodeByName(name) {
+    const rows = Math.ceil(100 / gridSize);
+    const cols = gridSize;
+    for (let fl in floors) {
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          
+          if (getCell(parseInt(fl), row, col) === name) {
+            return { floor: parseInt(fl), row, col };
+          }
+        }
+      }
+    }
+    return null;
+  }
