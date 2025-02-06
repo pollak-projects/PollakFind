@@ -63,8 +63,8 @@ button:hover {
   padding: 10px;
   position: absolute;
   cursor: grab;
-  top: 20px;
-  left: 300px;
+  top: 300px;
+  left: 500px;
   background: rgba(45, 45, 45, 0.36);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);

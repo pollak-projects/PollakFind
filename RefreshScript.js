@@ -308,8 +308,8 @@ document.addEventListener("DOMContentLoaded", function () {
       gridElement.style.cursor = "grab";
     });
     window.resetGridPosition = function () {
-      gridElement.style.left = "300px";
-      gridElement.style.top = "20px";
+      gridElement.style.left = "500px";
+      gridElement.style.top = "300px";
     };
 
     if (!document.getElementById("floorSelect")) {
