@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let newLeft = event.clientX - offsetX;
         let newTop = event.clientY - offsetY;
         // Calculate boundaries so the grid stays within the viewport
-        const minLeft = 0;
+        const minLeft = 300;
         const minTop = 0;
         const maxLeft = window.innerWidth - gridElement.offsetWidth;
         const maxTop = window.innerHeight - gridElement.offsetHeight;
@@ -333,18 +333,6 @@ document.addEventListener("DOMContentLoaded", function () {
       currentPath = [];
       createGrid(gridSize);
     };
-    
-
-    if (!document.getElementById("floorSelect")) {
-      const floorSelector = document.createElement("select");
-      floorSelector.id = "floorSelect";
-      floorSelector.innerHTML = `<option value="0">Földszint</option>
-                                 <option value="1">1. Emelet</option>`;
-      floorSelector.addEventListener("change", (e) =>
-        switchFloor(parseInt(e.target.value))
-      );
-      document.querySelector(".left-panel").appendChild(floorSelector);
-    }
   }
 
   function setupMobile() {
