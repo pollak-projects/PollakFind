@@ -31,7 +31,7 @@ const floors = {
     "cell-1-1": "Büfé",
     "cell-1-2": "",
     "cell-1-3": "",
-    "cell-1-4": "Aszt",
+    "cell-1-4": "",
     "cell-1-5": "",
     "cell-1-6": "X",
     "cell-1-7": "X",
@@ -69,7 +69,7 @@ const floors = {
     "cell-2-18": "",
     "cell-2-19": "X",
   
-    "cell-3-0": "X",
+    "cell-3-0": "Játék",
     "cell-3-1": "",
     "cell-3-2": "",
     "cell-3-3": "",
@@ -308,8 +308,8 @@ document.addEventListener("DOMContentLoaded", function () {
       gridElement.style.cursor = "grab";
     });
     window.resetGridPosition = function () {
-      gridElement.style.left = "300px";
-      gridElement.style.top = "20px";
+      gridElement.style.left = "500px";
+      gridElement.style.top = "300px";
     };
 
     if (!document.getElementById("floorSelect")) {
