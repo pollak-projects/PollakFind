@@ -307,10 +307,16 @@ document.addEventListener("DOMContentLoaded", function () {
       isDragging = false;
       gridElement.style.cursor = "grab";
     });
-    window.resetGridPosition = function () {
-      gridElement.style.left = "500px";
-      gridElement.style.top = "300px";
+    window.resetGridPosition = function() {
+      const gridElement = document.getElementById("grid");
+      gridElement.style.left = "300px";
+      gridElement.style.top = "20px";
+    
+      // Az útvonal törlése
+      currentPath = [];
+      createGrid(gridSize);
     };
+    
 
     if (!document.getElementById("floorSelect")) {
       const floorSelector = document.createElement("select");

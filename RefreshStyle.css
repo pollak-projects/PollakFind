@@ -36,7 +36,8 @@ body {
   border-radius: 10px;
 }
 
-select, button {
+select,
+button {
   padding: 10px;
   border-radius: 5px;
   border: none;
@@ -149,37 +150,65 @@ button:hover {
   border: 1px solid rgba(75, 75, 75, 0.12);
 }
 
-
 /* Mobilos nézet stílusai */
 @media screen and (max-width: 768px) {
-  /* Rejtjük a reset gombot */
+  /* Állítsuk a body-t oszlopirányú flex elrendezésre */
+  body {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+  }
+
+  /* Sidebar – left-panel teljes szélesség */
+  .left-panel {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  /* Select container */
+  .select-container {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .select-container label,
+  .select-container select,
+  .select-container button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* A grid (content) a sidebar alatt, relatív pozícióban */
+  .grid {
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    margin-top: 10px;
+    width: 100%;
+    grid-template-columns: repeat(20, 40px);
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  /* Reset gomb rejtése mobilon */
   .reset-button {
     display: none !important;
   }
-  
-  @media screen and (max-width: 768px) and (orientation: portrait) {
-    #grid {
+
+  /* Ha portré módban kell elrejteni mindent */
+  @media screen and (orientation: portrait) {
+    .left-panel,
+    .grid {
       display: none !important;
     }
   }
-  
 
-  /* Rejtjük a sidebar-t */
-  .left-panel {
-    display: none !important;
-  }
-  
-  /* A grid legyen középen, statikus */
-  .grid {
-    position: relative !important;
-    left: 50% !important;
-    top: 100px !important;
-    transform: translateX(-50%) !important;
-    cursor: default !important;
-    grid-template-columns: repeat(20, 40px);
-  }
-  
-  /* Mobil emeletváltó gombok */
+  /* Mobil emeletváltó gombok (ha használod) */
   .mobile-floor-nav {
     position: absolute;
     top: 20px;
@@ -189,11 +218,11 @@ button:hover {
     align-items: center;
     gap: 20px;
     z-index: 100;
-    background: rgba(45,45,45,0.8);
+    background: rgba(45, 45, 45, 0.8);
     padding: 5px 10px;
     border-radius: 10px;
   }
-  
+
   .mobile-floor-nav button {
     background: #3498db;
     color: white;
@@ -203,7 +232,7 @@ button:hover {
     cursor: pointer;
     font-size: 1rem;
   }
-  
+
   .mobile-floor-nav span {
     color: white;
     font-size: 1rem;
