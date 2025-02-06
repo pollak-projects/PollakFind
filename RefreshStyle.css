@@ -136,9 +136,10 @@ button:hover {
   align-items: center;
   justify-content: center;
   z-index: 999;
-  font-size: 1.5rem;
+  font-size: 1.5rem; /* Fixált méret */
   color: #ffffff;
   text-align: center;
+  transform: none !important;
   padding: 20px;
   box-sizing: border-box;
   background: rgba(45, 45, 45, 0.36);
@@ -156,6 +157,13 @@ button:hover {
     display: none !important;
   }
   
+  @media screen and (max-width: 768px) and (orientation: portrait) {
+    #grid {
+      display: none !important;
+    }
+  }
+  
+
   /* Rejtjük a sidebar-t */
   .left-panel {
     display: none !important;

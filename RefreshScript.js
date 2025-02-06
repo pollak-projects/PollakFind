@@ -365,22 +365,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // Ellenőrizzük az orientációt:
   function checkOrientation() {
     const overlay = document.getElementById("orientationOverlay");
-    const gridElement = document.getElementById("grid");
-    const leftPanel = document.querySelector(".left-panel");
-    const mobileNav = document.querySelector(".mobile-floor-nav");
-    // Mobil nézet esetén, ha portrét (állított) módba kerül (width < height)
+
     if (window.innerWidth < window.innerHeight) {
-      overlay.style.display = "flex";
-      if (gridElement) gridElement.style.display = "none";
-      if (leftPanel) leftPanel.style.display = "none";
-      if (mobileNav) mobileNav.style.display = "none";
+        overlay.style.display = "flex";
+        overlay.style.fontSize = "1.5rem"; // Méret fixálása
     } else {
-      overlay.style.display = "none";
-      if (gridElement) gridElement.style.display = "";
-      if (leftPanel) leftPanel.style.display = "";
-      if (mobileNav) mobileNav.style.display = "";
+        overlay.style.display = "none";
     }
-  }
+}
 
   if (isMobileView()) {
     // Mobil nézetben csak ha landscape (width >= height) jelenítjük meg a UI-t
