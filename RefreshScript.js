@@ -312,6 +312,7 @@ document.addEventListener("DOMContentLoaded", function () {
       gridElement.style.top = "300px";
     };
 
+
     if (!document.getElementById("floorSelect")) {
       const floorSelector = document.createElement("select");
       floorSelector.id = "floorSelect";

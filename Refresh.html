@@ -108,6 +108,11 @@
         <option value="KNX">KNX terem</option>
         <option value="Mech">Mech terem</option>
       </select>
+        <label for="floorSelect">Emelet választás:</label>
+<select id="floorSelect" onchange="switchFloor(parseInt(this.value))">
+  <option value="0">Földszint</option>
+  <option value="1">1. Emelet</option>
+</select>
       <!-- Kereső gomb -->
       <button onclick="runPathfinding()">Tanterem keresése</button>
     </div>
