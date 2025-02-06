@@ -318,6 +318,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     
 
+
     if (!document.getElementById("floorSelect")) {
       const floorSelector = document.createElement("select");
       floorSelector.id = "floorSelect";
