@@ -27,6 +27,16 @@ body {
   border: 1px solid rgba(75, 75, 75, 0.12);
 }
 
+/* Megakadályozza a szöveg kijelölését a gridben és a sidebarban */
+.left-panel, 
+.grid, 
+.grid div {
+  user-select: none;       /* Modern böngészők */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* Internet Explorer / Edge */
+}
+
 .select-container {
   display: flex;
   flex-direction: column;

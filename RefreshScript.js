@@ -309,15 +309,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     window.resetGridPosition = function() {
       const gridElement = document.getElementById("grid");
-      gridElement.style.left = "300px";
-      gridElement.style.top = "20px";
+    
+      // Az eredeti pozíció visszaállítása
+      gridElement.style.position = "absolute";
+      gridElement.style.left = "500px"; // Az eredeti left érték
+      gridElement.style.top = "300px";  // Az eredeti top érték
     
       // Az útvonal törlése
       currentPath = [];
       createGrid(gridSize);
     };
     
-
 
     if (!document.getElementById("floorSelect")) {
       const floorSelector = document.createElement("select");
