@@ -4,7 +4,7 @@ const allowedStairs = ["⬇️", "➡️", "⬆️", "⬅️"];
 // Emeletek: minden emelet saját sor- és oszlopszámmal, illetve cellaadatokkal
 const floors = {
   0: {
-    rows: 5, // például: 5 sor
+    rows: 10, // például: 5 sor
     cols: 20, // például: 20 oszlop
     "cell-0-0": "X",
     "cell-0-1": "Chill",
@@ -234,6 +234,7 @@ function createGrid() {
   const floorData = floors[currentFloor];
   const rows = floorData.rows;
   const cols = floorData.cols;
+  
   for (let row = 0; row < rows; row++) {
     let rowArray = [];
     for (let col = 0; col < cols; col++) {
@@ -242,7 +243,6 @@ function createGrid() {
       cell.id = cellId;
       cell.setAttribute("data-row", row);
       cell.setAttribute("data-col", col);
-      // Prevent text selection on the cell
       cell.style.userSelect = "none";
 
       const key = `cell-${row}-${col}`;
@@ -256,7 +256,7 @@ function createGrid() {
         }
       }
 
-      // Ha a jelenlegi útvonal tartalmazza ezt a cellát, jelöljük
+      // Ha az aktuális útvonalban van, kiemeljük
       if (
         currentPath.some(
           (n) => n.floor === currentFloor && n.row === row && n.col === col
