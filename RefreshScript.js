@@ -1,11 +1,11 @@
-// Alapadatok
-const gridSize = 20;
 // Ezek a nyilacska emoji-k jelölik a lépcsőket
 const allowedStairs = ["⬇️", "➡️", "⬆️", "⬅️"];
 
-// További emeletek (példa: 1. emelet)
+// Emeletek: minden emelet saját sor- és oszlopszámmal, illetve cellaadatokkal
 const floors = {
   0: {
+    rows: 5, // például: 5 sor
+    cols: 20, // például: 20 oszlop
     "cell-0-0": "X",
     "cell-0-1": "Chill",
     "cell-0-2": "",
@@ -112,6 +112,8 @@ const floors = {
     "cell-4-19": "X",
   },
   1: {
+    rows: 5,
+    cols: 20,
     "cell-0-0": "X",
     "cell-0-1": "X",
     "cell-0-2": "X",
@@ -224,27 +226,28 @@ let grid = [];
 // Eltároljuk a jelenlegi útvonalat, hogy minden emelet váltásnál meg tudjuk jeleníteni a megfelelő részt
 let currentPath = [];
 
-// Grid létrehozása
-function createGrid(columns) {
+// Grid létrehozása az aktuális emelet beállításai szerint
+function createGrid() {
   const gridElement = document.getElementById("grid");
   gridElement.innerHTML = ""; // Előző grid törlése
   grid = [];
-  const rows = Math.ceil(100 / columns);
+  const floorData = floors[currentFloor];
+  const rows = floorData.rows;
+  const cols = floorData.cols;
   for (let row = 0; row < rows; row++) {
     let rowArray = [];
-    for (let col = 0; col < columns; col++) {
+    for (let col = 0; col < cols; col++) {
       const cell = document.createElement("div");
       const cellId = `cell-${row}-${col}`;
       cell.id = cellId;
       cell.setAttribute("data-row", row);
       cell.setAttribute("data-col", col);
-
       // Prevent text selection on the cell
       cell.style.userSelect = "none";
 
       const key = `cell-${row}-${col}`;
-      if (floors[currentFloor][key]) {
-        const name = floors[currentFloor][key];
+      if (floorData[key]) {
+        const name = floorData[key];
         if (name === "X") {
           cell.classList.add("black");
           cell.innerText = "";
@@ -273,12 +276,12 @@ function createGrid(columns) {
 function switchFloor(floor) {
   if (floors[floor]) {
     currentFloor = floor;
-    createGrid(gridSize);
+    createGrid();
   }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  createGrid(gridSize);
+  createGrid();
 
   function isMobileView() {
     return window.innerWidth <= 768;
@@ -323,15 +326,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.resetGridPosition = function () {
       const gridElement = document.getElementById("grid");
-    
+
       // Az eredeti pozíció visszaállítása
       gridElement.style.position = "absolute";
       gridElement.style.left = "500px"; // Az eredeti left érték
-      gridElement.style.top = "300px";  // Az eredeti top érték
-    
+      gridElement.style.top = "300px"; // Az eredeti top érték
+
       // Az útvonal törlése
       currentPath = [];
-      createGrid(gridSize);
+      createGrid();
     };
   }
 
@@ -429,12 +432,13 @@ function getNeighbors(node, startName, endName) {
     [0, -1],
     [0, 1],
   ];
-  const rows = Math.ceil(100 / gridSize);
-  const cols = gridSize;
+  const floorData = floors[floor];
+  const maxRows = floorData.rows;
+  const maxCols = floorData.cols;
   directions.forEach(([dRow, dCol]) => {
     const nRow = row + dRow;
     const nCol = col + dCol;
-    if (nRow >= 0 && nRow < rows && nCol >= 0 && nCol < cols) {
+    if (nRow >= 0 && nRow < maxRows && nCol >= 0 && nCol < maxCols) {
       if (!isBlocked(floor, nRow, nCol, startName, endName)) {
         neighbors.push({ floor, row: nRow, col: nCol });
       }
@@ -443,11 +447,16 @@ function getNeighbors(node, startName, endName) {
   // Ha a jelenlegi cella lépcső, akkor emeletváltás lehetséges
   if (allowedStairs.includes(getCell(floor, row, col))) {
     [floor - 1, floor + 1].forEach((newFloor) => {
-      if (
-        floors[newFloor] &&
-        allowedStairs.includes(getCell(newFloor, row, col))
-      ) {
-        neighbors.push({ floor: newFloor, row, col });
+      if (floors[newFloor]) {
+        const newFloorData = floors[newFloor];
+        // Csak akkor léphetünk át, ha az adott (row, col) létezik az új emeleten is
+        if (
+          row < newFloorData.rows &&
+          col < newFloorData.cols &&
+          allowedStairs.includes(getCell(newFloor, row, col))
+        ) {
+          neighbors.push({ floor: newFloor, row, col });
+        }
       }
     });
   }
@@ -542,7 +551,7 @@ function runPathfinding() {
   currentPath = multiFloorAStar(startPos, endPos, startName, endName);
 
   // Újrageneráljuk a gridet, így a currentPath alapján a megfelelő cellák ki lesznek emelve
-  createGrid(gridSize);
+  createGrid();
 
   if (currentPath.length === 0) {
     alert("Nincs útvonal a kiválasztott pontok között!");
@@ -551,11 +560,10 @@ function runPathfinding() {
 
 // Keresés az összes emeletben
 function findNodeByName(name) {
-  const rows = Math.ceil(100 / gridSize);
-  const cols = gridSize;
   for (let fl in floors) {
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
+    const floorData = floors[fl];
+    for (let row = 0; row < floorData.rows; row++) {
+      for (let col = 0; col < floorData.cols; col++) {
         if (getCell(parseInt(fl), row, col) === name) {
           return { floor: parseInt(fl), row, col };
         }
