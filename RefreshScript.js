@@ -111,14 +111,6 @@ const floors = {
     "cell-4-18": "Info VI",
     "cell-4-19": "X",
 
-    "cell-5-0":"X",
-    "cell-5-1":"Chill",
-    "cell-6-0":"X",
-    "cell-6-1":"Büfé",
-    "cell-7-0":"X",
-    "cell-7-1":"X",
-    "cell-8-0":"Játék",
-    "cell-9-3":"FőBej",
   },
   1: {
     rows: 5,
