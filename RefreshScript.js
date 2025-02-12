@@ -313,7 +313,7 @@ const floors = {
     "cell-4-2": "⬇️",
     "cell-4-3": "X",
     "cell-4-4": "X",
-    "cell-4-5": "Mat I.",
+    "cell-4-5": "XD",
     "cell-4-6": "X",
     "cell-4-7": "VII.",
     "cell-4-8": "X",
@@ -517,18 +517,25 @@ function getCell(floor, row, col) {
   return floors[floor][key] || "";
 }
 
+
+const presetRoomNames = ["Info I"]; // Itt add meg a kivételként kezelt szobaneveket!
+
+
 // Vizsgáljuk, hogy egy cella akadályként szerepel-e
 function isBlocked(floor, row, col, startName, endName) {
   const cell = getCell(floor, row, col);
-  if (cell === "X") return true;
-  if (
-    cell !== "" &&
-    !allowedStairs.includes(cell) &&
-    cell !== startName &&
-    cell !== endName
-  ) {
+  if (cell === "X") return true; // Falak továbbra is akadályok
+
+  // Ha a cella neve szerepel a presetRoomNames listában, akkor engedélyezzük az áthaladást
+  if (presetRoomNames.includes(cell)) {
+    return false;
+  }
+
+  // Alapból minden más akadály (ha nem indulási vagy célállomás)
+  if (cell !== "" && !allowedStairs.includes(cell) && cell !== startName && cell !== endName) {
     return true;
   }
+
   return false;
 }
 

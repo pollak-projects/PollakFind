@@ -15,8 +15,10 @@
 </head>
 <body>
   <div class="left-panel">
-    <img src="./Logo.png" alt="Logo">
-    <h1>PollakFind</h1>
+    <div class="logo-container">
+      <img src="./Logo.png" alt="Logo">
+      <h1>PollakFind</h1>
+    </div>
     <div class="select-container">
       <!-- Indulási hely -->
       <label for="start">Indulási hely:</label>
@@ -65,6 +67,7 @@
         <option value="KNX">KNX terem</option>
         <option value="Mech">Mech terem</option>
         <option value="Elektr">Elektr terem</option>
+        <option value="XD">XD</option>
       </select>
       <!-- Cél -->
       <label for="end">Cél:</label>
@@ -113,6 +116,7 @@
         <option value="KNX">KNX terem</option>
         <option value="Mech">Mech terem</option>
         <option value="Elektr">Elektr terem</option>
+        <option value="XD">XD</option>
       </select>
       <label for="floorSelect">Emelet választás:</label>
       <select id="floorSelect" onchange="switchFloor(parseInt(this.value))">
@@ -122,12 +126,11 @@
       </select>
       <!-- Kereső gomb -->
       <button onclick="runPathfinding()">Tanterem keresése</button>
+      <button class="reset-button" onclick="resetGridPosition()">Visszaállítás</button>
     </div>
   </div>
   <!-- A grid ide generálódik -->
   <div class="grid" id="grid"></div>
-  <!-- Reset gomb -->
-  <button class="reset-button" onclick="resetGridPosition()">Reset Grid</button>
 
   <!-- Orientation overlay – mobil portrét módban -->
   <div id="orientationOverlay">
