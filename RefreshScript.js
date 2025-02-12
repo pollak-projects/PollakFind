@@ -576,11 +576,30 @@ function switchFloor(floor) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  createGrid();
+  createGrid(); // Grid létrehozása
+  centerGrid(); // Azonnali középre igazítás
 
   function isMobileView() {
-    return window.innerWidth <= 768;
+      return window.innerWidth <= 768;
   }
+
+  function checkOrientation() {
+      const overlay = document.getElementById("orientationOverlay");
+      if (window.innerWidth < window.innerHeight) {
+          overlay.style.display = "flex";
+      } else {
+          overlay.style.display = "none";
+      }
+  }
+
+  if (isMobileView()) {
+      checkOrientation();
+  } else {
+      setupDesktop();
+  }
+
+  window.addEventListener("resize", centerGrid);
+});
 
   function setupDesktop() {
     const gridElement = document.getElementById("grid");
@@ -621,17 +640,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.resetGridPosition = function () {
       const gridElement = document.getElementById("grid");
-
-      // Az eredeti pozíció visszaállítása
-      gridElement.style.position = "absolute";
-      gridElement.style.left = "500px"; // Az eredeti left érték
-      gridElement.style.top = "300px"; // Az eredeti top érték
-
+  
+      // Az eredeti pozíció visszaállítása és középre igazítás
+      centerGrid();
+  
       // Az útvonal törlése
       currentPath = [];
       createGrid();
     };
   }
+
+  function centerGrid() {
+    const gridElement = document.getElementById("grid");
+    if (!gridElement) return;
+
+    const gridWidth = gridElement.offsetWidth;
+    const gridHeight = gridElement.offsetHeight;
+    
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // Középre igazítás
+    gridElement.style.position = "absolute";
+    gridElement.style.left = `${(windowWidth - gridWidth) / 2}px`;
+    gridElement.style.top = `${(windowHeight - gridHeight) / 2}px`;
+}
+
+// Az ablak átméretezésekor is középre igazítja
+window.addEventListener("resize", centerGrid);
 
   function setupMobile() {
     if (!document.querySelector(".mobile-floor-nav")) {
@@ -694,8 +730,6 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", function () {
     checkOrientation();
   });
-});
-
 // Segédfüggvény: adott emelet, sor, oszlop cellájának tartalma
 function getCell(floor, row, col) {
   const key = `cell-${row}-${col}`;
@@ -864,7 +898,6 @@ function runPathfinding() {
   console.log("Startpos:", startPos, "End:", endPos);
 
   if (!startPos || !endPos) {
-    alert("Nem található az indulási vagy célterem! 123");
     return;
   }
 
