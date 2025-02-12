@@ -665,7 +665,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const windowHeight = window.innerHeight;
       
       const leftPanelWidth = leftPanel.offsetWidth;
-      const panelMargin = 40; // Fix távolság a left-panel és a grid között
+      const panelMargin = 28; // Fix távolság a left-panel és a grid között
   
       // Középre számított pozíció
       const centerX = (windowWidth - gridWidth) / 2;
