@@ -92,6 +92,64 @@ backdrop-filter: blur(7.4px);
 border: 1px solid rgba(0, 0, 0, 0.57);
 }
 
+.searchable-select {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.searchable-select input {
+  width: 185px;
+  padding: 12px 15px;
+  border: 2px solid #ff4444;
+  border-radius: 8px;
+  background: rgba(255, 68, 68, 0.1);
+  color: white;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.searchable-select input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 68, 68, 0.5);
+  background: rgba(255, 68, 68, 0.15);
+}
+
+.searchable-select datalist {
+  position: absolute;
+  background: #2a2a2a;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ff4444;
+  border-radius: 8px;
+  margin-top: 5px;
+  z-index: 1000;
+}
+
+.searchable-select option {
+  padding: 10px 15px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.searchable-select option:hover {
+  background: #ff4444;
+}
+
+/* Megőrizzük az eredeti select stílust a szintválasztónak */
+#floorSelect {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  background: #333;
+  color: white;
+}
+
+
 /* Megakadályozza a szöveg kijelölését a gridben és a sidebarban */
 .left-panel, 
 .grid, 

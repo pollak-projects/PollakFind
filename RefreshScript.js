@@ -502,6 +502,20 @@ const floors = {
   },
 };
 
+// Új objektum a lépcsőkapcsolatok tárolásához
+const stairConnections = {
+  // Földszinti lépcső kapcsolódik az 1. emeleti lépcsőhöz
+  "0-12-2": { floor: 1, row: 4, col: 2 },
+  "0-11-19": { floor: 1, row: 3, col: 19 },
+  "2-4-2": { floor: 1, row: 12, col: 2 },
+  "2-3-19": { floor: 1, row: 11, col: 19 },
+  // 1. emeleti lépcső kapcsolódik a földszintihez
+  "1-4-2": { floor: 0, row: 12, col: 2 },
+  "1-3-19": { floor: 0, row: 11, col: 19 },
+  "1-12-2": { floor: 0, row: 4, col: 2 },
+  "1-11-19": { floor: 0, row: 3, col: 19 },
+};
+
 let currentFloor = 0;
 let grid = [];
 // Eltároljuk a jelenlegi útvonalat, hogy minden emelet váltásnál meg tudjuk jeleníteni a megfelelő részt
@@ -731,6 +745,18 @@ function getNeighbors(node, startName, endName) {
         neighbors.push({ floor, row: nRow, col: nCol });
       }
     }
+
+ // Lépcsőkapcsolatok kezelése
+ const currentKey = `${node.floor}-${node.row}-${node.col}`;
+ if (stairConnections[currentKey]) {
+   const target = stairConnections[currentKey];
+   neighbors.push({
+     floor: target.floor,
+     row: target.row,
+     col: target.col
+   });
+ }
+
   });
   // Ha a jelenlegi cella lépcső, akkor emeletváltás lehetséges
   if (allowedStairs.includes(getCell(floor, row, col))) {
@@ -753,12 +779,17 @@ function getNeighbors(node, startName, endName) {
 
 // Heurisztika: Manhattan távolság + emeletkülönbség
 function heuristic(a, b) {
+  // Ha lépcsőn vagyunk, ne számoljuk a pozíciók közötti távolságot
+  if (stairConnections[`${a.floor}-${a.row}-${a.col}`]) {
+    return Math.abs(a.floor - b.floor); // Prioritizáljuk az emeletváltást
+  }
   return (
     Math.abs(a.row - b.row) +
     Math.abs(a.col - b.col) +
-    Math.abs(a.floor - b.floor)
+    Math.abs(a.floor - b.floor) * 10 // Emeljen nagyobb súllyal az emeletkülönbségre
   );
 }
+
 
 // Multi-floor A* algoritmus
 function multiFloorAStar(startPos, endPos, startName, endName) {
@@ -826,9 +857,11 @@ function reconstructPath(parent, current) {
 function runPathfinding() {
   const startName = document.getElementById("start").value;
   const endName = document.getElementById("end").value;
+  console.log("Startname:", startName, "End:", endName);
 
   const startPos = findNodeByName(startName);
   const endPos = findNodeByName(endName);
+  console.log("Startpos:", startPos, "End:", endPos);
 
   if (!startPos || !endPos) {
     alert("Nem található az indulási vagy célterem! 123");
@@ -837,6 +870,7 @@ function runPathfinding() {
 
   // Futtatjuk a multi-floor A* algoritmust
   currentPath = multiFloorAStar(startPos, endPos, startName, endName);
+  console.log(currentPath);
 
   // Újrageneráljuk a gridet, így a currentPath alapján a megfelelő cellák ki lesznek emelve
   createGrid();
