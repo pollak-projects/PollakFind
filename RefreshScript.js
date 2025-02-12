@@ -576,8 +576,10 @@ function switchFloor(floor) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  createGrid(); // Grid létrehozása
-  centerGrid(); // Azonnali középre igazítás
+  createGrid();
+  centerGrid(true); // `true` értékkel kikényszerítjük az igazítást betöltéskor
+  window.addEventListener("resize", () => centerGrid());
+});
 
   function isMobileView() {
       return window.innerWidth <= 768;
@@ -599,7 +601,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   window.addEventListener("resize", centerGrid);
-});
 
   function setupDesktop() {
     const gridElement = document.getElementById("grid");
@@ -639,35 +640,49 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     window.resetGridPosition = function () {
-      const gridElement = document.getElementById("grid");
-  
-      // Az eredeti pozíció visszaállítása és középre igazítás
-      centerGrid();
-  
-      // Az útvonal törlése
+      gridMovedManually = false; // Reset esetén újra középre igazítjuk
+      centerGrid(true);
       currentPath = [];
       createGrid();
-    };
+  };
   }
 
-  function centerGrid() {
-    const gridElement = document.getElementById("grid");
-    if (!gridElement) return;
+  let gridMovedManually = false; // Jelzi, hogy a felhasználó mozgatta-e a gridet
 
-    const gridWidth = gridElement.offsetWidth;
-    const gridHeight = gridElement.offsetHeight;
-    
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-
-    // Középre igazítás
-    gridElement.style.position = "absolute";
-    gridElement.style.left = `${(windowWidth - gridWidth) / 2}px`;
-    gridElement.style.top = `${(windowHeight - gridHeight) / 2}px`;
-}
-
-// Az ablak átméretezésekor is középre igazítja
-window.addEventListener("resize", centerGrid);
+  function centerGrid(force = false) {
+      const gridElement = document.getElementById("grid");
+      const leftPanel = document.querySelector(".left-panel");
+  
+      if (!gridElement || !leftPanel) return;
+  
+      // Ha a felhasználó már mozgatta a gridet, ne igazítsuk középre (kivéve, ha force = true)
+      if (gridMovedManually && !force) return;
+  
+      const gridWidth = gridElement.offsetWidth;
+      const gridHeight = gridElement.offsetHeight;
+      
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+      
+      const leftPanelWidth = leftPanel.offsetWidth;
+      const panelMargin = 40; // Fix távolság a left-panel és a grid között
+  
+      // Középre számított pozíció
+      const centerX = (windowWidth - gridWidth) / 2;
+      const adjustedX = Math.max(leftPanelWidth + panelMargin, centerX);
+  
+      gridElement.style.position = "absolute";
+      gridElement.style.left = `${adjustedX}px`;
+      gridElement.style.top = `${(windowHeight - gridHeight) / 2}px`;
+  }
+  
+  // Figyeljük a felhasználói mozgatást, hogy ne ugráljon vissza
+  document.addEventListener("mousedown", (event) => {
+      const gridElement = document.getElementById("grid");
+      if (gridElement.contains(event.target)) {
+          gridMovedManually = true;
+      }
+  });
 
   function setupMobile() {
     if (!document.querySelector(".mobile-floor-nav")) {
