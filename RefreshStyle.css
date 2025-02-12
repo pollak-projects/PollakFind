@@ -194,7 +194,7 @@ border: 1px solid rgba(185, 185, 185, 0.57);
 }
 
 .grid .path {
-  background: #f1c40f !important;
+  background: #00ddff !important;
   color: white;
 }
 
@@ -206,7 +206,7 @@ border: 1px solid rgba(185, 185, 185, 0.57);
   font-size: 1rem;
   cursor: pointer;
   border: none;
-  transition: background 0.3s;
+  transition: 0.3s;
 }
 
 .reset-button:hover {

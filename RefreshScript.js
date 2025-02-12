@@ -537,14 +537,14 @@ function createGrid() {
         }
       }
 
-      // Ha az aktuális útvonalban van, kiemeljük
-      if (
-        currentPath.some(
-          (n) => n.floor === currentFloor && n.row === row && n.col === col
-        )
-      ) {
-        cell.classList.add("path");
-      }
+// Ha az aktuális útvonalban van, késleltetve emeljük ki
+const pathIndex = currentPath.findIndex(n => n.floor === currentFloor && n.row === row && n.col === col);
+if (pathIndex !== -1) {
+  setTimeout(() => {
+    cell.classList.add("path");
+  }, pathIndex * 75); // 75ms lépésenkénti késleltetés
+}
+
 
       rowArray.push(cell);
       gridElement.appendChild(cell);
