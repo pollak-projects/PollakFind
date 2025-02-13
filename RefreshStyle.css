@@ -192,9 +192,31 @@ button:hover {
   color: transparent;
 }
 
+/* Animált fénylés a highlightolt kockáknak */
+@keyframes glow {
+  0% {
+      box-shadow: 0 0 5px rgba(0, 221, 255, 0.5);
+      background-color: rgba(0, 221, 255, 0.4);
+      border: 2px solid rgba(0, 221, 255, 0.8);
+  }
+  50% {
+      box-shadow: 0 0 15px rgba(0, 221, 255, 1);
+      background-color: rgba(0, 221, 255, 0.9);
+      border: 2px solid rgba(0, 221, 255, 1);
+  }
+  100% {
+      box-shadow: 0 0 5px rgba(0, 221, 255, 0.5);
+      background-color: rgba(0, 221, 255, 0.4);
+      border: 2px solid rgba(0, 221, 255, 0.8);
+  }
+}
+
 .grid .path {
-  background: #00ddff !important;
-  color: white;
+  color: #ffffff;
+  animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+  animation-delay: calc(var(--path-index) * 0.2s); /* Egyenkénti animálás */
+  box-sizing: border-box; /* Megelőzi a méretváltozást */
+  margin: 0; /* Megelőzi a hézagok kialakulását */
 }
 
 .reset-button {

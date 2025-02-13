@@ -501,10 +501,13 @@ const floors = {
 
 let currentFloor = 0;
 let grid = [];
+
 // Eltároljuk a jelenlegi útvonalat, hogy minden emelet váltásnál meg tudjuk jeleníteni a megfelelő részt
 let currentPath = [];
 
 // Grid létrehozása az aktuális emelet beállításai szerint
+let timeoutIds = [];
+
 function createGrid() {
   const gridElement = document.getElementById("grid");
   gridElement.innerHTML = ""; // Előző grid törlése
@@ -512,6 +515,10 @@ function createGrid() {
   const floorData = floors[currentFloor];
   const rows = floorData.rows;
   const cols = floorData.cols;
+
+  // Töröljük az összes korábbi időzítőt
+  timeoutIds.forEach((id) => clearTimeout(id));
+  timeoutIds = [];
 
   for (let row = 0; row < rows; row++) {
     let rowArray = [];
@@ -539,9 +546,10 @@ function createGrid() {
         (n) => n.floor === currentFloor && n.row === row && n.col === col
       );
       if (pathIndex !== -1) {
-        setTimeout(() => {
+        const timeoutId = setTimeout(() => {
           cell.classList.add("path");
         }, pathIndex * 75); // 75ms lépésenkénti késleltetés
+        timeoutIds.push(timeoutId);
       }
 
       rowArray.push(cell);
@@ -559,9 +567,27 @@ function switchFloor(floor) {
   }
 }
 
+const roomIndex = {};
+
+function buildRoomIndex() {
+  for (let fl in floors) {
+    const floorData = floors[fl];
+    for (let row = 0; row < floorData.rows; row++) {
+      for (let col = 0; col < floorData.cols; col++) {
+        const cellValue = getCell(parseInt(fl), row, col);
+        if (cellValue && cellValue !== "X") {
+          roomIndex[cellValue] = { floor: parseInt(fl), row, col };
+        }
+      }
+    }
+  }
+}
+
+// Az indexet egyszer felépítjük, amikor az oldal betöltődik
 document.addEventListener("DOMContentLoaded", function () {
+  buildRoomIndex();
   createGrid();
-  centerGrid(true); // `true` értékkel kikényszerítjük az igazítást betöltéskor
+  centerGrid(true);
   window.addEventListener("resize", () => centerGrid());
 });
 
@@ -869,7 +895,7 @@ function reconstructPath(parent, current) {
     return `${node.floor}-${node.row}-${node.col}`;
   }
   while (current) {
-    path.push(current);
+    path.push({ floor: current.floor, row: current.row, col: current.col });
     current = parent[nodeKey(current)];
   }
   return path.reverse();
@@ -879,6 +905,13 @@ function reconstructPath(parent, current) {
 function runPathfinding() {
   const startName = document.getElementById("start").value;
   const endName = document.getElementById("end").value;
+
+  // Ellenőrizzük, hogy van-e kiválasztva kezdő- és célpont
+  if (!startName || !endName) {
+    alert("Válassz egy kezdő és/vagy célpontot!");
+    return; // Kilépünk a függvényből, ha nincs mindkettő kiválasztva
+  }
+
   console.log("Startname:", startName, "End:", endName);
 
   const startPos = findNodeByName(startName);
@@ -886,6 +919,7 @@ function runPathfinding() {
   console.log("Startpos:", startPos, "End:", endPos);
 
   if (!startPos || !endPos) {
+    alert("Érvénytelen kezdő- vagy célpont.");
     return;
   }
 
@@ -903,15 +937,5 @@ function runPathfinding() {
 
 // Keresés az összes emeletben
 function findNodeByName(name) {
-  for (let fl in floors) {
-    const floorData = floors[fl];
-    for (let row = 0; row < floorData.rows; row++) {
-      for (let col = 0; col < floorData.cols; col++) {
-        if (getCell(parseInt(fl), row, col) === name) {
-          return { floor: parseInt(fl), row, col };
-        }
-      }
-    }
-  }
-  return null;
+  return roomIndex[name] || null;
 }
