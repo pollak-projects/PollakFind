@@ -7,7 +7,6 @@ const floors = {
     rows: 13, // például: 10 sor
     cols: 20, // például: 20 oszlop
 
-
     "cell-0-0": "X",
     "cell-0-1": "X",
     "cell-0-2": "Ajtó",
@@ -102,16 +101,16 @@ const floors = {
     "cell-4-7": "X",
     "cell-4-8": "X",
     "cell-4-9": "X",
-    "cell-4-10":"X",
-    "cell-4-11":"X",
-    "cell-4-12":"X",
-    "cell-4-13":"X",
-    "cell-4-14":"X",
-    "cell-4-15":"X",
-    "cell-4-16":"X",
-    "cell-4-17":"X",
-    "cell-4-18":"X",
-    "cell-4-19":"X",
+    "cell-4-10": "X",
+    "cell-4-11": "X",
+    "cell-4-12": "X",
+    "cell-4-13": "X",
+    "cell-4-14": "X",
+    "cell-4-15": "X",
+    "cell-4-16": "X",
+    "cell-4-17": "X",
+    "cell-4-18": "X",
+    "cell-4-19": "X",
 
     "cell-5-0": "X",
     "cell-5-1": "X",
@@ -123,16 +122,16 @@ const floors = {
     "cell-5-7": "X",
     "cell-5-8": "X",
     "cell-5-9": "X",
-    "cell-5-10":"X",
-    "cell-5-11":"X",
-    "cell-5-12":"X",
-    "cell-5-13":"X",
-    "cell-5-14":"X",
-    "cell-5-15":"X",
-    "cell-5-16":"X",
-    "cell-5-17":"X",
-    "cell-5-18":"X",
-    "cell-5-19":"X",
+    "cell-5-10": "X",
+    "cell-5-11": "X",
+    "cell-5-12": "X",
+    "cell-5-13": "X",
+    "cell-5-14": "X",
+    "cell-5-15": "X",
+    "cell-5-16": "X",
+    "cell-5-17": "X",
+    "cell-5-18": "X",
+    "cell-5-19": "X",
 
     "cell-6-0": "KAjtó",
     "cell-6-1": "",
@@ -176,26 +175,26 @@ const floors = {
     "cell-7-18": "X",
     "cell-7-19": "X",
 
-    "cell-8-0":"X",
-    "cell-8-1":"Chill",
-    "cell-8-2":"",
-    "cell-8-3":"X",
-    "cell-8-4":"X",
-    "cell-8-5":"X",
-    "cell-8-6":"X",
-    "cell-8-7":"X",
-    "cell-8-8":"X",
-    "cell-8-9":"X",
-    "cell-8-10":"X",
-    "cell-8-11":"X",
-    "cell-8-12":"X",
-    "cell-8-13":"X",
-    "cell-8-14":"X",
-    "cell-8-15":"X",
-    "cell-8-16":"X",
-    "cell-8-17":"SzerT",
-    "cell-8-18":"NőiM",
-    "cell-8-19":"X",
+    "cell-8-0": "X",
+    "cell-8-1": "Chill",
+    "cell-8-2": "",
+    "cell-8-3": "X",
+    "cell-8-4": "X",
+    "cell-8-5": "X",
+    "cell-8-6": "X",
+    "cell-8-7": "X",
+    "cell-8-8": "X",
+    "cell-8-9": "X",
+    "cell-8-10": "X",
+    "cell-8-11": "X",
+    "cell-8-12": "X",
+    "cell-8-13": "X",
+    "cell-8-14": "X",
+    "cell-8-15": "X",
+    "cell-8-16": "X",
+    "cell-8-17": "SzerT",
+    "cell-8-18": "NőiM",
+    "cell-8-19": "X",
 
     "cell-9-0": "X",
     "cell-9-1": "Büfé",
@@ -205,7 +204,7 @@ const floors = {
     "cell-9-5": "",
     "cell-9-6": "X",
     "cell-9-7": "X",
-    "cell-9-8":"X",
+    "cell-9-8": "X",
     "cell-9-9": "X",
     "cell-9-10": "X",
     "cell-9-11": "X",
@@ -268,7 +267,7 @@ const floors = {
     "cell-12-5": "X",
     "cell-12-6": "X",
     "cell-12-7": "Mat2",
-    "cell-12-8": "X",  
+    "cell-12-8": "X",
     "cell-12-9": "Mat3",
     "cell-12-10": "X",
     "cell-12-11": "X",
@@ -280,8 +279,6 @@ const floors = {
     "cell-12-17": "X",
     "cell-12-18": "Info VI",
     "cell-12-19": "X",
-
-
   },
   1: {
     rows: 5,
@@ -502,22 +499,6 @@ const floors = {
   },
 };
 
-// Új objektum a lépcsőkapcsolatok tárolásához
-// Frissített getNeighbors függvény, amely figyelembe veszi az emeletváltozás szabályait
-const stairConnections = {
-  // Földszint és 1. emelet közötti lépcsőkapcsolatok
-  "0-12-2": { floor: 1, row: 4, col: 2 },
-  "0-11-19": { floor: 1, row: 3, col: 19 },
-  "1-4-2": { floor: 0, row: 12, col: 2 },
-  "1-3-19": { floor: 0, row: 11, col: 19 },
-  
-  // 1. és 2. emelet közötti lépcsőkapcsolatok
-  "1-4-2": { floor: 2, row: 4, col: 2 },
-  "1-3-19": { floor: 2, row: 3, col: 19 },
-  "2-4-2": { floor: 1, row: 4, col: 2 },
-  "2-3-19": { floor: 1, row: 3, col: 19 },
-};
-
 let currentFloor = 0;
 let grid = [];
 // Eltároljuk a jelenlegi útvonalat, hogy minden emelet váltásnál meg tudjuk jeleníteni a megfelelő részt
@@ -531,7 +512,7 @@ function createGrid() {
   const floorData = floors[currentFloor];
   const rows = floorData.rows;
   const cols = floorData.cols;
-  
+
   for (let row = 0; row < rows; row++) {
     let rowArray = [];
     for (let col = 0; col < cols; col++) {
@@ -553,14 +534,15 @@ function createGrid() {
         }
       }
 
-// Ha az aktuális útvonalban van, késleltetve emeljük ki
-const pathIndex = currentPath.findIndex(n => n.floor === currentFloor && n.row === row && n.col === col);
-if (pathIndex !== -1) {
-  setTimeout(() => {
-    cell.classList.add("path");
-  }, pathIndex * 75); // 75ms lépésenkénti késleltetés
-}
-
+      // Ha az aktuális útvonalban van, késleltetve emeljük ki
+      const pathIndex = currentPath.findIndex(
+        (n) => n.floor === currentFloor && n.row === row && n.col === col
+      );
+      if (pathIndex !== -1) {
+        setTimeout(() => {
+          cell.classList.add("path");
+        }, pathIndex * 75); // 75ms lépésenkénti késleltetés
+      }
 
       rowArray.push(cell);
       gridElement.appendChild(cell);
@@ -583,138 +565,136 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", () => centerGrid());
 });
 
-  function isMobileView() {
-      return window.innerWidth <= 768;
-  }
+function isMobileView() {
+  return window.innerWidth <= 768;
+}
 
-  function checkOrientation() {
-      const overlay = document.getElementById("orientationOverlay");
-      if (window.innerWidth < window.innerHeight) {
-          overlay.style.display = "flex";
-      } else {
-          overlay.style.display = "none";
-      }
-  }
-
-  if (isMobileView()) {
-      checkOrientation();
+function checkOrientation() {
+  const overlay = document.getElementById("orientationOverlay");
+  if (window.innerWidth < window.innerHeight) {
+    overlay.style.display = "flex";
   } else {
-      setupDesktop();
+    overlay.style.display = "none";
   }
+}
 
-  window.addEventListener("resize", centerGrid);
+if (isMobileView()) {
+  checkOrientation();
+} else {
+  setupDesktop();
+}
 
-  function setupDesktop() {
-    const gridElement = document.getElementById("grid");
-    let isDragging = false,
-      offsetX,
-      offsetY;
-    gridElement.style.cursor = "grab";
+window.addEventListener("resize", centerGrid);
 
-    gridElement.addEventListener("mousedown", function (event) {
-      isDragging = true;
-      offsetX = event.clientX - gridElement.offsetLeft;
-      offsetY = event.clientY - gridElement.offsetTop;
-      gridElement.style.cursor = "grabbing";
-    });
+function setupDesktop() {
+  const gridElement = document.getElementById("grid");
+  let isDragging = false,
+    offsetX,
+    offsetY;
+  gridElement.style.cursor = "grab";
 
-    document.addEventListener("mousemove", function (event) {
-      if (isDragging) {
-        let newLeft = event.clientX - offsetX;
-        let newTop = event.clientY - offsetY;
-        // Calculate boundaries so the grid stays within the viewport
-        const minLeft = 300;
-        const minTop = 0;
-        const maxLeft = window.innerWidth - gridElement.offsetWidth;
-        const maxTop = window.innerHeight - gridElement.offsetHeight;
-
-        newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
-        newTop = Math.max(minTop, Math.min(newTop, maxTop));
-
-        gridElement.style.left = `${newLeft}px`;
-        gridElement.style.top = `${newTop}px`;
-      }
-    });
-
-    document.addEventListener("mouseup", function () {
-      isDragging = false;
-      gridElement.style.cursor = "grab";
-    });
-
-    window.resetGridPosition = function () {
-      gridMovedManually = false; // Reset esetén újra középre igazítjuk
-      centerGrid(true);
-      currentPath = [];
-      createGrid();
-  };
-  }
-
-  let gridMovedManually = false; // Jelzi, hogy a felhasználó mozgatta-e a gridet
-
-  function centerGrid(force = false) {
-      const gridElement = document.getElementById("grid");
-      const leftPanel = document.querySelector(".left-panel");
-  
-      if (!gridElement || !leftPanel) return;
-  
-      // Ha a felhasználó már mozgatta a gridet, ne igazítsuk középre (kivéve, ha force = true)
-      if (gridMovedManually && !force) return;
-  
-      const gridWidth = gridElement.offsetWidth;
-      const gridHeight = gridElement.offsetHeight;
-      
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
-      
-      const leftPanelWidth = leftPanel.offsetWidth;
-      const panelMargin = 28; // Fix távolság a left-panel és a grid között
-  
-      // Középre számított pozíció
-      const centerX = (windowWidth - gridWidth) / 2;
-      const adjustedX = Math.max(leftPanelWidth + panelMargin, centerX);
-  
-      gridElement.style.position = "absolute";
-      gridElement.style.left = `${adjustedX}px`;
-      gridElement.style.top = `${(windowHeight - gridHeight) / 2}px`;
-  }
-  
-  // Figyeljük a felhasználói mozgatást, hogy ne ugráljon vissza
-  document.addEventListener("mousedown", (event) => {
-      const gridElement = document.getElementById("grid");
-      if (gridElement.contains(event.target)) {
-          gridMovedManually = true;
-      }
+  gridElement.addEventListener("mousedown", function (event) {
+    isDragging = true;
+    offsetX = event.clientX - gridElement.offsetLeft;
+    offsetY = event.clientY - gridElement.offsetTop;
+    gridElement.style.cursor = "grabbing";
   });
 
-  // Ellenőrizzük az orientációt:
-  function checkOrientation() {
-    const overlay = document.getElementById("orientationOverlay");
-    if (window.innerWidth < window.innerHeight) {
-      overlay.style.display = "flex";
-      overlay.style.fontSize = "1.5rem";
-    } else {
-      overlay.style.display = "none";
+  document.addEventListener("mousemove", function (event) {
+    if (isDragging) {
+      let newLeft = event.clientX - offsetX;
+      let newTop = event.clientY - offsetY;
+      // Calculate boundaries so the grid stays within the viewport
+      const minLeft = 300;
+      const minTop = 0;
+      const maxLeft = window.innerWidth - gridElement.offsetWidth;
+      const maxTop = window.innerHeight - gridElement.offsetHeight;
+
+      newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
+      newTop = Math.max(minTop, Math.min(newTop, maxTop));
+
+      gridElement.style.left = `${newLeft}px`;
+      gridElement.style.top = `${newTop}px`;
     }
-  }
-
-  if (isMobileView()) {
-    checkOrientation();
-  } else {
-    setupDesktop();
-  }
-
-  window.addEventListener("resize", function () {
-    checkOrientation();
   });
+
+  document.addEventListener("mouseup", function () {
+    isDragging = false;
+    gridElement.style.cursor = "grab";
+  });
+
+  window.resetGridPosition = function () {
+    gridMovedManually = false; // Reset esetén újra középre igazítjuk
+    centerGrid(true);
+    currentPath = [];
+    createGrid();
+  };
+}
+
+let gridMovedManually = false; // Jelzi, hogy a felhasználó mozgatta-e a gridet
+
+function centerGrid(force = false) {
+  const gridElement = document.getElementById("grid");
+  const leftPanel = document.querySelector(".left-panel");
+
+  if (!gridElement || !leftPanel) return;
+
+  // Ha a felhasználó már mozgatta a gridet, ne igazítsuk középre (kivéve, ha force = true)
+  if (gridMovedManually && !force) return;
+
+  const gridWidth = gridElement.offsetWidth;
+  const gridHeight = gridElement.offsetHeight;
+
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
+  const leftPanelWidth = leftPanel.offsetWidth;
+  const panelMargin = 28; // Fix távolság a left-panel és a grid között
+
+  // Középre számított pozíció
+  const centerX = (windowWidth - gridWidth) / 2;
+  const adjustedX = Math.max(leftPanelWidth + panelMargin, centerX);
+
+  gridElement.style.position = "absolute";
+  gridElement.style.left = `${adjustedX}px`;
+  gridElement.style.top = `${(windowHeight - gridHeight) / 2}px`;
+}
+
+// Figyeljük a felhasználói mozgatást, hogy ne ugráljon vissza
+document.addEventListener("mousedown", (event) => {
+  const gridElement = document.getElementById("grid");
+  if (gridElement.contains(event.target)) {
+    gridMovedManually = true;
+  }
+});
+
+// Ellenőrizzük az orientációt:
+function checkOrientation() {
+  const overlay = document.getElementById("orientationOverlay");
+  if (window.innerWidth < window.innerHeight) {
+    overlay.style.display = "flex";
+    overlay.style.fontSize = "1.5rem";
+  } else {
+    overlay.style.display = "none";
+  }
+}
+
+if (isMobileView()) {
+  checkOrientation();
+} else {
+  setupDesktop();
+}
+
+window.addEventListener("resize", function () {
+  checkOrientation();
+});
 // Segédfüggvény: adott emelet, sor, oszlop cellájának tartalma
 function getCell(floor, row, col) {
   const key = `cell-${row}-${col}`;
   return floors[floor][key] || "";
 }
 
-
 const presetRoomNames = ["Info I"]; // Itt add meg a kivételként kezelt szobaneveket!
-
 
 // Vizsgáljuk, hogy egy cella akadályként szerepel-e
 function isBlocked(floor, row, col, startName, endName) {
@@ -727,22 +707,41 @@ function isBlocked(floor, row, col, startName, endName) {
   }
 
   // Alapból minden más akadály (ha nem indulási vagy célállomás)
-  if (cell !== "" && !allowedStairs.includes(cell) && cell !== startName && cell !== endName) {
+  if (
+    cell !== "" &&
+    !allowedStairs.includes(cell) &&
+    cell !== startName &&
+    cell !== endName
+  ) {
     return true;
   }
 
   return false;
 }
 
-// Generáljuk a szomszédokat (4 irány az aktuális emeleten, majd lépcső mozgás)
+// Frissített getNeighbors függvény, amely figyelembe veszi az emeletváltozás szabályait
+const stairConnections = {
+  // Földszint és 1. emelet közötti lépcsőkapcsolatok
+  "0-12-2": { floor: 1, row: 4, col: 2 },
+  "0-11-19": { floor: 1, row: 3, col: 19 },
+  "1-4-2": { floor: 0, row: 12, col: 2 },
+  "1-3-19": { floor: 0, row: 11, col: 19 },
+
+  // 1. és 2. emelet közötti lépcsőkapcsolatok
+  "1-4-2": { floor: 2, row: 4, col: 2 },
+  "1-3-19": { floor: 2, row: 3, col: 19 },
+  "2-4-2": { floor: 1, row: 4, col: 2 },
+  "2-3-19": { floor: 1, row: 3, col: 19 },
+};
+
 function getNeighbors(node, startName, endName) {
   const { floor, row, col } = node;
   const neighbors = [];
   const directions = [
-      [-1, 0],
-      [1, 0],
-      [0, -1],
-      [0, 1],
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1],
   ];
   const floorData = floors[floor];
   const maxRows = floorData.rows;
@@ -751,43 +750,55 @@ function getNeighbors(node, startName, endName) {
   const endPos = findNodeByName(endName);
 
   if (!startPos || !endPos) {
-      console.error("Hiba: Érvénytelen kezdő- vagy célpont.");
-      return [];
+    console.error("Hiba: Érvénytelen kezdő- vagy célpont.");
+    return [];
   }
 
   const sameFloor = startPos.floor === endPos.floor;
 
   directions.forEach(([dRow, dCol]) => {
-      const nRow = row + dRow;
-      const nCol = col + dCol;
-      if (nRow >= 0 && nRow < maxRows && nCol >= 0 && nCol < maxCols) {
-          const cellValue = getCell(floor, nRow, nCol);
-          
-          // Ha ugyanazon az emeleten van, akkor tiltsuk a lépcsőket
-          if (sameFloor && allowedStairs.includes(cellValue)) {
-              return;
-          }
-          
-          if (!isBlocked(floor, nRow, nCol, startName, endName)) {
-              neighbors.push({ floor, row: nRow, col: nCol });
-          }
+    const nRow = row + dRow;
+    const nCol = col + dCol;
+    if (nRow >= 0 && nRow < maxRows && nCol >= 0 && nCol < maxCols) {
+      const cellValue = getCell(floor, nRow, nCol);
+
+      // Ha ugyanazon az emeleten van, akkor tiltsuk a lépcsőket
+      if (sameFloor && allowedStairs.includes(cellValue)) {
+        return;
       }
+
+      if (!isBlocked(floor, nRow, nCol, startName, endName)) {
+        neighbors.push({ floor, row: nRow, col: nCol });
+      }
+    }
   });
 
   // Ha emeletváltás szükséges, biztosítsuk, hogy a lépcsőkapcsolatok mindig működjenek
   const currentKey = `${node.floor}-${node.row}-${node.col}`;
   if (stairConnections[currentKey]) {
-      const target = stairConnections[currentKey];
-      neighbors.push({
-          floor: target.floor,
-          row: target.row,
-          col: target.col
-      });
+    const target = stairConnections[currentKey];
+    neighbors.push({
+      floor: target.floor,
+      row: target.row,
+      col: target.col,
+    });
+  }
+
+  // Ellenőrizzük, hogy a célpont másik emeleten van-e, és ha igen, biztosítsuk az átjárást
+  if (!sameFloor) {
+    Object.entries(stairConnections).forEach(([key, target]) => {
+      if (target.floor === floor && target.row === row && target.col === col) {
+        neighbors.push({
+          floor: parseInt(key.split("-")[0]),
+          row: parseInt(key.split("-")[1]),
+          col: parseInt(key.split("-")[2]),
+        });
+      }
+    });
   }
 
   return neighbors;
 }
-
 
 // Heurisztika: Manhattan távolság + emeletkülönbség
 function heuristic(a, b) {
@@ -801,7 +812,6 @@ function heuristic(a, b) {
     Math.abs(a.floor - b.floor) * 10 // Emeljen nagyobb súllyal az emeletkülönbségre
   );
 }
-
 
 // Multi-floor A* algoritmus
 function multiFloorAStar(startPos, endPos, startName, endName) {
