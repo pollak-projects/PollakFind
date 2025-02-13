@@ -1,12 +1,15 @@
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   margin: 0;
   display: flex;
   height: 100vh;
   color: white;
   position: relative;
   background-color: #151515;
-  background-image: radial-gradient(rgba(115, 115, 115, 0.171) 2px, transparent 0);
+  background-image: radial-gradient(
+    rgba(115, 115, 115, 0.171) 2px,
+    transparent 0
+  );
   background-size: 30px 30px;
   background-position: -5px -5px;
 }
@@ -22,8 +25,6 @@ body {
   height: auto;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Raleway:200');
-
 #box {
   display: flex;
   align-items: center;
@@ -31,48 +32,14 @@ body {
   width: 400px;
   height: 200px;
   color: white;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-size: 2.5rem;
-}
-
-.gradient-border {
-  --borderWidth: 4.5px;
-  background: #1D1F20;
-  position: relative;
-  border-radius: var(--borderWidth);
-}
-.gradient-border:after {
-  content: '';
-  position: absolute;
-  top: calc(-1 * var(--borderWidth));
-  left: calc(-1 * var(--borderWidth));
-  height: calc(100% + var(--borderWidth) * 2);
-  width: calc(100% + var(--borderWidth) * 2);
-  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
-  border-radius: calc(2 * var(--borderWidth));
-  z-index: -1;
-  animation: animatedgradient 3s ease alternate infinite;
-  background-size: 300% 300%;
-}
-
-
-@keyframes animatedgradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
 }
 
 .logo-container h1 {
   font-size: 1.5rem;
   margin: 0;
 }
-
 
 /* Sidebar és egyéb desktop elemek */
 .left-panel {
@@ -83,13 +50,13 @@ body {
   flex-direction: column;
   gap: 10px;
 
-/* From https://css.glass */
-background: rgba(25, 25, 25, 0.5);
-border-radius: 25px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
-backdrop-filter: blur(7.4px);
--webkit-backdrop-filter: blur(7.4px);
-border: 1px solid rgba(45, 45, 45, 0.75);
+  /* From https://css.glass */
+  background: rgba(25, 25, 25, 0.5);
+  border-radius: 25px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75);
 }
 
 .searchable-select {
@@ -122,29 +89,6 @@ border: 1px solid rgba(45, 45, 45, 0.75);
   background: #009ccc28;
 }
 
-.searchable-select datalist {
-  position: absolute;
-  background: #2a2a2a;
-  width: 100%;
-  max-height: 200px;
-  overflow-y: auto;
-  border: 1px solid #ff4444;
-  border-radius: 8px;
-  margin-top: 5px;
-  z-index: 1000;
-}
-
-.searchable-select option {
-  padding: 10px 15px;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.searchable-select option:hover {
-  background: #ff4444;
-}
-
 /* Megőrizzük az eredeti select stílust a szintválasztónak */
 #floorSelect {
   padding: 10px;
@@ -157,15 +101,14 @@ border: 1px solid rgba(45, 45, 45, 0.75);
   color: white;
 }
 
-
 /* Megakadályozza a szöveg kijelölését a gridben és a sidebarban */
-.left-panel, 
-.grid, 
+.left-panel,
+.grid,
 .grid div {
-  user-select: none;       /* Modern böngészők */
+  user-select: none; /* Modern böngészők */
   -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* Internet Explorer / Edge */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer / Edge */
 }
 
 .select-container {
@@ -178,12 +121,12 @@ border: 1px solid rgba(45, 45, 45, 0.75);
   overflow: hidden;
 
   /* From https://css.glass */
-background: rgba(45, 45, 45, 0.5);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(7.4px);
--webkit-backdrop-filter: blur(7.4px);
-border: 1px solid rgba(45, 45, 45, 0.75);
+  background: rgba(45, 45, 45, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75);
 }
 
 select,
@@ -249,16 +192,6 @@ button:hover {
   color: transparent;
 }
 
-.grid .start {
-  background: #27ae60;
-  color: white;
-}
-
-.grid .end {
-  background: #e74c3c;
-  color: white;
-}
-
 .grid .path {
   background: #00ddff !important;
   color: white;
@@ -267,7 +200,7 @@ button:hover {
 .reset-button {
   background-color: #450000;
   color: #a30000;
-  border-radius: 10px;
+  border-radius: 10px; 
   font-size: 1rem;
   cursor: pointer;
   border: none;
@@ -279,7 +212,7 @@ button:hover {
   color: #ffffff;
 }
 
-/* Orientation overlay – mobil portrét módhoz */
+/* Orientation overlay – mobil portrét módhoz      02.13 jelenleg hibás működés */
 #orientationOverlay {
   position: fixed;
   top: 0;
@@ -303,7 +236,7 @@ button:hover {
   border: 1px solid rgba(75, 75, 75, 0.12);
 }
 
-/* Mobilos nézet stílusai */
+/* Mobilos nézet stílusai   02.13 Jelenleg hibás működés */
 @media screen and (max-width: 768px) {
   /* Állítsuk a body-t oszlopirányú flex elrendezésre */
   body {
