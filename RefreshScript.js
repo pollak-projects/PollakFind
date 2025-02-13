@@ -503,17 +503,19 @@ const floors = {
 };
 
 // Új objektum a lépcsőkapcsolatok tárolásához
+// Frissített getNeighbors függvény, amely figyelembe veszi az emeletváltozás szabályait
 const stairConnections = {
-  // Földszinti lépcső kapcsolódik az 1. emeleti lépcsőhöz
+  // Földszint és 1. emelet közötti lépcsőkapcsolatok
   "0-12-2": { floor: 1, row: 4, col: 2 },
   "0-11-19": { floor: 1, row: 3, col: 19 },
-  "2-4-2": { floor: 1, row: 12, col: 2 },
-  "2-3-19": { floor: 1, row: 11, col: 19 },
-  // 1. emeleti lépcső kapcsolódik a földszintihez
   "1-4-2": { floor: 0, row: 12, col: 2 },
   "1-3-19": { floor: 0, row: 11, col: 19 },
-  "1-12-2": { floor: 0, row: 4, col: 2 },
-  "1-11-19": { floor: 0, row: 3, col: 19 },
+  
+  // 1. és 2. emelet közötti lépcsőkapcsolatok
+  "1-4-2": { floor: 2, row: 4, col: 2 },
+  "1-3-19": { floor: 2, row: 3, col: 19 },
+  "2-4-2": { floor: 1, row: 4, col: 2 },
+  "2-3-19": { floor: 1, row: 3, col: 19 },
 };
 
 let currentFloor = 0;
@@ -737,53 +739,55 @@ function getNeighbors(node, startName, endName) {
   const { floor, row, col } = node;
   const neighbors = [];
   const directions = [
-    [-1, 0],
-    [1, 0],
-    [0, -1],
-    [0, 1],
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1],
   ];
   const floorData = floors[floor];
   const maxRows = floorData.rows;
   const maxCols = floorData.cols;
-  directions.forEach(([dRow, dCol]) => {
-    const nRow = row + dRow;
-    const nCol = col + dCol;
-    if (nRow >= 0 && nRow < maxRows && nCol >= 0 && nCol < maxCols) {
-      if (!isBlocked(floor, nRow, nCol, startName, endName)) {
-        neighbors.push({ floor, row: nRow, col: nCol });
-      }
-    }
+  const startPos = findNodeByName(startName);
+  const endPos = findNodeByName(endName);
 
- // Lépcsőkapcsolatok kezelése
- const currentKey = `${node.floor}-${node.row}-${node.col}`;
- if (stairConnections[currentKey]) {
-   const target = stairConnections[currentKey];
-   neighbors.push({
-     floor: target.floor,
-     row: target.row,
-     col: target.col
-   });
- }
-
-  });
-  // Ha a jelenlegi cella lépcső, akkor emeletváltás lehetséges
-  if (allowedStairs.includes(getCell(floor, row, col))) {
-    [floor - 1, floor + 1].forEach((newFloor) => {
-      if (floors[newFloor]) {
-        const newFloorData = floors[newFloor];
-        // Csak akkor léphetünk át, ha az adott (row, col) létezik az új emeleten is
-        if (
-          row < newFloorData.rows &&
-          col < newFloorData.cols &&
-          allowedStairs.includes(getCell(newFloor, row, col))
-        ) {
-          neighbors.push({ floor: newFloor, row, col });
-        }
-      }
-    });
+  if (!startPos || !endPos) {
+      console.error("Hiba: Érvénytelen kezdő- vagy célpont.");
+      return [];
   }
+
+  const sameFloor = startPos.floor === endPos.floor;
+
+  directions.forEach(([dRow, dCol]) => {
+      const nRow = row + dRow;
+      const nCol = col + dCol;
+      if (nRow >= 0 && nRow < maxRows && nCol >= 0 && nCol < maxCols) {
+          const cellValue = getCell(floor, nRow, nCol);
+          
+          // Ha ugyanazon az emeleten van, akkor tiltsuk a lépcsőket
+          if (sameFloor && allowedStairs.includes(cellValue)) {
+              return;
+          }
+          
+          if (!isBlocked(floor, nRow, nCol, startName, endName)) {
+              neighbors.push({ floor, row: nRow, col: nCol });
+          }
+      }
+  });
+
+  // Ha emeletváltás szükséges, biztosítsuk, hogy a lépcsőkapcsolatok mindig működjenek
+  const currentKey = `${node.floor}-${node.row}-${node.col}`;
+  if (stairConnections[currentKey]) {
+      const target = stairConnections[currentKey];
+      neighbors.push({
+          floor: target.floor,
+          row: target.row,
+          col: target.col
+      });
+  }
+
   return neighbors;
 }
+
 
 // Heurisztika: Manhattan távolság + emeletkülönbség
 function heuristic(a, b) {
