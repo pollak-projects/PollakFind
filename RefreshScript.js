@@ -684,44 +684,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
   });
 
-  function setupMobile() {
-    if (!document.querySelector(".mobile-floor-nav")) {
-      const mobileNav = document.createElement("div");
-      mobileNav.classList.add("mobile-floor-nav");
-      mobileNav.innerHTML = `
-        <button id="prevFloor">&larr;</button>
-        <span id="currentFloorLabel">Emelet: ${
-          currentFloor === 0 ? "Földszint" : currentFloor + ". Emelet"
-        }</span>
-        <button id="nextFloor">&rarr;</button>
-      `;
-      document.body.appendChild(mobileNav);
-      document
-        .getElementById("prevFloor")
-        .addEventListener("click", function () {
-          if (floors[currentFloor - 1] !== undefined) {
-            currentFloor = currentFloor - 1;
-            switchFloor(currentFloor);
-            updateFloorLabel();
-          }
-        });
-      document
-        .getElementById("nextFloor")
-        .addEventListener("click", function () {
-          if (floors[currentFloor + 1] !== undefined) {
-            currentFloor = currentFloor + 1;
-            switchFloor(currentFloor);
-            updateFloorLabel();
-          }
-        });
-      function updateFloorLabel() {
-        document.getElementById("currentFloorLabel").innerText = `Emelet: ${
-          currentFloor === 0 ? "Földszint" : currentFloor + ". Emelet"
-        }`;
-      }
-    }
-  }
-
   // Ellenőrizzük az orientációt:
   function checkOrientation() {
     const overlay = document.getElementById("orientationOverlay");
@@ -734,9 +696,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (isMobileView()) {
-    if (window.innerWidth >= window.innerHeight) {
-      setupMobile();
-    }
     checkOrientation();
   } else {
     setupDesktop();
