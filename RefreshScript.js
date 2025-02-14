@@ -939,3 +939,13 @@ function runPathfinding() {
 function findNodeByName(name) {
   return roomIndex[name] || null;
 }
+
+
+function switchFloor(floor) {
+  if (floors[floor]) {
+    currentFloor = floor;
+    gridMovedManually = false; // Reset manual dragging flag
+    createGrid();
+    centerGrid(true); // Re-center the grid
+  }
+}
