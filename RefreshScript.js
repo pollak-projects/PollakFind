@@ -1,5 +1,6 @@
 // Ezek a nyilacska emoji-k jelölik a lépcsőket
 const allowedStairs = ["⬇️", "➡️", "⬆️", "⬅️"];
+const presetRoomNames = ["Info I", "Játék"]; // Itt add meg a kivételként kezelt szobaneveket!
 
 // Emeletek: minden emelet saját sor- és oszlopszámmal, illetve cellaadatokkal
 const floors = {
@@ -434,9 +435,9 @@ const floors = {
     "cell-1-18": "X",
     "cell-1-19": "X",
 
-    "cell-2-0": "",
-    "cell-2-1": "",
-    "cell-2-2": "",
+    "cell-2-0": "X",
+    "cell-2-1": "X",
+    "cell-2-2": "X",
     "cell-2-3": "X",
     "cell-2-4": "X",
     "cell-2-5": "X",
@@ -455,7 +456,7 @@ const floors = {
     "cell-2-18": "X",
     "cell-2-19": "X",
 
-    "cell-3-0": "",
+    "cell-3-0": "X",
     "cell-3-1": "Játék",
     "cell-3-2": "",
     "cell-3-3": "",
@@ -477,24 +478,24 @@ const floors = {
     "cell-3-19": "➡️",
 
     "cell-4-0": "",
-    "cell-4-1": "Fwc1",
+    "cell-4-1": "Fwc2",
     "cell-4-2": "⬇️",
     "cell-4-3": "X",
     "cell-4-4": "X",
-    "cell-4-5": "XD",
+    "cell-4-5": "Mat1",
     "cell-4-6": "X",
-    "cell-4-7": "VII.",
+    "cell-4-7": "VII. Tant.",
     "cell-4-8": "X",
     "cell-4-9": "X",
-    "cell-4-10": "VIII.",
+    "cell-4-10": "VIII. Tant.",
     "cell-4-11": "X",
     "cell-4-12": "X",
     "cell-4-13": "X",
-    "cell-4-14": "IX.",
+    "cell-4-14": "IX. Tant.",
     "cell-4-15": "X",
     "cell-4-16": "X",
     "cell-4-17": "X",
-    "cell-4-18": "X.",
+    "cell-4-18": "X. Tant.",
     "cell-4-19": "X",
   },
 };
@@ -720,7 +721,6 @@ function getCell(floor, row, col) {
   return floors[floor][key] || "";
 }
 
-const presetRoomNames = ["Info I"]; // Itt add meg a kivételként kezelt szobaneveket!
 
 // Vizsgáljuk, hogy egy cella akadályként szerepel-e
 function isBlocked(floor, row, col, startName, endName) {
