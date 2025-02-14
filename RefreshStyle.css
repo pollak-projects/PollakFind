@@ -234,116 +234,46 @@ button:hover {
   color: #ffffff;
 }
 
-/* Orientation overlay – mobil portrét módhoz      02.13 jelenleg hibás működés */
 #orientationOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: none; /* alapból rejtett */
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  font-size: 1.5rem; /* Fixált méret */
-  color: #ffffff;
-  text-align: center;
-  transform: none !important;
-  padding: 20px;
-  box-sizing: border-box;
-  background: rgba(45, 45, 45, 0.36);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(4.2px);
-  -webkit-backdrop-filter: blur(7.5px);
-  border: 1px solid rgba(75, 75, 75, 0.12);
+  display: none;
+}
+@media screen and (orientation: landscape) and (max-width: 1000px) {
+  .left-panel {
+    display: none;
+  }
+  .grid {
+    grid-template-columns: repeat(20, 40px);
+    left: 0; /* Igazítsuk balra */
+    top: 0; /* Ha kell, igazítsd függőlegesen is */
+    justify-content: center; /* Középre helyezés */
+  }
+  .grid div {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 0.8rem;
+  }
 }
 
-/* Mobilos nézet stílusai   02.13 Jelenleg hibás működés */
-@media screen and (max-width: 768px) {
-  /* Állítsuk a body-t oszlopirányú flex elrendezésre */
-  body {
-    flex-direction: column;
-    align-items: stretch;
-    height: auto;
-  }
-
-  /* Sidebar – left-panel teljes szélesség */
-  .left-panel {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  /* Select container */
-  .select-container {
+/* Ha portré módban kell elrejteni mindent */
+@media screen and (orientation: portrait) and (max-width: 768px) {
+  body{
     width: 100%;
-    overflow-x: hidden;
+    height: 100vh;
   }
 
-  .select-container label,
-  .select-container select,
-  .select-container button {
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  /* A grid (content) a sidebar alatt, relatív pozícióban */
+  .left-panel,
   .grid {
-    position: relative !important;
-    left: 0 !important;
-    top: 0 !important;
-    transform: none !important;
-    margin-top: 10px;
-    width: 100%;
-    grid-template-columns: repeat(20, 40px);
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  /* Reset gomb rejtése mobilon */
-  .reset-button {
     display: none !important;
   }
 
-  /* Ha portré módban kell elrejteni mindent */
-  @media screen and (orientation: portrait) {
-    .left-panel,
-    .grid {
-      display: none !important;
-    }
-  }
-
-  /* Mobil emeletváltó gombok (ha használod) */
-  .mobile-floor-nav {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    z-index: 100;
-    background: rgba(45, 45, 45, 0.8);
-    padding: 5px 10px;
-    border-radius: 10px;
-  }
-
-  .mobile-floor-nav button {
-    background: #3498db;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-
-  .mobile-floor-nav span {
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
+  #orientationOverlay {
+    display: block;
+    width: 80%;
   }
 }
+
+
+
+

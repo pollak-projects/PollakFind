@@ -1,6 +1,23 @@
 // Ezek a nyilacska emoji-k jelölik a lépcsőket
 const allowedStairs = ["⬇️", "➡️", "⬆️", "⬅️"];
 
+const presetRoomNames = ["Info I"]; // Itt add meg a kivételként kezelt szobaneveket!
+
+// Frissített getNeighbors függvény, amely figyelembe veszi az emeletváltozás szabályait
+const stairConnections = {
+  // Földszint és 1. emelet közötti lépcsőkapcsolatok
+  "0-12-2": { floor: 1, row: 4, col: 2 },
+  "0-11-19": { floor: 1, row: 3, col: 19 },
+  "1-4-2": { floor: 0, row: 12, col: 2 },
+  "1-3-19": { floor: 0, row: 11, col: 19 },
+
+  // 1. és 2. emelet közötti lépcsőkapcsolatok
+  "1-4-2": { floor: 2, row: 4, col: 2 },
+  "1-3-19": { floor: 2, row: 3, col: 19 },
+  "2-4-2": { floor: 1, row: 4, col: 2 },
+  "2-3-19": { floor: 1, row: 3, col: 19 },
+};
+
 // Emeletek: minden emelet saját sor- és oszlopszámmal, illetve cellaadatokkal
 const floors = {
   0: {
@@ -591,24 +608,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", () => centerGrid());
 });
 
-function isMobileView() {
-  return window.innerWidth <= 768;
-}
-
-function checkOrientation() {
-  const overlay = document.getElementById("orientationOverlay");
-  if (window.innerWidth < window.innerHeight) {
-    overlay.style.display = "flex";
-  } else {
-    overlay.style.display = "none";
-  }
-}
-
-if (isMobileView()) {
-  checkOrientation();
-} else {
-  setupDesktop();
-}
+setupDesktop();
 
 window.addEventListener("resize", centerGrid);
 
@@ -644,6 +644,7 @@ function setupDesktop() {
     }
   });
 
+
   document.addEventListener("mouseup", function () {
     isDragging = false;
     gridElement.style.cursor = "grab";
@@ -674,8 +675,7 @@ function centerGrid(force = false) {
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
 
-  const leftPanelWidth = leftPanel.offsetWidth;
-  const panelMargin = 28; // Fix távolság a left-panel és a grid között
+  const leftPanelWidth = leftPanel.offsetWidth; // Fix távolság a left-panel és a grid között
 
   // Középre számított pozíció
   const centerX = (windowWidth - gridWidth) / 2;
@@ -694,33 +694,11 @@ document.addEventListener("mousedown", (event) => {
   }
 });
 
-// Ellenőrizzük az orientációt:
-function checkOrientation() {
-  const overlay = document.getElementById("orientationOverlay");
-  if (window.innerWidth < window.innerHeight) {
-    overlay.style.display = "flex";
-    overlay.style.fontSize = "1.5rem";
-  } else {
-    overlay.style.display = "none";
-  }
-}
-
-if (isMobileView()) {
-  checkOrientation();
-} else {
-  setupDesktop();
-}
-
-window.addEventListener("resize", function () {
-  checkOrientation();
-});
 // Segédfüggvény: adott emelet, sor, oszlop cellájának tartalma
 function getCell(floor, row, col) {
   const key = `cell-${row}-${col}`;
   return floors[floor][key] || "";
 }
-
-const presetRoomNames = ["Info I"]; // Itt add meg a kivételként kezelt szobaneveket!
 
 // Vizsgáljuk, hogy egy cella akadályként szerepel-e
 function isBlocked(floor, row, col, startName, endName) {
@@ -744,21 +722,6 @@ function isBlocked(floor, row, col, startName, endName) {
 
   return false;
 }
-
-// Frissített getNeighbors függvény, amely figyelembe veszi az emeletváltozás szabályait
-const stairConnections = {
-  // Földszint és 1. emelet közötti lépcsőkapcsolatok
-  "0-12-2": { floor: 1, row: 4, col: 2 },
-  "0-11-19": { floor: 1, row: 3, col: 19 },
-  "1-4-2": { floor: 0, row: 12, col: 2 },
-  "1-3-19": { floor: 0, row: 11, col: 19 },
-
-  // 1. és 2. emelet közötti lépcsőkapcsolatok
-  "1-4-2": { floor: 2, row: 4, col: 2 },
-  "1-3-19": { floor: 2, row: 3, col: 19 },
-  "2-4-2": { floor: 1, row: 4, col: 2 },
-  "2-3-19": { floor: 1, row: 3, col: 19 },
-};
 
 function getNeighbors(node, startName, endName) {
   const { floor, row, col } = node;
