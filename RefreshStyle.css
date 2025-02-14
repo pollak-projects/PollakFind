@@ -237,6 +237,7 @@ button:hover {
 #orientationOverlay {
   display: none;
 }
+
 @media screen and (orientation: landscape) and (max-width: 1000px) {
   .left-panel {
     display: none;

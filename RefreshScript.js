@@ -893,7 +893,7 @@ function centerGrid(force = false) {
   const leftPanel = document.querySelector(".left-panel");
   if (!gridElement || !leftPanel) return;
 
-  // If the grid was manually moved, do not re-center unless forced
+  // Ha a felhasználó manuálisan mozgatta a gridet, ne igazítsuk újra, kivéve, ha force = true
   if (gridMovedManually && !force) return;
 
   const gridWidth = gridElement.offsetWidth;
@@ -901,19 +901,22 @@ function centerGrid(force = false) {
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
   const leftPanelWidth = leftPanel.offsetWidth;
-  const panelMargin = 28; // Fixed margin between left-panel and grid
 
-  // Calculate horizontal center ensuring grid doesn't overlap the left panel
+  // Asztali vagy telefonos mód ellenőrzése
+  const isDesktop = windowWidth > 1000; // 1000px felett asztali mód
+  const panelMargin = isDesktop ? 28 : 0; // Csak asztali módban legyen 28px
+  const topOffset = isDesktop ? (windowHeight - gridHeight) / 2 : 0; // Telefonos módban top = 0
+
+  // Biztosítjuk, hogy asztali módban a top ne legyen túl alacsony
+  const adjustedTop = isDesktop ? Math.max(20, topOffset) : 0;
+
+  // Vízszintes középre igazítás
   const centerX = (windowWidth - gridWidth) / 2;
   const adjustedX = Math.max(leftPanelWidth + panelMargin, centerX);
 
-  // Calculate vertical centering but ensure the grid doesn't start too low
-  let top = (windowHeight - gridHeight) / 2;
-  if (top < 20) {
-    top = 20; // Ensure at least 20px from the top
-  }
-
   gridElement.style.position = "absolute";
   gridElement.style.left = `${adjustedX}px`;
-  gridElement.style.top = `${top}px`;
+  gridElement.style.top = `${adjustedTop}px`;
 }
+
+
