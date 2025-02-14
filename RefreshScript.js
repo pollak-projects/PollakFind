@@ -659,31 +659,7 @@ function setupDesktop() {
 
 let gridMovedManually = false; // Jelzi, hogy a felhasználó mozgatta-e a gridet
 
-function centerGrid(force = false) {
-  const gridElement = document.getElementById("grid");
-  const leftPanel = document.querySelector(".left-panel");
 
-  if (!gridElement || !leftPanel) return;
-
-  // Ha a felhasználó már mozgatta a gridet, ne igazítsuk középre (kivéve, ha force = true)
-  if (gridMovedManually && !force) return;
-
-  const gridWidth = gridElement.offsetWidth;
-  const gridHeight = gridElement.offsetHeight;
-
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
-
-  const leftPanelWidth = leftPanel.offsetWidth; // Fix távolság a left-panel és a grid között
-
-  // Középre számított pozíció
-  const centerX = (windowWidth - gridWidth) / 2;
-  const adjustedX = Math.max(leftPanelWidth + panelMargin, centerX);
-
-  gridElement.style.position = "absolute";
-  gridElement.style.left = `${adjustedX}px`;
-  gridElement.style.top = `${(windowHeight - gridHeight) / 2}px`;
-}
 
 // Figyeljük a felhasználói mozgatást, hogy ne ugráljon vissza
 document.addEventListener("mousedown", (event) => {
@@ -910,4 +886,34 @@ function switchFloor(floor) {
     createGrid();
     centerGrid(true); // Re-center the grid
   }
+}
+
+function centerGrid(force = false) {
+  const gridElement = document.getElementById("grid");
+  const leftPanel = document.querySelector(".left-panel");
+  if (!gridElement || !leftPanel) return;
+
+  // If the grid was manually moved, do not re-center unless forced
+  if (gridMovedManually && !force) return;
+
+  const gridWidth = gridElement.offsetWidth;
+  const gridHeight = gridElement.offsetHeight;
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+  const leftPanelWidth = leftPanel.offsetWidth;
+  const panelMargin = 28; // Fixed margin between left-panel and grid
+
+  // Calculate horizontal center ensuring grid doesn't overlap the left panel
+  const centerX = (windowWidth - gridWidth) / 2;
+  const adjustedX = Math.max(leftPanelWidth + panelMargin, centerX);
+
+  // Calculate vertical centering but ensure the grid doesn't start too low
+  let top = (windowHeight - gridHeight) / 2;
+  if (top < 20) {
+    top = 20; // Ensure at least 20px from the top
+  }
+
+  gridElement.style.position = "absolute";
+  gridElement.style.left = `${adjustedX}px`;
+  gridElement.style.top = `${top}px`;
 }
