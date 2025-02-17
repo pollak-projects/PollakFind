@@ -896,6 +896,14 @@ function centerGrid(force = false) {
   // Ha a felhasználó manuálisan mozgatta a gridet, ne igazítsuk újra, kivéve, ha force = true
   if (gridMovedManually && !force) return;
 
+
+  if (window.innerWidth <= 768) {
+    gridElement.style.position = "relative";
+    gridElement.style.left = "0";
+    gridElement.style.top = "0";
+    return;
+  }
+  
   const gridWidth = gridElement.offsetWidth;
   const gridHeight = gridElement.offsetHeight;
   const windowWidth = window.innerWidth;
@@ -917,6 +925,11 @@ function centerGrid(force = false) {
   gridElement.style.position = "absolute";
   gridElement.style.left = `${adjustedX}px`;
   gridElement.style.top = `${adjustedTop}px`;
+
+  
+
+
+  
 }
 
 
