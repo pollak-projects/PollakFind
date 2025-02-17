@@ -212,11 +212,9 @@ button:hover {
 }
 
 .grid .path {
-  color: #ffffff;
   animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-  animation-delay: calc(var(--path-index) * 0.2s); /* Egyenkénti animálás */
-  box-sizing: border-box; /* Megelőzi a méretváltozást */
-  margin: 0; /* Megelőzi a hézagok kialakulását */
+  box-sizing: border-box;
+  margin: 0;
 }
 
 .reset-button {

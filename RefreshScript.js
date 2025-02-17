@@ -532,7 +532,9 @@ function createGrid() {
   const rows = floorData.rows;
   const cols = floorData.cols;
 
-  // Töröljük az összes korábbi időzítőt
+  // DOM-frissítések minimalizálása
+  const fragment = document.createDocumentFragment();
+
   timeoutIds.forEach((id) => clearTimeout(id));
   timeoutIds = [];
 
@@ -557,22 +559,26 @@ function createGrid() {
         }
       }
 
-      // Ha az aktuális útvonalban van, késleltetve emeljük ki
+      // Gyorsabb animációk az útvonalon
       const pathIndex = currentPath.findIndex(
         (n) => n.floor === currentFloor && n.row === row && n.col === col
       );
       if (pathIndex !== -1) {
-        const timeoutId = setTimeout(() => {
+        const delay = pathIndex * 25; // 100ms helyett 50ms, hogy gyorsabb legyen
+        setTimeout(() => {
           cell.classList.add("path");
-        }, pathIndex * 75); // 75ms lépésenkénti késleltetés
-        timeoutIds.push(timeoutId);
+          cell.style.animationDelay = `${pathIndex * 0.1}s`; // 0.2s helyett 0.1s
+        }, delay);
       }
 
       rowArray.push(cell);
-      gridElement.appendChild(cell);
+      fragment.appendChild(cell);
     }
     grid.push(rowArray);
   }
+
+  // Egyszerre adjuk hozzá a DOM-hoz, gyorsítva a megjelenítést
+  gridElement.appendChild(fragment);
 }
 
 // Emelet váltása dropdown segítségével
