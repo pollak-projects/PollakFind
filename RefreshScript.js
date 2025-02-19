@@ -93,7 +93,7 @@ const floors = {
     "cell-3-4": "FérfiÖ",
     "cell-3-5": "X",
     "cell-3-6": "X",
-    "cell-3-7": "FérfiM",
+    "cell-3-7": "FérfiM1",
     "cell-3-8": "X",
     "cell-3-9": "X",
     "cell-3-10": "NőiÖ",
@@ -276,7 +276,7 @@ const floors = {
     "cell-11-19": "➡️",
 
     "cell-12-0": "",
-    "cell-12-1": "X",
+    "cell-12-1": "FérfiM2",
     "cell-12-2": "⬇️",
     "cell-12-3": "FőBej",
     "cell-12-4": "X",
@@ -546,6 +546,7 @@ function createGrid() {
       cell.id = cellId;
       cell.setAttribute("data-row", row);
       cell.setAttribute("data-col", col);
+      cell.classList.add("cell");
       cell.style.userSelect = "none";
 
       const key = `cell-${row}-${col}`;
@@ -660,6 +661,8 @@ function setupDesktop() {
     centerGrid(true);
     currentPath = [];
     createGrid();
+    document.getElementById("start").value = "";
+    document.getElementById("end").value = "";
   };
 }
 
@@ -938,4 +941,23 @@ function centerGrid(force = false) {
   
 }
 
+document.addEventListener("click", function (event) { console.log(event.key)
+    // get the element that was clicked
+    const element = event.target;
+    // check if the element has the class "cell"
+    if (element.classList.contains("cell") && element.id !== "start" && element.id !== "end" && element.innerHTML != "X" && element.innerHTML != "") {
+      console.log(element.innerHTML);
+        document.getElementById("start").value = element.innerHTML;
+  }
+});
+document.addEventListener("contextmenu", function (event) {
+  event.preventDefault();
 
+    const element = event.target;
+    // check if the element has the class "cell"
+    if (element.classList.contains("cell") && element.id !== "start" && element.id !== "end" && element.innerHTML != "X" && element.innerHTML != "") {
+      console.log(element.innerHTML);
+        document.getElementById("end").value = element.innerHTML;
+      
+  }
+});
