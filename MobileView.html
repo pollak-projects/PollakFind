@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./Logo.png" type="image/x-icon" />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Stíluslap -->
+    <style>body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      color: white;
+      position: relative;
+      background-color: #151515;
+      background-image: radial-gradient(
+        rgba(115, 115, 115, 0.171) 2px,
+        transparent 0
+      );
+      background-size: 30px 30px;
+      background-position: -5px -5px;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px; /* Távolság a logó és a szöveg között */
+    }
+    
+    .logo-container img {
+      width: 50px; /* Kisebb logó */
+      height: auto;
+    }
+    
+    #box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 400px;
+      height: 200px;
+      color: white;
+      font-family: "Raleway";
+      font-size: 2.5rem;
+    }
+    
+    .logo-container h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+    
+    /* Sidebar és egyéb desktop elemek */
+    .left-panel {
+      width: 250px;
+      padding: 10px;
+      margin: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    
+      /* From https://css.glass */
+      background: rgba(25, 25, 25, 0.5);
+      border-radius: 25px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(7.4px);
+      -webkit-backdrop-filter: blur(7.4px);
+      border: 1px solid rgba(45, 45, 45, 0.75);
+    }
+    
+    .searchable-select {
+      width: 100%; /* A szülő div teljes szélességét használja */
+      box-sizing: border-box; /* Ne lógjon ki a padding miatt */
+      position: relative;
+      margin-bottom: 15px;
+    }
+    
+    .search-button {
+      padding: 15px;
+    }
+    
+    .searchable-select input {
+      width: 100%; /* Teljes szélesség */
+      max-width: 100%; /* Ne lógjon ki */
+      box-sizing: border-box; /* Padding miatt ne legyen szélesebb */
+      padding: 12px 15px;
+      border: 2px solid #009ccc;
+      border-radius: 8px;
+      background: #00222c8c;
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    .searchable-select input:focus {
+      outline: none;
+      box-shadow: 0 0 8px #009cccbe;
+      background: #009ccc28;
+    }
+    
+    /* Megőrizzük az eredeti select stílust a szintválasztónak */
+    #floorSelect {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      width: 100%;
+      background: #333;
+      color: white;
+    }
+    
+    /* Megakadályozza a szöveg kijelölését a gridben és a sidebarban */
+    .left-panel,
+    .grid,
+    .grid div {
+      user-select: none; /* Modern böngészők */
+      -webkit-user-select: none; /* Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer / Edge */
+    }
+    
+    .select-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 15px;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    
+      /* From https://css.glass */
+      background: rgba(45, 45, 45, 0.5);
+      border-radius: 16px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(7.4px);
+      -webkit-backdrop-filter: blur(7.4px);
+      border: 1px solid rgba(45, 45, 45, 0.75);
+    }
+    
+    select,
+    button {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    
+    button {
+      background: #1a4500;
+      color: #57a300;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    
+    button:hover {
+      background: #57a300;
+      color: #ffffff;
+    }
+    
+    /* Grid alap beállítások (desktop) */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(20, 50px);
+      gap: 5px;
+      padding: 10px;
+      position: absolute;
+      cursor: grab;
+      top: 300px;
+      left: 500px;
+    
+      /* From https://css.glass */
+      background: rgba(25, 25, 25, 0.5);
+      border-radius: 16px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(7.4px);
+      -webkit-backdrop-filter: blur(7.4px);
+      border: 1px solid rgba(45, 45, 45, 0.75);
+    }
+    
+    .grid div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 7.5px;
+      font-weight: bold;
+      padding: 0.25px;
+      text-align: center;
+      color: black;
+      min-height: 50px;
+      min-width: 50px;
+    }
+    
+    .grid .black {
+      background: #000;
+      color: transparent;
+    }
+    
+    /* Animált fénylés a highlightolt kockáknak */
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 5px rgba(0, 221, 255, 0.5);
+        background-color: rgba(0, 221, 255, 0.4);
+        border: 2px solid rgba(0, 221, 255, 0.8);
+      }
+      50% {
+        box-shadow: 0 0 15px rgba(0, 221, 255, 1);
+        background-color: rgba(0, 221, 255, 0.9);
+        border: 2px solid rgba(0, 221, 255, 1);
+      }
+      100% {
+        box-shadow: 0 0 5px rgba(0, 221, 255, 0.5);
+        background-color: rgba(0, 221, 255, 0.4);
+        border: 2px solid rgba(0, 221, 255, 0.8);
+      }
+    }
+    
+    .grid .path {
+      animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+      box-sizing: border-box;
+      margin: 0;
+    }
+    
+    .reset-button {
+      background-color: #450000;
+      color: #a30000;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s;
+    }
+    
+    .reset-button:hover {
+      background-color: #a30000;
+      color: #ffffff;
+    }
+    
+    #orientationOverlay {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: white;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    
+    @media screen and (orientation: landscape) and (max-width: 1100px) {
+      .left-panel {
+        display: none;
+      }
+      .grid {
+        grid-template-columns: repeat(20, 40px);
+        left: 0; /* Igazítsuk balra */
+        top: 0; /* Ha kell, igazítsd függőlegesen is */
+        justify-content: center; /* Középre helyezés */
+      }
+      .grid div {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        font-size: 0.8rem;
+      }
+    }
+    
+    /* Ha portré módban kell elrejteni mindent */
+    @media screen and (orientation: portrait) and (max-width: 768px) {
+      body{
+        width: 100%;
+        height: 100vh;
+      }
+    
+      .left-panel,
+      .grid {
+        display: none !important;
+      }
+    
+      #orientationOverlay {
+        display: block;
+        width: 80%;
+      }
+    }
+    
+    
+    
+    
+    </style>
+    <title>PollakFind • Teremkereső</title>
+  </head>
+  <body>
+    <div class="left-panel">
+      <div class="logo-container">
+        <img src="./Logo.png" alt="Logo" />
+        <h1>PollakFind</h1>
+      </div>
+      <div class="select-container">
+        <!-- Indulási hely -->
+        <label for="start">Indulási hely:</label>
+        <div class="searchable-select">
+          <input
+            type="text"
+            id="start"
+            placeholder="Keresés..."
+            list="startOptions"
+          />
+          <datalist id="startOptions">
+            <option value="Chill">Chill Zóna</option>
+            <option value="Büfé">Büfé</option>
+            <option value="FőBej">FőBejárat</option>
+            <option value="Mat1">Matek I. terem</option>
+            <option value="Mat2">Matek II. terem</option>
+            <option value="Mat3">Matek III. terem</option>
+            <option value="CadC">CadCam terem</option>
+            <option value="HBej">Hátsó bejárat</option>
+            <option value="Nwc">Női mosdó-Földszint</option>
+            <option value="FérfiM">Férfi mosdó-Földszint</option>
+            <option value="Fwc1">Férfi mosdó- I.emelet</option>
+            <option value="Fwc2">Férfi mosdó-II.emelet</option>
+            <option value="FérfiÖ">Férfi öltöző</option>
+            <option value="NőiÖ">Női öltöző</option>
+            <option value="Gaz.ir">Gazdasági iroda</option>
+            <option value="Igazg.">Igazgatói iroda</option>
+            <option value="Titk">Titkárság</option>
+            <option value="Tanári">Tanári</option>
+            <option value="Szert.">Szertár</option>
+            <option value="⬇️">FőBejárat melletti lépcsők</option>
+            <option value="➡️">Infó 6-os terem melletti lépcsők</option>
+            <option value="Info I">Infó I-es terem</option>
+            <option value="Info II">Infó II-es terem</option>
+            <option value="Info III">Infó III-as terem</option>
+            <option value="Info IV">Infó IV-es terem</option>
+            <option value="Info V">Infó V-ös terem</option>
+            <option value="Info VI">Infó VI-os terem</option>
+            <option value="Info VII">Infó VII-es terem</option>
+            <option value="V. Tant.">V.tanterem</option>
+            <option value="VI. Tant.">VI.tanterem</option>
+            <option value="VII. Tant.">VII.tanterem</option>
+            <option value="VIII. Tant.">VIII.tanterem</option>
+            <option value="I. Tant.">I.tanterem</option>
+            <option value="IX. Tant.">IX.tanterem</option>
+            <option value="X. Tant.">X.tanterem</option>
+            <option value="Kajtor">Kajtor tanterem</option>
+            <option value="Nylabor">Nyelvi labor</option>
+            <option value="Torna T.">Tornaterem</option>
+            <option value="PLC">PLC terem</option>
+            <option value="DKA">DKA terem</option>
+            <option value="KNX">KNX terem</option>
+            <option value="Mech">Mech terem</option>
+            <option value="Elektr">Elektr terem</option>
+          </datalist>
+        </div>
+        <!-- Cél -->
+        <label for="end">Cél:</label>
+        <div class="searchable-select">
+          <input
+            type="text"
+            id="end"
+            placeholder="Keresés..."
+            list="endOptions"
+          />
+          <datalist id="endOptions">
+            <option value="Chill">Chill Zóna</option>
+            <option value="Büfé">Büfé</option>
+            <option value="FőBej">FőBejárat</option>
+            <option value="Mat1">Matek I. terem</option>
+            <option value="Mat2">Matek II. terem</option>
+            <option value="Mat3">Matek III. terem</option>
+            <option value="CadC">CadCam terem</option>
+            <option value="HBej">Hátsó bejárat</option>
+            <option value="Nwc">Női mosdó-Földszint</option>
+            <option value="FérfiM">Férfi mosdó-Földszint</option>
+            <option value="Fwc1">Férfi mosdó- I.emelet</option>
+            <option value="Fwc2">Férfi mosdó-II.emelet</option>
+            <option value="FérfiÖ">Férfi öltöző</option>
+            <option value="NőiÖ">Női öltöző</option>
+            <option value="Gaz.ir">Gazdasági iroda</option>
+            <option value="Igazg.">Igazgatói iroda</option>
+            <option value="Titk">Titkárság</option>
+            <option value="Tanári">Tanári</option>
+            <option value="Szert.">Szertár</option>
+            <option value="⬇️">FőBejárat melletti lépcsők</option>
+            <option value="➡️">Infó 6-os terem melletti lépcsők</option>
+            <option value="Info I">Infó I-es terem</option>
+            <option value="Info II">Infó II-es terem</option>
+            <option value="Info III">Infó III-as terem</option>
+            <option value="Info IV">Infó IV-es terem</option>
+            <option value="Info V">Infó V-ös terem</option>
+            <option value="Info VI">Infó VI-os terem</option>
+            <option value="Info VII">Infó VII-es terem</option>
+            <option value="V. Tant.">V.tanterem</option>
+            <option value="VI. Tant.">VI.tanterem</option>
+            <option value="VII. Tant.">VII.tanterem</option>
+            <option value="VIII. Tant.">VIII.tanterem</option>
+            <option value="I. Tant.">I.tanterem</option>
+            <option value="IX. Tant.">IX.tanterem</option>
+            <option value="X. Tant.">X.tanterem</option>
+            <option value="Kajtor">Kajtor tanterem</option>
+            <option value="Nylabor">Nyelvi labor</option>
+            <option value="Torna T.">Tornaterem</option>
+            <option value="PLC">PLC terem</option>
+            <option value="DKA">DKA terem</option>
+            <option value="KNX">KNX terem</option>
+            <option value="Mech">Mech terem</option>
+            <option value="Elektr">Elektr terem</option>
+          </datalist>
+        </div>
+        <label for="floorSelect">Emelet választás:</label>
+        <select id="floorSelect" onchange="switchFloor(parseInt(this.value))">
+          <option value="0">Földszint</option>
+          <option value="1">1. Emelet</option>
+          <option value="2">2.Emelet</option>
+        </select>
+        <!-- Kereső gomb -->
+        <button class="search-button" onclick="runPathfinding()">
+          Tanterem keresése
+        </button>
+        <button class="reset-button" onclick="resetGridPosition()">
+          Visszaállítás
+        </button>
+      </div>
+    </div>
+    <!-- A grid ide generálódik -->
+    <div class="grid" id="grid"></div>
+
+    <!-- Orientation overlay – mobil portrét módban -->
+    <div id="orientationOverlay">
+      Fordítsa el mobilkészülékét a folytatáshoz
+    </div>
+    <script>// Ezek a nyilacska emoji-k jelölik a lépcsőket
+      const allowedStairs = ["⬇️", "➡️", "⬆️", "⬅️"];
+      const presetRoomNames = ["Info I", "Játék"]; // Itt add meg a kivételként kezelt szobaneveket!
+      
+      // Frissített getNeighbors függvény, amely figyelembe veszi az emeletváltozás szabályait
+      const stairConnections = {
+        // Földszint és 1. emelet közötti lépcsőkapcsolatok
+        "0-12-2": { floor: 1, row: 4, col: 2 },
+        "0-11-19": { floor: 1, row: 3, col: 19 },
+        "1-4-2": { floor: 0, row: 12, col: 2 },
+        "1-3-19": { floor: 0, row: 11, col: 19 },
+      
+        // 1. és 2. emelet közötti lépcsőkapcsolatok
+        "1-4-2": { floor: 2, row: 4, col: 2 },
+        "1-3-19": { floor: 2, row: 3, col: 19 },
+        "2-4-2": { floor: 1, row: 4, col: 2 },
+        "2-3-19": { floor: 1, row: 3, col: 19 },
+      };
+      
+      // Emeletek: minden emelet saját sor- és oszlopszámmal, illetve cellaadatokkal
+      const floors = {
+        0: {
+          rows: 13, // például: 10 sor
+          cols: 20, // például: 20 oszlop
+      
+          "cell-0-0": "X",
+          "cell-0-1": "X",
+          "cell-0-2": "Ajtó",
+          "cell-0-3": "X",
+          "cell-0-4": "X",
+          "cell-0-5": "X",
+          "cell-0-6": "X",
+          "cell-0-7": "X",
+          "cell-0-8": "X",
+          "cell-0-9": "X",
+          "cell-0-10": "X",
+          "cell-0-11": "X",
+          "cell-0-12": "X",
+          "cell-0-13": "X",
+          "cell-0-14": "X",
+          "cell-0-15": "X",
+          "cell-0-16": "X",
+          "cell-0-17": "X",
+          "cell-0-18": "X",
+          "cell-0-19": "X",
+      
+          "cell-1-0": "X",
+          "cell-1-1": "",
+          "cell-1-2": "",
+          "cell-1-3": "X",
+          "cell-1-4": "X",
+          "cell-1-5": "X",
+          "cell-1-6": "X",
+          "cell-1-7": "X",
+          "cell-1-8": "X",
+          "cell-1-9": "X",
+          "cell-1-10": "X",
+          "cell-1-11": "X",
+          "cell-1-12": "X",
+          "cell-1-13": "X",
+          "cell-1-14": "X",
+          "cell-1-15": "X",
+          "cell-1-16": "X",
+          "cell-1-17": "X",
+          "cell-1-18": "X",
+          "cell-1-19": "X",
+      
+          "cell-2-0": "X",
+          "cell-2-1": "X",
+          "cell-2-2": "",
+          "cell-2-3": "",
+          "cell-2-4": "",
+          "cell-2-5": "",
+          "cell-2-6": "",
+          "cell-2-7": "",
+          "cell-2-8": "",
+          "cell-2-9": "",
+          "cell-2-10": "",
+          "cell-2-11": "",
+          "cell-2-12": "",
+          "cell-2-13": "",
+          "cell-2-14": "",
+          "cell-2-15": "",
+          "cell-2-16": "",
+          "cell-2-17": "",
+          "cell-2-18": "",
+          "cell-2-19": "",
+      
+          "cell-3-0": "",
+          "cell-3-1": "",
+          "cell-3-2": "",
+          "cell-3-3": "X",
+          "cell-3-4": "FérfiÖ",
+          "cell-3-5": "X",
+          "cell-3-6": "X",
+          "cell-3-7": "FérfiM",
+          "cell-3-8": "X",
+          "cell-3-9": "X",
+          "cell-3-10": "NőiÖ",
+          "cell-3-11": "X",
+          "cell-3-12": "X",
+          "cell-3-13": "X",
+          "cell-3-14": "Szert.",
+          "cell-3-15": "X",
+          "cell-3-16": "X",
+          "cell-3-17": "Torna T.",
+          "cell-3-18": "X",
+          "cell-3-19": "X",
+      
+          "cell-4-0": "",
+          "cell-4-1": "X",
+          "cell-4-2": "",
+          "cell-4-3": "X",
+          "cell-4-4": "X",
+          "cell-4-5": "X",
+          "cell-4-6": "X",
+          "cell-4-7": "X",
+          "cell-4-8": "X",
+          "cell-4-9": "X",
+          "cell-4-10": "X",
+          "cell-4-11": "X",
+          "cell-4-12": "X",
+          "cell-4-13": "X",
+          "cell-4-14": "X",
+          "cell-4-15": "X",
+          "cell-4-16": "X",
+          "cell-4-17": "X",
+          "cell-4-18": "X",
+          "cell-4-19": "X",
+      
+          "cell-5-0": "X",
+          "cell-5-1": "X",
+          "cell-5-2": "",
+          "cell-5-3": "X",
+          "cell-5-4": "X",
+          "cell-5-5": "X",
+          "cell-5-6": "X",
+          "cell-5-7": "X",
+          "cell-5-8": "X",
+          "cell-5-9": "X",
+          "cell-5-10": "X",
+          "cell-5-11": "X",
+          "cell-5-12": "X",
+          "cell-5-13": "X",
+          "cell-5-14": "X",
+          "cell-5-15": "X",
+          "cell-5-16": "X",
+          "cell-5-17": "X",
+          "cell-5-18": "X",
+          "cell-5-19": "X",
+      
+          "cell-6-0": "KAjtó",
+          "cell-6-1": "",
+          "cell-6-2": "",
+          "cell-6-3": "Ajtó",
+          "cell-6-4": "X",
+          "cell-6-5": "X",
+          "cell-6-6": "X",
+          "cell-6-7": "X",
+          "cell-6-8": "X",
+          "cell-6-9": "X",
+          "cell-6-10": "X",
+          "cell-6-11": "X",
+          "cell-6-12": "X",
+          "cell-6-13": "X",
+          "cell-6-14": "X",
+          "cell-6-15": "X",
+          "cell-6-16": "X",
+          "cell-6-17": "X",
+          "cell-6-18": "X",
+          "cell-6-19": "X",
+      
+          "cell-7-0": "X",
+          "cell-7-1": "X",
+          "cell-7-2": "",
+          "cell-7-3": "X",
+          "cell-7-4": "X",
+          "cell-7-5": "X",
+          "cell-7-6": "X",
+          "cell-7-7": "X",
+          "cell-7-8": "X",
+          "cell-7-9": "X",
+          "cell-7-10": "X",
+          "cell-7-11": "X",
+          "cell-7-12": "X",
+          "cell-7-13": "X",
+          "cell-7-14": "X",
+          "cell-7-15": "X",
+          "cell-7-16": "X",
+          "cell-7-17": "X",
+          "cell-7-18": "X",
+          "cell-7-19": "X",
+      
+          "cell-8-0": "X",
+          "cell-8-1": "Chill",
+          "cell-8-2": "",
+          "cell-8-3": "X",
+          "cell-8-4": "X",
+          "cell-8-5": "X",
+          "cell-8-6": "X",
+          "cell-8-7": "X",
+          "cell-8-8": "X",
+          "cell-8-9": "X",
+          "cell-8-10": "X",
+          "cell-8-11": "X",
+          "cell-8-12": "X",
+          "cell-8-13": "X",
+          "cell-8-14": "X",
+          "cell-8-15": "X",
+          "cell-8-16": "X",
+          "cell-8-17": "SzerT",
+          "cell-8-18": "NőiM",
+          "cell-8-19": "X",
+      
+          "cell-9-0": "X",
+          "cell-9-1": "Büfé",
+          "cell-9-2": "",
+          "cell-9-3": "",
+          "cell-9-4": "",
+          "cell-9-5": "",
+          "cell-9-6": "X",
+          "cell-9-7": "X",
+          "cell-9-8": "X",
+          "cell-9-9": "X",
+          "cell-9-10": "X",
+          "cell-9-11": "X",
+          "cell-9-12": "X",
+          "cell-9-13": "X",
+          "cell-9-14": "X",
+          "cell-9-15": "X",
+          "cell-9-16": "I. Tant.",
+          "cell-9-17": "",
+          "cell-9-18": "",
+          "cell-9-19": "HBej",
+      
+          "cell-10-0": "X",
+          "cell-10-1": "X",
+          "cell-10-2": "",
+          "cell-10-3": "",
+          "cell-10-4": "X",
+          "cell-10-5": "",
+          "cell-10-6": "X",
+          "cell-10-7": "X",
+          "cell-10-8": "X",
+          "cell-10-9": "X",
+          "cell-10-10": "X",
+          "cell-10-11": "X",
+          "cell-10-12": "X",
+          "cell-10-13": "X",
+          "cell-10-14": "X",
+          "cell-10-15": "X",
+          "cell-10-16": "X",
+          "cell-10-17": "",
+          "cell-10-18": "",
+          "cell-10-19": "X",
+      
+          "cell-11-0": "Játék",
+          "cell-11-1": "",
+          "cell-11-2": "",
+          "cell-11-3": "",
+          "cell-11-4": "",
+          "cell-11-5": "",
+          "cell-11-6": "",
+          "cell-11-7": "",
+          "cell-11-8": "",
+          "cell-11-9": "",
+          "cell-11-10": "",
+          "cell-11-11": "",
+          "cell-11-12": "",
+          "cell-11-13": "",
+          "cell-11-14": "",
+          "cell-11-15": "",
+          "cell-11-16": "",
+          "cell-11-17": "",
+          "cell-11-18": "",
+          "cell-11-19": "➡️",
+      
+          "cell-12-0": "",
+          "cell-12-1": "X",
+          "cell-12-2": "⬇️",
+          "cell-12-3": "FőBej",
+          "cell-12-4": "X",
+          "cell-12-5": "X",
+          "cell-12-6": "X",
+          "cell-12-7": "Mat2",
+          "cell-12-8": "X",
+          "cell-12-9": "Mat3",
+          "cell-12-10": "X",
+          "cell-12-11": "X",
+          "cell-12-12": "X",
+          "cell-12-13": "X",
+          "cell-12-14": "CadC",
+          "cell-12-15": "X",
+          "cell-12-16": "X",
+          "cell-12-17": "X",
+          "cell-12-18": "Info VI",
+          "cell-12-19": "X",
+        },
+        1: {
+          rows: 5,
+          cols: 20,
+          "cell-0-0": "X",
+          "cell-0-1": "X",
+          "cell-0-2": "X",
+          "cell-0-3": "X",
+          "cell-0-4": "X",
+          "cell-0-5": "X",
+          "cell-0-6": "X",
+          "cell-0-7": "X",
+          "cell-0-8": "X",
+          "cell-0-9": "X",
+          "cell-0-10": "X",
+          "cell-0-11": "X",
+          "cell-0-12": "X",
+          "cell-0-13": "X",
+          "cell-0-14": "X",
+          "cell-0-15": "X",
+          "cell-0-16": "X",
+          "cell-0-17": "X",
+          "cell-0-18": "X",
+          "cell-0-19": "X",
+      
+          "cell-1-0": "X",
+          "cell-1-1": "X",
+          "cell-1-2": "X",
+          "cell-1-3": "X",
+          "cell-1-4": "X",
+          "cell-1-5": "X",
+          "cell-1-6": "X",
+          "cell-1-7": "X",
+          "cell-1-8": "X",
+          "cell-1-9": "X",
+          "cell-1-10": "X",
+          "cell-1-11": "X",
+          "cell-1-12": "X",
+          "cell-1-13": "X",
+          "cell-1-14": "X",
+          "cell-1-15": "X",
+          "cell-1-16": "X",
+          "cell-1-17": "Info II",
+          "cell-1-18": "",
+          "cell-1-19": "X",
+      
+          "cell-2-0": "Igazg.",
+          "cell-2-1": "Titk",
+          "cell-2-2": "Tanári",
+          "cell-2-3": "X",
+          "cell-2-4": "X",
+          "cell-2-5": "Info III",
+          "cell-2-6": "X",
+          "cell-2-7": "X",
+          "cell-2-8": "X",
+          "cell-2-9": "X",
+          "cell-2-10": "X",
+          "cell-2-11": "X",
+          "cell-2-12": "X",
+          "cell-2-13": "X",
+          "cell-2-14": "X",
+          "cell-2-15": "X",
+          "cell-2-16": "X",
+          "cell-2-17": "X",
+          "cell-2-18": "Info I",
+          "cell-2-19": "X",
+      
+          "cell-3-0": "",
+          "cell-3-1": "",
+          "cell-3-2": "",
+          "cell-3-3": "",
+          "cell-3-4": "",
+          "cell-3-5": "",
+          "cell-3-6": "",
+          "cell-3-7": "",
+          "cell-3-8": "",
+          "cell-3-9": "",
+          "cell-3-10": "",
+          "cell-3-11": "",
+          "cell-3-12": "",
+          "cell-3-13": "",
+          "cell-3-14": "",
+          "cell-3-15": "",
+          "cell-3-16": "",
+          "cell-3-17": "",
+          "cell-3-18": "",
+          "cell-3-19": "➡️",
+      
+          "cell-4-0": "Nwc1",
+          "cell-4-1": "Fwc1",
+          "cell-4-2": "⬇️",
+          "cell-4-3": "Gaz.ir",
+          "cell-4-4": "V. Tant.",
+          "cell-4-5": "X",
+          "cell-4-6": "Kajtor",
+          "cell-4-7": "X",
+          "cell-4-8": "X",
+          "cell-4-9": "X",
+          "cell-4-10": "Info VII",
+          "cell-4-11": "X",
+          "cell-4-12": "X",
+          "cell-4-13": "X",
+          "cell-4-14": "Info V",
+          "cell-4-15": "X",
+          "cell-4-16": "X",
+          "cell-4-17": "X",
+          "cell-4-18": "Info IV",
+          "cell-4-19": "X",
+        },
+      
+        2: {
+          rows: 5,
+          cols: 20,
+          "cell-0-0": "X",
+          "cell-0-1": "X",
+          "cell-0-2": "X",
+          "cell-0-3": "X",
+          "cell-0-4": "X",
+          "cell-0-5": "X",
+          "cell-0-6": "X",
+          "cell-0-7": "X",
+          "cell-0-8": "X",
+          "cell-0-9": "X",
+          "cell-0-10": "X",
+          "cell-0-11": "X",
+          "cell-0-12": "X",
+          "cell-0-13": "X",
+          "cell-0-14": "X",
+          "cell-0-15": "X",
+          "cell-0-16": "X",
+          "cell-0-17": "X",
+          "cell-0-18": "X",
+          "cell-0-19": "X",
+      
+          "cell-1-0": "X",
+          "cell-1-1": "X",
+          "cell-1-2": "X",
+          "cell-1-3": "X",
+          "cell-1-4": "X",
+          "cell-1-5": "X",
+          "cell-1-6": "X",
+          "cell-1-7": "X",
+          "cell-1-8": "X",
+          "cell-1-9": "X",
+          "cell-1-10": "X",
+          "cell-1-11": "X",
+          "cell-1-12": "X",
+          "cell-1-13": "X",
+          "cell-1-14": "X",
+          "cell-1-15": "X",
+          "cell-1-16": "X",
+          "cell-1-17": "X",
+          "cell-1-18": "X",
+          "cell-1-19": "X",
+      
+          "cell-2-0": "X",
+          "cell-2-1": "X",
+          "cell-2-2": "X",
+          "cell-2-3": "X",
+          "cell-2-4": "X",
+          "cell-2-5": "X",
+          "cell-2-6": "X",
+          "cell-2-7": "X",
+          "cell-2-8": "X",
+          "cell-2-9": "X",
+          "cell-2-10": "X",
+          "cell-2-11": "X",
+          "cell-2-12": "X",
+          "cell-2-13": "X",
+          "cell-2-14": "X",
+          "cell-2-15": "X",
+          "cell-2-16": "X",
+          "cell-2-17": "X",
+          "cell-2-18": "X",
+          "cell-2-19": "X",
+      
+          "cell-3-0": "X",
+          "cell-3-1": "Játék",
+          "cell-3-2": "",
+          "cell-3-3": "",
+          "cell-3-4": "",
+          "cell-3-5": "",
+          "cell-3-6": "",
+          "cell-3-7": "",
+          "cell-3-8": "",
+          "cell-3-9": "",
+          "cell-3-10": "",
+          "cell-3-11": "",
+          "cell-3-12": "",
+          "cell-3-13": "",
+          "cell-3-14": "",
+          "cell-3-15": "",
+          "cell-3-16": "",
+          "cell-3-17": "",
+          "cell-3-18": "",
+          "cell-3-19": "➡️",
+      
+          "cell-4-0": "",
+          "cell-4-1": "Fwc2",
+          "cell-4-2": "⬇️",
+          "cell-4-3": "X",
+          "cell-4-4": "X",
+          "cell-4-5": "Mat1",
+          "cell-4-6": "X",
+          "cell-4-7": "VII. Tant.",
+          "cell-4-8": "X",
+          "cell-4-9": "X",
+          "cell-4-10": "VIII. Tant.",
+          "cell-4-11": "X",
+          "cell-4-12": "X",
+          "cell-4-13": "X",
+          "cell-4-14": "IX. Tant.",
+          "cell-4-15": "X",
+          "cell-4-16": "X",
+          "cell-4-17": "X",
+          "cell-4-18": "X. Tant.",
+          "cell-4-19": "X",
+        },
+      };
+      
+      let currentFloor = 0;
+      let grid = [];
+      
+      // Eltároljuk a jelenlegi útvonalat, hogy minden emelet váltásnál meg tudjuk jeleníteni a megfelelő részt
+      let currentPath = [];
+      
+      // Grid létrehozása az aktuális emelet beállításai szerint
+      let timeoutIds = [];
+      
+      function createGrid() {
+        const gridElement = document.getElementById("grid");
+        gridElement.innerHTML = ""; // Előző grid törlése
+        grid = [];
+        const floorData = floors[currentFloor];
+        const rows = floorData.rows;
+        const cols = floorData.cols;
+      
+        // DOM-frissítések minimalizálása
+        const fragment = document.createDocumentFragment();
+      
+        timeoutIds.forEach((id) => clearTimeout(id));
+        timeoutIds = [];
+      
+        for (let row = 0; row < rows; row++) {
+          let rowArray = [];
+          for (let col = 0; col < cols; col++) {
+            const cell = document.createElement("div");
+            const cellId = `cell-${row}-${col}`;
+            cell.id = cellId;
+            cell.setAttribute("data-row", row);
+            cell.setAttribute("data-col", col);
+            cell.style.userSelect = "none";
+      
+            const key = `cell-${row}-${col}`;
+            if (floorData[key]) {
+              const name = floorData[key];
+              if (name === "X") {
+                cell.classList.add("black");
+                cell.innerText = "";
+              } else {
+                cell.innerText = name;
+              }
+            }
+      
+            // Gyorsabb animációk az útvonalon
+            const pathIndex = currentPath.findIndex(
+              (n) => n.floor === currentFloor && n.row === row && n.col === col
+            );
+            if (pathIndex !== -1) {
+              const delay = pathIndex * 25; // 100ms helyett 50ms, hogy gyorsabb legyen
+              setTimeout(() => {
+                cell.classList.add("path");
+                cell.style.animationDelay = `${pathIndex * 0.1}s`; // 0.2s helyett 0.1s
+              }, delay);
+            }
+      
+            rowArray.push(cell);
+            fragment.appendChild(cell);
+          }
+          grid.push(rowArray);
+        }
+      
+        // Egyszerre adjuk hozzá a DOM-hoz, gyorsítva a megjelenítést
+        gridElement.appendChild(fragment);
+      }
+      
+      // Emelet váltása dropdown segítségével
+      function switchFloor(floor) {
+        if (floors[floor]) {
+          currentFloor = floor;
+          createGrid();
+        }
+      }
+      
+      const roomIndex = {};
+      
+      function buildRoomIndex() {
+        for (let fl in floors) {
+          const floorData = floors[fl];
+          for (let row = 0; row < floorData.rows; row++) {
+            for (let col = 0; col < floorData.cols; col++) {
+              const cellValue = getCell(parseInt(fl), row, col);
+              if (cellValue && cellValue !== "X") {
+                roomIndex[cellValue] = { floor: parseInt(fl), row, col };
+              }
+            }
+          }
+        }
+      }
+      
+      // Az indexet egyszer felépítjük, amikor az oldal betöltődik
+      document.addEventListener("DOMContentLoaded", function () {
+        buildRoomIndex();
+        createGrid();
+        centerGrid(true);
+        window.addEventListener("resize", () => centerGrid());
+      });
+      
+      setupDesktop();
+      
+      window.addEventListener("resize", centerGrid);
+      
+      function setupDesktop() {
+        const gridElement = document.getElementById("grid");
+        let isDragging = false,
+          offsetX,
+          offsetY;
+        gridElement.style.cursor = "grab";
+      
+        gridElement.addEventListener("mousedown", function (event) {
+          isDragging = true;
+          offsetX = event.clientX - gridElement.offsetLeft;
+          offsetY = event.clientY - gridElement.offsetTop;
+          gridElement.style.cursor = "grabbing";
+        });
+      
+        document.addEventListener("mousemove", function (event) {
+          if (isDragging) {
+            let newLeft = event.clientX - offsetX;
+            let newTop = event.clientY - offsetY;
+            // Calculate boundaries so the grid stays within the viewport
+            const minLeft = 300;
+            const minTop = 0;
+            const maxLeft = window.innerWidth - gridElement.offsetWidth;
+            const maxTop = window.innerHeight - gridElement.offsetHeight;
+      
+            newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
+            newTop = Math.max(minTop, Math.min(newTop, maxTop));
+      
+            gridElement.style.left = `${newLeft}px`;
+            gridElement.style.top = `${newTop}px`;
+          }
+        });
+      
+      
+        document.addEventListener("mouseup", function () {
+          isDragging = false;
+          gridElement.style.cursor = "grab";
+        });
+      
+        window.resetGridPosition = function () {
+          gridMovedManually = false; // Reset esetén újra középre igazítjuk
+          centerGrid(true);
+          currentPath = [];
+          createGrid();
+        };
+      }
+      
+      let gridMovedManually = false; // Jelzi, hogy a felhasználó mozgatta-e a gridet
+      
+      
+      
+      // Figyeljük a felhasználói mozgatást, hogy ne ugráljon vissza
+      document.addEventListener("mousedown", (event) => {
+        const gridElement = document.getElementById("grid");
+        if (gridElement.contains(event.target)) {
+          gridMovedManually = true;
+        }
+      });
+      
+      // Segédfüggvény: adott emelet, sor, oszlop cellájának tartalma
+      function getCell(floor, row, col) {
+        const key = `cell-${row}-${col}`;
+        return floors[floor][key] || "";
+      }
+      
+      // Vizsgáljuk, hogy egy cella akadályként szerepel-e
+      function isBlocked(floor, row, col, startName, endName) {
+        const cell = getCell(floor, row, col);
+        if (cell === "X") return true; // Falak továbbra is akadályok
+      
+        // Ha a cella neve szerepel a presetRoomNames listában, akkor engedélyezzük az áthaladást
+        if (presetRoomNames.includes(cell)) {
+          return false;
+        }
+      
+        // Alapból minden más akadály (ha nem indulási vagy célállomás)
+        if (
+          cell !== "" &&
+          !allowedStairs.includes(cell) &&
+          cell !== startName &&
+          cell !== endName
+        ) {
+          return true;
+        }
+      
+        return false;
+      }
+      
+      function getNeighbors(node, startName, endName) {
+        const { floor, row, col } = node;
+        const neighbors = [];
+        const directions = [
+          [-1, 0],
+          [1, 0],
+          [0, -1],
+          [0, 1],
+        ];
+        const floorData = floors[floor];
+        const maxRows = floorData.rows;
+        const maxCols = floorData.cols;
+        const startPos = findNodeByName(startName);
+        const endPos = findNodeByName(endName);
+      
+        if (!startPos || !endPos) {
+          console.error("Hiba: Érvénytelen kezdő- vagy célpont.");
+          return [];
+        }
+      
+        const sameFloor = startPos.floor === endPos.floor;
+      
+        directions.forEach(([dRow, dCol]) => {
+          const nRow = row + dRow;
+          const nCol = col + dCol;
+          if (nRow >= 0 && nRow < maxRows && nCol >= 0 && nCol < maxCols) {
+            const cellValue = getCell(floor, nRow, nCol);
+      
+            // Ha ugyanazon az emeleten van, akkor tiltsuk a lépcsőket
+            if (sameFloor && allowedStairs.includes(cellValue)) {
+              return;
+            }
+      
+            if (!isBlocked(floor, nRow, nCol, startName, endName)) {
+              neighbors.push({ floor, row: nRow, col: nCol });
+            }
+          }
+        });
+      
+        // Ha emeletváltás szükséges, biztosítsuk, hogy a lépcsőkapcsolatok mindig működjenek
+        const currentKey = `${node.floor}-${node.row}-${node.col}`;
+        if (stairConnections[currentKey]) {
+          const target = stairConnections[currentKey];
+          neighbors.push({
+            floor: target.floor,
+            row: target.row,
+            col: target.col,
+          });
+        }
+      
+        // Ellenőrizzük, hogy a célpont másik emeleten van-e, és ha igen, biztosítsuk az átjárást
+        if (!sameFloor) {
+          Object.entries(stairConnections).forEach(([key, target]) => {
+            if (target.floor === floor && target.row === row && target.col === col) {
+              neighbors.push({
+                floor: parseInt(key.split("-")[0]),
+                row: parseInt(key.split("-")[1]),
+                col: parseInt(key.split("-")[2]),
+              });
+            }
+          });
+        }
+      
+        return neighbors;
+      }
+      
+      // Heurisztika: Manhattan távolság + emeletkülönbség
+      function heuristic(a, b) {
+        // Ha lépcsőn vagyunk, ne számoljuk a pozíciók közötti távolságot
+        if (stairConnections[`${a.floor}-${a.row}-${a.col}`]) {
+          return Math.abs(a.floor - b.floor); // Prioritizáljuk az emeletváltást
+        }
+        return (
+          Math.abs(a.row - b.row) +
+          Math.abs(a.col - b.col) +
+          Math.abs(a.floor - b.floor) * 10 // Emeljen nagyobb súllyal az emeletkülönbségre
+        );
+      }
+      
+      // Multi-floor A* algoritmus
+      function multiFloorAStar(startPos, endPos, startName, endName) {
+        const openList = [];
+        const closedSet = new Set();
+        const gScore = {};
+        const fScore = {};
+        const parent = {};
+      
+        function nodeKey(node) {
+          return `${node.floor}-${node.row}-${node.col}`;
+        }
+      
+        const startKey = nodeKey(startPos);
+        gScore[startKey] = 0;
+        fScore[startKey] = heuristic(startPos, endPos);
+        openList.push(startPos);
+      
+        while (openList.length) {
+          let current = openList.reduce((best, node) =>
+            fScore[nodeKey(node)] < fScore[nodeKey(best)] ? node : best
+          );
+          if (
+            current.floor === endPos.floor &&
+            current.row === endPos.row &&
+            current.col === endPos.col
+          ) {
+            return reconstructPath(parent, current);
+          }
+          const currentKey = nodeKey(current);
+          openList.splice(openList.indexOf(current), 1);
+          closedSet.add(currentKey);
+      
+          const neighbors = getNeighbors(current, startName, endName);
+          neighbors.forEach((neighbor) => {
+            const neighborKey = nodeKey(neighbor);
+            if (closedSet.has(neighborKey)) return;
+            const tentativeG = gScore[currentKey] + 1;
+            if (tentativeG < (gScore[neighborKey] || Infinity)) {
+              parent[neighborKey] = current;
+              gScore[neighborKey] = tentativeG;
+              fScore[neighborKey] = tentativeG + heuristic(neighbor, endPos);
+              if (!openList.some((n) => nodeKey(n) === neighborKey)) {
+                openList.push(neighbor);
+              }
+            }
+          });
+        }
+        return []; // Útvonal nem található
+      }
+      
+      function reconstructPath(parent, current) {
+        const path = [];
+        function nodeKey(node) {
+          return `${node.floor}-${node.row}-${node.col}`;
+        }
+        while (current) {
+          path.push({ floor: current.floor, row: current.row, col: current.col });
+          current = parent[nodeKey(current)];
+        }
+        return path.reverse();
+      }
+      
+      // Útvonalkeresés
+      function runPathfinding() {
+        const startName = document.getElementById("start").value;
+        const endName = document.getElementById("end").value;
+      
+        // Ellenőrizzük, hogy van-e kiválasztva kezdő- és célpont
+        if (!startName || !endName) {
+          alert("Válassz egy kezdő és/vagy célpontot!");
+          return; // Kilépünk a függvényből, ha nincs mindkettő kiválasztva
+        }
+      
+        console.log("Startname:", startName, "End:", endName);
+      
+        const startPos = findNodeByName(startName);
+        const endPos = findNodeByName(endName);
+        console.log("Startpos:", startPos, "End:", endPos);
+      
+        if (!startPos || !endPos) {
+          alert("Érvénytelen kezdő- vagy célpont.");
+          return;
+        }
+      
+        // Futtatjuk a multi-floor A* algoritmust
+        currentPath = multiFloorAStar(startPos, endPos, startName, endName);
+        console.log(currentPath);
+      
+        // Újrageneráljuk a gridet, így a currentPath alapján a megfelelő cellák ki lesznek emelve
+        createGrid();
+      
+        if (currentPath.length === 0) {
+          alert("Nincs útvonal a kiválasztott pontok között!");
+        }
+      }
+      
+      // Keresés az összes emeletben
+      function findNodeByName(name) {
+        return roomIndex[name] || null;
+      }
+      
+      
+      function switchFloor(floor) {
+        if (floors[floor]) {
+          currentFloor = floor;
+          gridMovedManually = false; // Reset manual dragging flag
+          createGrid();
+          centerGrid(true); // Re-center the grid
+        }
+      }
+      
+      function centerGrid(force = false) {
+        const gridElement = document.getElementById("grid");
+        const leftPanel = document.querySelector(".left-panel");
+        if (!gridElement || !leftPanel) return;
+      
+        // Ha a felhasználó manuálisan mozgatta a gridet, ne igazítsuk újra, kivéve, ha force = true
+        if (gridMovedManually && !force) return;
+      
+      
+        if (window.innerWidth <= 768) {
+          gridElement.style.position = "relative";
+          gridElement.style.left = "0";
+          gridElement.style.top = "0";
+          return;
+        }
+        
+        const gridWidth = gridElement.offsetWidth;
+        const gridHeight = gridElement.offsetHeight;
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        const leftPanelWidth = leftPanel.offsetWidth;
+      
+        // Asztali vagy telefonos mód ellenőrzése
+        const isDesktop = windowWidth > 1000; // 1000px felett asztali mód
+        const panelMargin = isDesktop ? 28 : 0; // Csak asztali módban legyen 28px
+        const topOffset = isDesktop ? (windowHeight - gridHeight) / 2 : 0; // Telefonos módban top = 0
+      
+        // Biztosítjuk, hogy asztali módban a top ne legyen túl alacsony
+        const adjustedTop = isDesktop ? Math.max(20, topOffset) : 0;
+      
+        // Vízszintes középre igazítás
+        const centerX = (windowWidth - gridWidth) / 2;
+        const adjustedX = Math.max(leftPanelWidth + panelMargin, centerX);
+      
+        gridElement.style.position = "absolute";
+        gridElement.style.left = `${adjustedX}px`;
+        gridElement.style.top = `${adjustedTop}px`;
+      
+        
+      
+      
+        
+      }
+      
+      
+      </script>
+  </body>
+</html>
