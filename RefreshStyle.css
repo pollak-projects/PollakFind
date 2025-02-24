@@ -229,7 +229,7 @@ body {
   width: 100%; /* Teljes szélesség */
   max-width: 100%; /* Ne lógjon ki */
   box-sizing: border-box; /* Padding miatt ne legyen szélesebb */
-  background: #00bac0;
+  background: #0084a5;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -237,13 +237,17 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid #00f7ff;
+  border: 1px solid #00c6ff;
+}
+
+::placeholder {
+  color: white;
 }
 
 .searchable-select input:focus {
   outline: none;
-  box-shadow: 0 0 8px #009cccbe;
-  background: #009ccc28;
+  box-shadow: 0 0 8px #00c6ff;
+  background: #00222b;
 }
 
 /* Megőrizzük az eredeti select stílust a szintválasztónak */
