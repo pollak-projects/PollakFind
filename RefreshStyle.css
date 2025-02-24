@@ -14,6 +14,52 @@ body {
   background-position: -5px -5px;
 }
 
+.message-separator {
+  align-self: center;
+  border: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2); /* Subtle white line */
+  margin: 5px 0; /* No need for auto here with flexbox */
+  width: 80%; /* Slightly shorter than full width */
+}
+
+#qrcode-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+
+  background: rgba(25, 25, 25, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75);
+}
+
+.tuto-message {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: 5px;
+  text-align: center;
+}
+
+#qr-message {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: 5px;
+  text-align: center;
+}
+
+#qrcode {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
 .logo-container {
   display: flex;
   align-items: center;

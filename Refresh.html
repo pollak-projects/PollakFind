@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="RefreshStyle.css" />
     <!-- JS script -->
     <script src="RefreshScript.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <title>PollakFind • Teremkereső</title>
   </head>
   <body>
@@ -148,8 +149,14 @@
         <button class="reset-button" onclick="resetGridPosition()">
           Visszaállítás
         </button>
-        <p>Bal klikk = indulási hely kiválasztása</p>
-        <p>Jobb klikk = Cél kiválasztása</p>
+        <hr class="message-separator">
+        <p class="tuto-message">• Bal klikk • <br> Kezdőpont kiválasztása</p>
+        <p class="tuto-message">• Jobb klikk • <br> Cél kiválasztása</p>
+        <div id="qrcode-container">
+          <p>Útvonal QR-kód</p>
+          <p id="qr-message">Indítsd el a keresést a generáláshoz</p>
+          <div id="qrcode"></div>
+        </div>
       </div>
     </div>
     <!-- A grid ide generálódik -->

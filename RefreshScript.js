@@ -590,6 +590,18 @@ function switchFloor(floor) {
   }
 }
 
+function generateQRCode(start, end) {
+  const qrContainer = document.getElementById("qrcode");
+  qrContainer.innerHTML = ""; // Előző QR-kód törlése
+  const qrData = `${window.location.href}?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`;
+  new QRCode(qrContainer, {
+    text: qrData,
+    width: 128,
+    height: 128,
+  });
+  document.getElementById("qr-message").style.display = "none"; // Üzenet elrejtése
+}
+
 const roomIndex = {};
 
 function buildRoomIndex() {
@@ -612,6 +624,18 @@ document.addEventListener("DOMContentLoaded", function () {
   createGrid();
   centerGrid(true);
   window.addEventListener("resize", () => centerGrid());
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const start = urlParams.get("start");
+  const end = urlParams.get("end");
+
+  if (start && end && roomIndex[start] && roomIndex[end]) {
+    document.getElementById("start").value = start;
+    document.getElementById("end").value = end;
+    runPathfinding();
+  } else {
+    document.getElementById("qr-message").style.display = "block"; // Üzenet megjelenítése, ha nincs útvonal
+  }
 });
 
 setupDesktop();
@@ -853,32 +877,27 @@ function runPathfinding() {
   const startName = document.getElementById("start").value;
   const endName = document.getElementById("end").value;
 
-  // Ellenőrizzük, hogy van-e kiválasztva kezdő- és célpont
   if (!startName || !endName) {
     alert("Válassz egy kezdő és/vagy célpontot!");
-    return; // Kilépünk a függvényből, ha nincs mindkettő kiválasztva
+    return;
   }
-
-  console.log("Startname:", startName, "End:", endName);
 
   const startPos = findNodeByName(startName);
   const endPos = findNodeByName(endName);
-  console.log("Startpos:", startPos, "End:", endPos);
 
   if (!startPos || !endPos) {
     alert("Érvénytelen kezdő- vagy célpont.");
     return;
   }
 
-  // Futtatjuk a multi-floor A* algoritmust
   currentPath = multiFloorAStar(startPos, endPos, startName, endName);
-  console.log(currentPath);
-
-  // Újrageneráljuk a gridet, így a currentPath alapján a megfelelő cellák ki lesznek emelve
   createGrid();
 
-  if (currentPath.length === 0) {
+  if (currentPath.length > 0) {
+    generateQRCode(startName, endName); // QR-kód generálása sikeres útvonal esetén
+  } else {
     alert("Nincs útvonal a kiválasztott pontok között!");
+    document.getElementById("qr-message").style.display = "block"; // Üzenet megjelenítése, ha nincs útvonal
   }
 }
 
