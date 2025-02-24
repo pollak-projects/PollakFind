@@ -14,6 +14,96 @@ body {
   background-position: -5px -5px;
 }
 
+/* From Uiverse.io by david-mohseni */ 
+.wrapper {
+  display: flex; /* inline-flex helyett flex, hogy jobban illeszkedjen */
+  list-style: none;
+  width: 100%; /* Ez marad, de a túlfolyást kezeljük */
+  font-family: "Poppins", sans-serif;
+  justify-content: space-between; /* center helyett space-between, hogy egyenletesen eloszoljanak */
+  padding: 0; /* Töröljük a felesleges paddingot */
+  margin: 10px 0; /* Csak függőlegesen legyen margó */
+  max-width: 100%; /* Biztosítjuk, hogy ne lógjon ki */
+  box-sizing: border-box; /* A padding és border ne növelje a méretet */
+}
+
+.wrapper .icon {
+  position: relative;
+  background: #0e0e0e;
+  border-radius: 50%;
+  margin: 0 5px; /* 10px helyett kisebb margó, hogy elférjenek */
+  width: 40px; /* 50px helyett kisebb méret */
+  height: 40px; /* 50px helyett kisebb méret */
+  font-size: 16px; /* 18px helyett kisebb betűméret */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip {
+  position: absolute;
+  top: -45px; /* Ez marad, de ellenőrizzük, hogy ne fedjen át mást */
+  font-size: 12px; /* 14px helyett kisebb méret */
+  background: #fff;
+  color: #fff;
+  padding: 4px 6px; /* 5px 8px helyett kisebb padding */
+  border-radius: 5px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip::before {
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  background: #fff;
+  bottom: -3px;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .icon:hover .tooltip {
+  top: -45px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.wrapper .icon:hover span,
+.wrapper .icon:hover .tooltip {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .facebook:hover,
+.wrapper .facebook:hover .tooltip,
+.wrapper .facebook:hover .tooltip::before {
+  background: #1877f2;
+  color: #fff;
+}
+
+.wrapper .twitter:hover,
+.wrapper .twitter:hover .tooltip,
+.wrapper .twitter:hover .tooltip::before {
+  background: #1da1f2;
+  color: #fff;
+}
+
+.wrapper .instagram:hover,
+.wrapper .instagram:hover .tooltip,
+.wrapper .instagram:hover .tooltip::before {
+  background: #e4405f;
+  color: #fff;
+}
+
+
 .message-separator {
   align-self: center;
   border: 0;
@@ -43,7 +133,15 @@ body {
 .tuto-message {
   font-size: 0.9rem;
   color: #ccc;
-  margin-top: 5px;
+  margin-top: -2.5px; /* Negatív margó, hogy felfelé tolja a szöveget */
+  margin-bottom: 5px; /* Opcionális: az alatta lévő elem távolságának szabályozása */
+}
+
+.tuto-message-center {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: -2.5px;
+  margin-bottom: -0.5px; /* Negatív margó, hogy felfelé tolja a szöveget */
   text-align: center;
 }
 
@@ -89,20 +187,29 @@ body {
 
 /* Sidebar és egyéb desktop elemek */
 .left-panel {
-  width: 250px;
-  padding: 10px;
+  width: 275px;
+  padding: 10px; /* Fent és lent 10px padding */
   margin: 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  /* From https://css.glass */
+  height: calc(100vh - 50px); /* A teljes viewport magasság mínusz margók (15px fent + 15px lent) és padding (10px fent + 10px lent) */
   background: rgba(25, 25, 25, 0.5);
   border-radius: 25px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
   border: 1px solid rgba(45, 45, 45, 0.75);
+  box-sizing: border-box; /* A padding ne növelje a méretet */
+  align-self: center;
+  justify-content: space-between; /* Felső és alsó részek szétválasztása */
+}
+
+.bottom-elements {
+  position: absolute;
+  bottom: 15px; /* A padding figyelembevétele */
+  width: calc(100% - 30px); /* Padding levonása */
+  text-align: center; /* Opcionális: középre igazítás */
 }
 
 .searchable-select {
@@ -164,9 +271,8 @@ body {
   padding: 15px;
   width: 100%;
   box-sizing: border-box;
+  flex-grow: 1;
   overflow: hidden;
-
-  /* From https://css.glass */
   background: rgba(45, 45, 45, 0.5);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -192,11 +298,17 @@ button {
   color: #57a300;
   cursor: pointer;
   transition: 0.3s;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid #2e7700;
 }
 
 button:hover {
   background: #57a300;
   color: #ffffff;
+  border: 1px solid #62ff00;
 }
 
 /* Grid alap beállítások (desktop) */
@@ -264,18 +376,21 @@ button:hover {
 }
 
 .reset-button {
-  background-color: #450000;
+  background: #450000;
   color: #a30000;
-  border-radius: 10px;
-  font-size: 1rem;
   cursor: pointer;
-  border: none;
   transition: 0.3s;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid #680000;
 }
 
 .reset-button:hover {
   background-color: #a30000;
   color: #ffffff;
+  border: 1px solid #ff0000;
 }
 
 #orientationOverlay {
