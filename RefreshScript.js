@@ -591,17 +591,29 @@ function switchFloor(floor) {
 }
 
 function generateQRCode(start, end) {
-  const qrContainer = document.getElementById("qrcode");
-  qrContainer.innerHTML = ""; // Előző QR-kód törlése
+  const qrContainer = document.getElementById("qrcode-container");
+  const qrDiv = document.getElementById("qrcode");
+  const qrMessage = document.getElementById("qr-message");
+
+  // Előző QR-kód törlése
+  qrDiv.innerHTML = "";
+
+  // QR-kód generálása
   const qrData = `${window.location.href}?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`;
-  new QRCode(qrContainer, {
+  new QRCode(qrDiv, {
     text: qrData,
     width: 128,
     height: 128,
   });
-  document.getElementById("qr-message").style.display = "none"; // Üzenet elrejtése
-}
 
+  // Hide the "Indítsd el a keresést a generáláshoz" message
+  qrMessage.style.display = "none";
+
+  // Animáció indítása
+  qrContainer.classList.remove("animate"); // Előző animáció eltávolítása
+  void qrContainer.offsetWidth; // Reflow kényszerítése az újraindításhoz
+  qrContainer.classList.add("animate"); // Animáció aktiválása
+}
 const roomIndex = {};
 
 function buildRoomIndex() {

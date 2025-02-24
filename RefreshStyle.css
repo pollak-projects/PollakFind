@@ -12,6 +12,48 @@ body {
   );
   background-size: 30px 30px;
   background-position: -5px -5px;
+
+
+}
+
+#qrcode-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(25, 25, 25, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75); /* Alap border */
+}
+
+/* Animáció osztály */
+#qrcode-container.animate {
+  animation: containerBorderPulse 2s alternate;
+}
+
+/* Animáció definíciója */
+@keyframes containerBorderPulse {
+  0% {
+    border-color: rgba(45, 45, 45, 0.75); /* Kezdő szín */
+  }
+  25% {
+    border-color: rgba(45, 45, 45, 0.75) ;
+  }
+  50% {
+    border-color: #00c3ff; 
+  }
+  75% {
+    border-color: rgba(51, 51, 51, 0.75); /* Vissza az eredeti színre */
+  }
+  100% {
+    border-color: rgba(45, 45, 45, 0.75); /* Vissza az eredeti színre */
+  }
 }
 
 .message-separator {
