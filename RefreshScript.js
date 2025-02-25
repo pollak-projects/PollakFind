@@ -606,14 +606,17 @@ function generateQRCode(start, end) {
     height: 128,
   });
 
-  // Hide the "Indítsd el a keresést a generáláshoz" message
+  // Üzenet elrejtése és QR-kód megjelenítése
   qrMessage.style.display = "none";
+  qrDiv.style.display = "block";
 
-  // Animáció indítása
-  qrContainer.classList.remove("animate"); // Előző animáció eltávolítása
-  void qrContainer.offsetWidth; // Reflow kényszerítése az újraindításhoz
-  qrContainer.classList.add("animate"); // Animáció aktiválása
+    // Animáció indítása
+    qrContainer.classList.remove("animate"); // Előző animáció eltávolítása
+    void qrContainer.offsetWidth; // Reflow kényszerítése az újraindításhoz
+    qrContainer.classList.add("animate"); // Animáció aktiválása
 }
+
+
 const roomIndex = {};
 
 function buildRoomIndex() {
@@ -693,12 +696,15 @@ function setupDesktop() {
   });
 
   window.resetGridPosition = function () {
-    gridMovedManually = false; // Reset esetén újra középre igazítjuk
+    gridMovedManually = false;
     centerGrid(true);
     currentPath = [];
     createGrid();
     document.getElementById("start").value = "";
     document.getElementById("end").value = "";
+    document.getElementById("qrcode").innerHTML = "";
+    document.getElementById("qrcode").style.display = "none";
+    document.getElementById("qr-message").style.display = "block";
   };
 }
 
@@ -906,10 +912,11 @@ function runPathfinding() {
   createGrid();
 
   if (currentPath.length > 0) {
-    generateQRCode(startName, endName); // QR-kód generálása sikeres útvonal esetén
+    generateQRCode(startName, endName);
+    document.getElementById("qr-message").style.display = "none";
   } else {
     alert("Nincs útvonal a kiválasztott pontok között!");
-    document.getElementById("qr-message").style.display = "block"; // Üzenet megjelenítése, ha nincs útvonal
+    document.getElementById("qr-message").style.display = "block";
   }
 }
 
