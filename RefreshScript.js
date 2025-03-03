@@ -999,3 +999,11 @@ document.addEventListener("contextmenu", function (event) {
       
   }
 });
+
+function changeFloor(direction) {
+    const newFloor = currentFloor + direction;
+    if (floors[newFloor] !== undefined) {
+        switchFloor(newFloor);
+        document.getElementById("floorSelect").value = newFloor; // Frissíti a legördülő menüt is
+    }
+}
