@@ -20,8 +20,8 @@ const stairConnections = {
 // Emeletek: minden emelet saját sor- és oszlopszámmal, illetve cellaadatokkal
 const floors = {
   0: {
-    rows: 13, // például: 10 sor
-    cols: 20, // például: 20 oszlop
+    rows: 13,
+    cols: 20,
 
     "cell-0-0": "X",
     "cell-0-1": "X",
@@ -535,8 +535,10 @@ function createGrid() {
   // DOM-frissítések minimalizálása
   const fragment = document.createDocumentFragment();
 
-  timeoutIds.forEach((id) => clearTimeout(id));
-  timeoutIds = [];
+  if (timeoutIds && timeoutIds.length > 0) {
+    timeoutIds.forEach((id) => clearTimeout(id));
+    timeoutIds = [];
+  }
 
   for (let row = 0; row < rows; row++) {
     let rowArray = [];
@@ -565,11 +567,12 @@ function createGrid() {
         (n) => n.floor === currentFloor && n.row === row && n.col === col
       );
       if (pathIndex !== -1) {
-        const delay = pathIndex * 25; // 100ms helyett 50ms, hogy gyorsabb legyen
-        setTimeout(() => {
+        const delay = pathIndex * 25;
+        const timeoutId = setTimeout(() => {
           cell.classList.add("path");
-          cell.style.animationDelay = `${pathIndex * 0.1}s`; // 0.2s helyett 0.1s
+          cell.style.animationDelay = `${pathIndex * 0.1}s`;
         }, delay);
+        timeoutIds.push(timeoutId);
       }
 
       rowArray.push(cell);
@@ -586,7 +589,9 @@ function createGrid() {
 function switchFloor(floor) {
   if (floors[floor]) {
     currentFloor = floor;
+    gridMovedManually = false;
     createGrid();
+    centerGrid(true);
   }
 }
 
@@ -610,12 +615,11 @@ function generateQRCode(start, end) {
   qrMessage.style.display = "none";
   qrDiv.style.display = "block";
 
-    // Animáció indítása
-    qrContainer.classList.remove("animate"); // Előző animáció eltávolítása
-    void qrContainer.offsetWidth; // Reflow kényszerítése az újraindításhoz
-    qrContainer.classList.add("animate"); // Animáció aktiválása
+  // Animáció indítása
+  qrContainer.classList.remove("animate");
+  void qrContainer.offsetWidth;
+  qrContainer.classList.add("animate");
 }
-
 
 const roomIndex = {};
 
@@ -637,6 +641,15 @@ function buildRoomIndex() {
 document.addEventListener("DOMContentLoaded", function () {
   buildRoomIndex();
   createGrid();
+  
+  // Grid elhelyezése a megfelelő pozícióban betöltéskor
+  const gridElement = document.getElementById("grid");
+  if (gridElement) {
+    gridElement.style.position = "absolute";
+    gridElement.style.left = "365px";
+    gridElement.style.top = "0";
+  }
+  
   centerGrid(true);
   window.addEventListener("resize", () => centerGrid());
 
@@ -649,7 +662,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("end").value = end;
     runPathfinding();
   } else {
-    document.getElementById("qr-message").style.display = "block"; // Üzenet megjelenítése, ha nincs útvonal
+    document.getElementById("qr-message").style.display = "block";
   }
 });
 
@@ -675,8 +688,8 @@ function setupDesktop() {
     if (isDragging) {
       let newLeft = event.clientX - offsetX;
       let newTop = event.clientY - offsetY;
-      // Calculate boundaries so the grid stays within the viewport
-      const minLeft = 300;
+      
+      const minLeft = 365;
       const minTop = 0;
       const maxLeft = window.innerWidth - gridElement.offsetWidth;
       const maxTop = window.innerHeight - gridElement.offsetHeight;
@@ -688,7 +701,6 @@ function setupDesktop() {
       gridElement.style.top = `${newTop}px`;
     }
   });
-
 
   document.addEventListener("mouseup", function () {
     isDragging = false;
@@ -710,12 +722,10 @@ function setupDesktop() {
 
 let gridMovedManually = false; // Jelzi, hogy a felhasználó mozgatta-e a gridet
 
-
-
 // Figyeljük a felhasználói mozgatást, hogy ne ugráljon vissza
 document.addEventListener("mousedown", (event) => {
   const gridElement = document.getElementById("grid");
-  if (gridElement.contains(event.target)) {
+  if (gridElement && gridElement.contains(event.target)) {
     gridMovedManually = true;
   }
 });
@@ -723,7 +733,7 @@ document.addEventListener("mousedown", (event) => {
 // Segédfüggvény: adott emelet, sor, oszlop cellájának tartalma
 function getCell(floor, row, col) {
   const key = `cell-${row}-${col}`;
-  return floors[floor][key] || "";
+  return floors[floor] ? (floors[floor][key] || "") : "";
 }
 
 // Vizsgáljuk, hogy egy cella akadályként szerepel-e
@@ -758,6 +768,9 @@ function getNeighbors(node, startName, endName) {
     [0, -1],
     [0, 1],
   ];
+  
+  if (!floors[floor]) return neighbors;
+  
   const floorData = floors[floor];
   const maxRows = floorData.rows;
   const maxCols = floorData.cols;
@@ -766,7 +779,7 @@ function getNeighbors(node, startName, endName) {
 
   if (!startPos || !endPos) {
     console.error("Hiba: Érvénytelen kezdő- vagy célpont.");
-    return [];
+    return neighbors;
   }
 
   const sameFloor = startPos.floor === endPos.floor;
@@ -803,10 +816,11 @@ function getNeighbors(node, startName, endName) {
   if (!sameFloor) {
     Object.entries(stairConnections).forEach(([key, target]) => {
       if (target.floor === floor && target.row === row && target.col === col) {
+        const parts = key.split("-");
         neighbors.push({
-          floor: parseInt(key.split("-")[0]),
-          row: parseInt(key.split("-")[1]),
-          col: parseInt(key.split("-")[2]),
+          floor: parseInt(parts[0]),
+          row: parseInt(parts[1]),
+          col: parseInt(parts[2]),
         });
       }
     });
@@ -909,9 +923,15 @@ function runPathfinding() {
   }
 
   currentPath = multiFloorAStar(startPos, endPos, startName, endName);
-  createGrid();
-
+  
   if (currentPath.length > 0) {
+    // Ha van útvonal, váltsunk a start emeletére
+    if (startPos.floor !== currentFloor) {
+      currentFloor = startPos.floor;
+      document.getElementById("floorSelect").value = currentFloor;
+    }
+    
+    createGrid();
     generateQRCode(startName, endName);
     document.getElementById("qr-message").style.display = "none";
   } else {
@@ -925,16 +945,6 @@ function findNodeByName(name) {
   return roomIndex[name] || null;
 }
 
-
-function switchFloor(floor) {
-  if (floors[floor]) {
-    currentFloor = floor;
-    gridMovedManually = false; // Reset manual dragging flag
-    createGrid();
-    centerGrid(true); // Re-center the grid
-  }
-}
-
 function centerGrid(force = false) {
   const gridElement = document.getElementById("grid");
   const leftPanel = document.querySelector(".left-panel");
@@ -942,14 +952,6 @@ function centerGrid(force = false) {
 
   // Ha a felhasználó manuálisan mozgatta a gridet, ne igazítsuk újra, kivéve, ha force = true
   if (gridMovedManually && !force) return;
-
-
-  if (window.innerWidth <= 768) {
-    gridElement.style.position = "relative";
-    gridElement.style.left = "0";
-    gridElement.style.top = "0";
-    return;
-  }
   
   const gridWidth = gridElement.offsetWidth;
   const gridHeight = gridElement.offsetHeight;
@@ -958,52 +960,48 @@ function centerGrid(force = false) {
   const leftPanelWidth = leftPanel.offsetWidth;
 
   // Asztali vagy telefonos mód ellenőrzése
-  const isDesktop = windowWidth > 1000; // 1000px felett asztali mód
-  const panelMargin = isDesktop ? 28 : 0; // Csak asztali módban legyen 28px
+  const isDesktop = windowWidth > 1300; // 1000px felett asztali mód
+  const panelMargin = isDesktop ? 90 : 55; // Csak asztali módban legyen 90px
   const topOffset = isDesktop ? (windowHeight - gridHeight) / 2 : 0; // Telefonos módban top = 0
 
   // Biztosítjuk, hogy asztali módban a top ne legyen túl alacsony
-  const adjustedTop = isDesktop ? Math.max(20, topOffset) : 0;
+  const adjustedTop = isDesktop ? Math.max(0, topOffset) : 0;
 
   // Vízszintes középre igazítás
-  const centerX = (windowWidth - gridWidth) / 2;
-  const adjustedX = Math.max(leftPanelWidth + panelMargin, centerX);
+  const adjustedX = Math.max(leftPanelWidth + panelMargin);
 
   gridElement.style.position = "absolute";
   gridElement.style.left = `${adjustedX}px`;
   gridElement.style.top = `${adjustedTop}px`;
 
-  
+  if (window.innerWidth <= 1300) {
+    gridElement.style.position = "absolute";
+    gridElement.style.left = "80";
+    gridElement.style.top = "0";
+    return;
+  }
 
-
-  
 }
 
-document.addEventListener("click", function (event) { console.log(event.key)
-    // get the element that was clicked
-    const element = event.target;
-    // check if the element has the class "cell"
-    if (element.classList.contains("cell") && element.id !== "start" && element.id !== "end" && element.innerHTML != "X" && element.innerHTML != "") {
-      console.log(element.innerHTML);
-        document.getElementById("start").value = element.innerHTML;
+document.addEventListener("click", function (event) {
+  const element = event.target;
+  if (element.classList.contains("cell") && element.id !== "start" && element.id !== "end" && element.innerHTML !== "X" && element.innerHTML !== "") {
+    document.getElementById("start").value = element.innerHTML;
   }
 });
+
 document.addEventListener("contextmenu", function (event) {
   event.preventDefault();
-
-    const element = event.target;
-    // check if the element has the class "cell"
-    if (element.classList.contains("cell") && element.id !== "start" && element.id !== "end" && element.innerHTML != "X" && element.innerHTML != "") {
-      console.log(element.innerHTML);
-        document.getElementById("end").value = element.innerHTML;
-      
+  const element = event.target;
+  if (element.classList.contains("cell") && element.id !== "start" && element.id !== "end" && element.innerHTML !== "X" && element.innerHTML !== "") {
+    document.getElementById("end").value = element.innerHTML;
   }
 });
 
 function changeFloor(direction) {
-    const newFloor = currentFloor + direction;
-    if (floors[newFloor] !== undefined) {
-        switchFloor(newFloor);
-        document.getElementById("floorSelect").value = newFloor; // Frissíti a legördülő menüt is
-    }
+  const newFloor = currentFloor + direction;
+  if (floors[newFloor] !== undefined) {
+    switchFloor(newFloor);
+    document.getElementById("floorSelect").value = newFloor;
+  }
 }

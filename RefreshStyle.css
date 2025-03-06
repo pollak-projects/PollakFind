@@ -12,15 +12,13 @@ body {
   );
   background-size: 30px 30px;
   background-position: -5px -5px;
-
-
 }
 
 #qrcode-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 200px; /* Fix magasság, hogy a konténer ne változzon */
+  height: 200px;
   background: rgba(25, 25, 25, 0.5);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -33,22 +31,20 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 128px; /* A QR-kód vagy üzenet magassága */
+  height: 128px;
 }
 
 #qrcode {
-  display: none; /* Alapból rejtett, amíg nem generáljuk a QR-kódot */
+  display: none;
 }
 
-/* Animáció osztály */
 #qrcode-container.animate {
   animation: containerBorderPulse 2s alternate;
 }
 
-/* Animáció definíciója */
 @keyframes containerBorderPulse {
   0% {
-    border-color: rgba(45, 45, 45, 0.75); /* Kezdő szín */
+    border-color: rgba(45, 45, 45, 0.75);
   }
   25% {
     border-color: #0084a5;
@@ -57,124 +53,34 @@ body {
     border-color: rgba(57, 57, 57, 0.75);
   }
   75% {
-    border-color: rgba(51, 51, 51, 0.75); /* Vissza az eredeti színre */
+    border-color: rgba(51, 51, 51, 0.75);
   }
   100% {
-    border-color: rgba(45, 45, 45, 0.75); /* Vissza az eredeti színre */
+    border-color: rgba(45, 45, 45, 0.75);
   }
 }
-
-/* From Uiverse.io by david-mohseni */ 
-.wrapper {
-  display: flex; /* inline-flex helyett flex, hogy jobban illeszkedjen */
-  list-style: none;
-  width: 100%; /* Ez marad, de a túlfolyást kezeljük */
-  font-family: "Poppins", sans-serif;
-  justify-content: space-between; /* center helyett space-between, hogy egyenletesen eloszoljanak */
-  padding: 0; /* Töröljük a felesleges paddingot */
-  margin: 10px 0; /* Csak függőlegesen legyen margó */
-  max-width: 100%; /* Biztosítjuk, hogy ne lógjon ki */
-  box-sizing: border-box; /* A padding és border ne növelje a méretet */
-}
-
-.wrapper .icon {
-  position: relative;
-  background: #0e0e0e;
-  border-radius: 50%;
-  margin: 0 5px; /* 10px helyett kisebb margó, hogy elférjenek */
-  width: 40px; /* 50px helyett kisebb méret */
-  height: 40px; /* 50px helyett kisebb méret */
-  font-size: 16px; /* 18px helyett kisebb betűméret */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.wrapper .tooltip {
-  position: absolute;
-  top: -45px; /* Ez marad, de ellenőrizzük, hogy ne fedjen át mást */
-  font-size: 12px; /* 14px helyett kisebb méret */
-  background: #fff;
-  color: #fff;
-  padding: 4px 6px; /* 5px 8px helyett kisebb padding */
-  border-radius: 5px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.wrapper .tooltip::before {
-  position: absolute;
-  content: "";
-  height: 8px;
-  width: 8px;
-  background: #fff;
-  bottom: -3px;
-  left: 50%;
-  transform: translate(-50%) rotate(45deg);
-  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.wrapper .icon:hover .tooltip {
-  top: -45px;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-.wrapper .icon:hover span,
-.wrapper .icon:hover .tooltip {
-  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
-}
-
-.wrapper .facebook:hover,
-.wrapper .facebook:hover .tooltip,
-.wrapper .facebook:hover .tooltip::before {
-  background: #1877f2;
-  color: #fff;
-}
-
-.wrapper .twitter:hover,
-.wrapper .twitter:hover .tooltip,
-.wrapper .twitter:hover .tooltip::before {
-  background: #1da1f2;
-  color: #fff;
-}
-
-.wrapper .instagram:hover,
-.wrapper .instagram:hover .tooltip,
-.wrapper .instagram:hover .tooltip::before {
-  background: #e4405f;
-  color: #fff;
-}
-
 
 .message-separator {
   align-self: center;
   border: 0;
   height: 1px;
-  background: rgba(255, 255, 255, 0.2); /* Subtle white line */
-  margin: 5px 0; /* No need for auto here with flexbox */
-  width: 80%; /* Slightly shorter than full width */
+  background: rgba(255, 255, 255, 0.2);
+  margin: 5px 0;
+  width: 80%;
 }
 
 .tuto-message {
   font-size: 0.9rem;
   color: #ccc;
-  margin-top: -2.5px; /* Negatív margó, hogy felfelé tolja a szöveget */
-  margin-bottom: 5px; /* Opcionális: az alatta lévő elem távolságának szabályozása */
+  margin-top: -2.5px;
+  margin-bottom: 5px;
 }
 
 .tuto-message-center {
   font-size: 0.9rem;
   color: #ccc;
   margin-top: -2.5px;
-  margin-bottom: 4px; /* Negatív margó, hogy felfelé tolja a szöveget */
+  margin-bottom: 4px;
   text-align: center;
 }
 
@@ -188,23 +94,12 @@ body {
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 10px; /* Távolság a logó és a szöveg között */
+  gap: 10px;
 }
 
 .logo-container img {
-  width: 50px; /* Kisebb logó */
+  width: 50px;
   height: auto;
-}
-
-#box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 400px;
-  height: 200px;
-  color: white;
-  font-family: "Raleway";
-  font-size: 2.5rem;
 }
 
 .logo-container h1 {
@@ -215,33 +110,33 @@ body {
 /* Sidebar és egyéb desktop elemek */
 .left-panel {
   width: 275px;
-  padding: 10px; /* Fent és lent 10px padding */
+  padding: 10px;
   margin: 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: calc(100vh - 50px); /* A teljes viewport magasság mínusz margók (15px fent + 15px lent) és padding (10px fent + 10px lent) */
+  height: calc(100vh - 50px);
   background: rgba(25, 25, 25, 0.5);
   border-radius: 25px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
   border: 1px solid rgba(45, 45, 45, 0.75);
-  box-sizing: border-box; /* A padding ne növelje a méretet */
+  box-sizing: border-box;
   align-self: center;
-  justify-content: space-between; /* Felső és alsó részek szétválasztása */
+  justify-content: space-between;
 }
 
 .bottom-elements {
   position: absolute;
-  bottom: 15px; /* A padding figyelembevétele */
-  width: calc(100% - 30px); /* Padding levonása */
-  text-align: center; /* Opcionális: középre igazítás */
+  bottom: 15px;
+  width: calc(100% - 30px);
+  text-align: center;
 }
 
 .searchable-select {
-  width: 100%; /* A szülő div teljes szélességét használja */
-  box-sizing: border-box; /* Ne lógjon ki a padding miatt */
+  width: 100%;
+  box-sizing: border-box;
   position: relative;
   margin-bottom: 15px;
 }
@@ -253,9 +148,9 @@ body {
 .searchable-select input {
   font-family: "Poppins", sans-serif;
   padding: 10px 15px;
-  width: 100%; /* Teljes szélesség */
-  max-width: 100%; /* Ne lógjon ki */
-  box-sizing: border-box; /* Padding miatt ne legyen szélesebb */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   background: #0084a5;
   color: white;
   cursor: pointer;
@@ -277,7 +172,6 @@ body {
   background: #00222b;
 }
 
-/* Megőrizzük az eredeti select stílust a szintválasztónak */
 #floorSelect {
   padding: 7.5px;
   border-radius: 10px;
@@ -299,14 +193,13 @@ select option {
   background: #0084a5;
 }
 
-/* Megakadályozza a szöveg kijelölését a gridben és a sidebarban */
 .left-panel,
 .grid,
 .grid div {
-  user-select: none; /* Modern böngészők */
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer / Edge */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .select-container {
@@ -358,7 +251,6 @@ button:hover {
   border: 1px solid #005822;
 }
 
-/* Grid alap beállítások (desktop) */
 .grid {
   display: grid;
   grid-template-columns: repeat(20, 50px);
@@ -366,10 +258,8 @@ button:hover {
   padding: 10px;
   position: absolute;
   cursor: grab;
-  top: 300px;
-  left: 500px;
-
-  /* From https://css.glass */
+  top: 0px; /* 50px helyett 0px */
+  left: 365px;
   background: rgba(25, 25, 25, 0.5);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
@@ -396,7 +286,6 @@ button:hover {
   color: transparent;
 }
 
-/* Animált fénylés a highlightolt kockáknak */
 @keyframes glow {
   0% {
     box-shadow: 0 0 5px rgba(0, 132, 165, 0.5);
@@ -459,14 +348,15 @@ button:hover {
 }
 
 /* Tájkép nézet, kisebb kijelzőkön */
-@media screen and (orientation: landscape) and (max-width: 1100px) {
+@media screen and (orientation: landscape) and (max-width: 1200px) {
   .left-panel {
     display: none;
   }
   .grid {
-    grid-template-columns: repeat(20, 40px);
-    left: 0;
+    position: absolute;
     top: 0;
+    left: 0;
+    grid-template-columns: repeat(20, 40px);
     justify-content: center;
   }
   .grid div {
@@ -476,7 +366,12 @@ button:hover {
     min-height: 40px;
     font-size: 0.8rem;
   }
+  .floor-navigation{
+    position: relative;
+    bottom: 180px;
+  }
 }
+
 
 /* Portré nézet, kisebb kijelzőkön */
 @media screen and (orientation: portrait) and (max-width: 768px) {
@@ -491,6 +386,44 @@ button:hover {
   #orientationOverlay {
     display: block;
     width: 80%;
+  }
+  #floor-up{
+    display: none;
+  }
+  #floor-down{
+    display: none;
+  }
+}
+@media screen and (min-width: 1028px) {
+  .searchable-select-label{
+    font-size: .9rem;
+  }
+  .searchable-select-input{
+    height: 40px;
+  }
+  .floor-select-label{
+    font-size: .9rem;
+  }
+  .search-button{
+    height: 40px;
+    font-size: .9rem;
+    padding-top: 8px;
+  }
+  .reset-button{
+    height: 30px;
+    font-size: .9rem;
+    padding-top: 3px;
+  }
+  .select-container{
+    gap: 5px;
+  }
+  .left-panel{
+    height: 100vh;
+    gap: 0;
+  }
+  .social-buttons{
+    position: relative;
+    top: 19px;
   }
 }
 
@@ -517,5 +450,3 @@ button:hover {
 .floor-navigation button:hover {
   background: #005f7a;
 }
-
-
