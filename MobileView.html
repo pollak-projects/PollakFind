@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Favicon -->
+    <!-- Favicon / Tab részleg -->
     <link rel="shortcut icon" href="./Logo.png" type="image/x-icon" />
     <!-- Google Fonts -->
     <link
@@ -11,298 +11,467 @@
       rel="stylesheet"
     />
     <!-- Stíluslap -->
-    <style>body {
-      font-family: "Poppins", sans-serif;
-      margin: 0;
-      display: flex;
-      height: 100vh;
-      color: white;
-      position: relative;
-      background-color: #151515;
-      background-image: radial-gradient(
-        rgba(115, 115, 115, 0.171) 2px,
-        transparent 0
-      );
-      background-size: 30px 30px;
-      background-position: -5px -5px;
-    }
-    
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 10px; /* Távolság a logó és a szöveg között */
-    }
-    
-    .logo-container img {
-      width: 50px; /* Kisebb logó */
-      height: auto;
-    }
-    
-    #box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 400px;
-      height: 200px;
-      color: white;
-      font-family: "Raleway";
-      font-size: 2.5rem;
-    }
-    
-    .logo-container h1 {
-      font-size: 1.5rem;
-      margin: 0;
-    }
-    
-    /* Sidebar és egyéb desktop elemek */
-    .left-panel {
-      width: 250px;
-      padding: 10px;
-      margin: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    
-      /* From https://css.glass */
-      background: rgba(25, 25, 25, 0.5);
-      border-radius: 25px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
-      backdrop-filter: blur(7.4px);
-      -webkit-backdrop-filter: blur(7.4px);
-      border: 1px solid rgba(45, 45, 45, 0.75);
-    }
-    
-    .searchable-select {
-      width: 100%; /* A szülő div teljes szélességét használja */
-      box-sizing: border-box; /* Ne lógjon ki a padding miatt */
-      position: relative;
-      margin-bottom: 15px;
-    }
-    
-    .search-button {
-      padding: 15px;
-    }
-    
-    .searchable-select input {
-      width: 100%; /* Teljes szélesség */
-      max-width: 100%; /* Ne lógjon ki */
-      box-sizing: border-box; /* Padding miatt ne legyen szélesebb */
-      padding: 12px 15px;
-      border: 2px solid #009ccc;
-      border-radius: 8px;
-      background: #00222c8c;
-      color: white;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-    
-    .searchable-select input:focus {
-      outline: none;
-      box-shadow: 0 0 8px #009cccbe;
-      background: #009ccc28;
-    }
-    
-    /* Megőrizzük az eredeti select stílust a szintválasztónak */
-    #floorSelect {
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      font-size: 1rem;
-      font-weight: 600;
-      width: 100%;
-      background: #333;
-      color: white;
-    }
-    
-    /* Megakadályozza a szöveg kijelölését a gridben és a sidebarban */
-    .left-panel,
-    .grid,
-    .grid div {
-      user-select: none; /* Modern böngészők */
-      -webkit-user-select: none; /* Safari */
-      -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* Internet Explorer / Edge */
-    }
-    
-    .select-container {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 15px;
-      width: 100%;
-      box-sizing: border-box;
-      overflow: hidden;
-    
-      /* From https://css.glass */
-      background: rgba(45, 45, 45, 0.5);
-      border-radius: 16px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(7.4px);
-      -webkit-backdrop-filter: blur(7.4px);
-      border: 1px solid rgba(45, 45, 45, 0.75);
-    }
-    
-    select,
-    button {
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      font-size: 1rem;
-      font-weight: 600;
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-    }
-    
-    button {
-      background: #1a4500;
-      color: #57a300;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    
-    button:hover {
-      background: #57a300;
-      color: #ffffff;
-    }
-    
-    /* Grid alap beállítások (desktop) */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(20, 50px);
-      gap: 5px;
-      padding: 10px;
-      position: absolute;
-      cursor: grab;
-      top: 300px;
-      left: 500px;
-    
-      /* From https://css.glass */
-      background: rgba(25, 25, 25, 0.5);
-      border-radius: 16px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
-      backdrop-filter: blur(7.4px);
-      -webkit-backdrop-filter: blur(7.4px);
-      border: 1px solid rgba(45, 45, 45, 0.75);
-    }
-    
-    .grid div {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 7.5px;
-      font-weight: bold;
-      padding: 0.25px;
-      text-align: center;
-      color: black;
-      min-height: 50px;
-      min-width: 50px;
-    }
-    
-    .grid .black {
-      background: #000;
-      color: transparent;
-    }
-    
-    /* Animált fénylés a highlightolt kockáknak */
-    @keyframes glow {
-      0% {
-        box-shadow: 0 0 5px rgba(0, 221, 255, 0.5);
-        background-color: rgba(0, 221, 255, 0.4);
-        border: 2px solid rgba(0, 221, 255, 0.8);
-      }
-      50% {
-        box-shadow: 0 0 15px rgba(0, 221, 255, 1);
-        background-color: rgba(0, 221, 255, 0.9);
-        border: 2px solid rgba(0, 221, 255, 1);
-      }
-      100% {
-        box-shadow: 0 0 5px rgba(0, 221, 255, 0.5);
-        background-color: rgba(0, 221, 255, 0.4);
-        border: 2px solid rgba(0, 221, 255, 0.8);
-      }
-    }
-    
-    .grid .path {
-      animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-      box-sizing: border-box;
-      margin: 0;
-    }
-    
-    .reset-button {
-      background-color: #450000;
-      color: #a30000;
-      border-radius: 10px;
-      font-size: 1rem;
-      cursor: pointer;
-      border: none;
-      transition: 0.3s;
-    }
-    
-    .reset-button:hover {
-      background-color: #a30000;
-      color: #ffffff;
-    }
-    
-    #orientationOverlay {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.5rem;
-      color: white;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 10px;
-    }
-    
-    @media screen and (orientation: landscape) and (max-width: 1100px) {
-      .left-panel {
-        display: none;
-      }
-      .grid {
-        grid-template-columns: repeat(20, 40px);
-        left: 0; /* Igazítsuk balra */
-        top: 0; /* Ha kell, igazítsd függőlegesen is */
-        justify-content: center; /* Középre helyezés */
-      }
-      .grid div {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-        min-height: 40px;
-        font-size: 0.8rem;
-      }
-    }
-    
-    /* Ha portré módban kell elrejteni mindent */
-    @media screen and (orientation: portrait) and (max-width: 768px) {
-      body{
-        width: 100%;
-        height: 100vh;
-      }
-    
-      .left-panel,
-      .grid {
-        display: none !important;
-      }
-    
-      #orientationOverlay {
-        display: block;
-        width: 80%;
-      }
-    }
-    
-    
-    
-    
-    </style>
+    <link rel="stylesheet" href="RefreshStyle.css" />
+    <!-- JS script -->
+    <script src="RefreshScript.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <title>PollakFind • Teremkereső</title>
   </head>
+  <style>
+    body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  display: flex;
+  height: 100vh;
+  color: white;
+  position: relative;
+  background-color: #151515;
+  background-image: radial-gradient(
+    rgba(115, 115, 115, 0.171) 2px,
+    transparent 0
+  );
+  background-size: 30px 30px;
+  background-position: -5px -5px;
+}
+
+#qrcode-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+  background: rgba(25, 25, 25, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75);
+}
+
+#qr-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 128px;
+}
+
+#qrcode {
+  display: none;
+}
+
+#qrcode-container.animate {
+  animation: containerBorderPulse 2s alternate;
+}
+
+@keyframes containerBorderPulse {
+  0% {
+    border-color: rgba(45, 45, 45, 0.75);
+  }
+  25% {
+    border-color: #0084a5;
+  }
+  50% {
+    border-color: rgba(57, 57, 57, 0.75);
+  }
+  75% {
+    border-color: rgba(51, 51, 51, 0.75);
+  }
+  100% {
+    border-color: rgba(45, 45, 45, 0.75);
+  }
+}
+
+.message-separator {
+  align-self: center;
+  border: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 5px 0;
+  width: 80%;
+}
+
+.tuto-message {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: -2.5px;
+  margin-bottom: 5px;
+}
+
+.tuto-message-center {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: -2.5px;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+#qr-message {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-container img {
+  width: 50px;
+  height: auto;
+}
+
+.logo-container h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+/* Sidebar és egyéb desktop elemek */
+.left-panel {
+  width: 275px;
+  padding: 10px;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: calc(100vh - 50px);
+  background: rgba(25, 25, 25, 0.5);
+  border-radius: 25px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75);
+  box-sizing: border-box;
+  align-self: center;
+  justify-content: space-between;
+}
+
+.bottom-elements {
+  position: absolute;
+  bottom: 15px;
+  width: calc(100% - 30px);
+  text-align: center;
+}
+
+.searchable-select {
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.search-button {
+  padding: 12.5px;
+}
+
+.searchable-select input {
+  font-family: "Poppins", sans-serif;
+  padding: 10px 15px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: #0084a5;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid #00c6ff;
+}
+
+::placeholder {
+  color: white;
+}
+
+.searchable-select input:focus {
+  outline: none;
+  box-shadow: 0 0 8px #00c6ff;
+  background: #00222b;
+}
+
+#floorSelect {
+  padding: 7.5px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  width: 100%;
+  color: white;
+  background: rgba(35, 35, 35, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75);
+}
+
+select option {
+  background: #0084a5;
+}
+
+.left-panel,
+.grid,
+.grid div {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.select-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  flex-grow: 1;
+  overflow: hidden;
+  background: rgba(45, 45, 45, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75);
+}
+
+select,
+button {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+button {
+  background: #00451a;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  transition: 0.3s;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid #00cf4f;
+}
+
+button:hover {
+  background: #003b17;
+  color: #00cf4f;
+  text-shadow: #00451a 1px 1px 1px;
+  border: 1px solid #005822;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(20, 50px);
+  gap: 5px;
+  padding: 10px;
+  position: absolute;
+  cursor: grab;
+  top: 0px; /* 50px helyett 0px */
+  left: 365px;
+  background: rgba(25, 25, 25, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75);
+}
+
+.grid div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 7.5px;
+  font-weight: bold;
+  text-align: center;
+  color: rgb(25, 25, 25);
+  min-height: 50px;
+  min-width: 50px;
+}
+
+.grid .black {
+  background: rgba(255, 255, 255, 0.05);
+  color: transparent;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(0, 132, 165, 0.5);
+    background-color: rgba(0, 132, 165, 0.4);
+    border: 1px solid rgba(0, 132, 165, 0.8);
+    color: white;
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(0, 132, 165, 1);
+    background-color: rgba(0, 132, 165, 0.9);
+    border: 1px solid rgba(0, 132, 165, 1);
+    color: white;
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(0, 132, 165, 0.5);
+    background-color: rgba(0, 132, 165, 0.4);
+    border: 1px solid rgba(0, 132, 165, 0.8);
+    color: white;
+  }
+}
+
+.grid .path {
+  animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+.reset-button {
+  background: #45000f;
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid #cf0034;
+}
+
+.reset-button:hover {
+  background-color: #3b000f;
+  color: #cf0034;
+  text-shadow: #45000f 1px 1px 1px;
+  border: 1px solid #58000f;
+}
+
+#orientationOverlay {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Tájkép nézet, kisebb kijelzőkön */
+@media screen and (orientation: landscape) and (max-width: 1200px) {
+  .left-panel {
+    display: none;
+  }
+  .grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    grid-template-columns: repeat(20, 40px);
+    justify-content: center;
+  }
+  .grid div {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 0.8rem;
+  }
+  .floor-navigation{
+    position: relative;
+    bottom: 180px;
+  }
+}
+
+
+/* Portré nézet, kisebb kijelzőkön */
+@media screen and (orientation: portrait) and (max-width: 768px) {
+  body {
+    width: 100%;
+    height: 100vh;
+  }
+  .left-panel,
+  .grid {
+    display: none !important;
+  }
+  #orientationOverlay {
+    display: block;
+    width: 80%;
+  }
+  #floor-up{
+    display: none;
+  }
+  #floor-down{
+    display: none;
+  }
+}
+@media screen and (min-width: 1028px) {
+  .searchable-select-label{
+    font-size: .9rem;
+  }
+  .searchable-select-input{
+    height: 40px;
+  }
+  .floor-select-label{
+    font-size: .9rem;
+  }
+  .search-button{
+    height: 40px;
+    font-size: .9rem;
+    padding-top: 8px;
+  }
+  .reset-button{
+    height: 30px;
+    font-size: .9rem;
+    padding-top: 3px;
+  }
+  .select-container{
+    gap: 5px;
+  }
+  .left-panel{
+    height: 100vh;
+    gap: 0;
+  }
+  .social-buttons{
+    position: relative;
+    top: 19px;
+  }
+}
+
+.floor-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-top: 350px;
+}
+
+.floor-navigation button {
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  background: #0084a5;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.floor-navigation button:hover {
+  background: #005f7a;
+}
+
+  </style>
   <body>
     <div class="left-panel">
       <div class="logo-container">
@@ -311,9 +480,10 @@
       </div>
       <div class="select-container">
         <!-- Indulási hely -->
-        <label for="start">Indulási hely:</label>
+        <label class="searchable-select-label" for="start">Kezdőpont: <p class="tuto-message">Bal klikk</p></label>
         <div class="searchable-select">
           <input
+            class="searchable-select-input"
             type="text"
             id="start"
             placeholder="Keresés..."
@@ -366,9 +536,10 @@
           </datalist>
         </div>
         <!-- Cél -->
-        <label for="end">Cél:</label>
+        <label class="searchable-select-label" for="end">Cél: <p class="tuto-message">Jobb klikk</p></label>
         <div class="searchable-select">
           <input
+            class="searchable-select-input"
             type="text"
             id="end"
             placeholder="Keresés..."
@@ -384,8 +555,10 @@
             <option value="CadC">CadCam terem</option>
             <option value="HBej">Hátsó bejárat</option>
             <option value="Nwc">Női mosdó-Földszint</option>
-            <option value="FérfiM">Férfi mosdó-Földszint</option>
-            <option value="Fwc1">Férfi mosdó- I.emelet</option>
+            <option value="Nwc1">Női mosdó-I.emelet</option>
+            <option value="FérfiM1">Férfi mosdó-Földszint Tesi teremnél</option>
+            <option value="FérfiM2">Férfi mosdó-Földszint főbejárat mellett</option>
+            <option value="Fwc1">Férfi mosdó-I.emelet</option>
             <option value="Fwc2">Férfi mosdó-II.emelet</option>
             <option value="FérfiÖ">Férfi öltöző</option>
             <option value="NőiÖ">Női öltöző</option>
@@ -420,7 +593,7 @@
             <option value="Elektr">Elektr terem</option>
           </datalist>
         </div>
-        <label for="floorSelect">Emelet választás:</label>
+        <label class="floor-select-label" for="floorSelect">Emelet választás:</label>
         <select id="floorSelect" onchange="switchFloor(parseInt(this.value))">
           <option value="0">Földszint</option>
           <option value="1">1. Emelet</option>
@@ -433,956 +606,1050 @@
         <button class="reset-button" onclick="resetGridPosition()">
           Visszaállítás
         </button>
+        <hr class="message-separator">
+        <div id="qrcode-container">
+          <p>Útvonal QR-kód</p>
+          <p id="qr-message">Indítsd el a keresést a generáláshoz</p>
+          <div id="qrcode"></div>
+        </div>
+        <hr class="message-separator">
+        <div class="bottom-elements">
+          <p class="tuto-message-center">Kövesd a Pollákot!</p>
+          <div class="social-buttons" style="display: flex; flex-wrap:wrap; align-items: center; justify-content: center;"><a href="https://www.facebook.com/pmszki/?locale=hu_HU" target="_blank" rel="noopener noreferrer" style="text-decoration:none;border:0;width:35px;height:35px;padding:2px;margin:5px;color:#ffffff;border-radius:50%;background-color:#0e0e0e;"><svg class="niftybutton-facebook" style="display:block;fill:currentColor" data-donate="true" data-tag="fac" data-name="Facebook" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><title>Facebook social icon</title>
+      <path d="M211.9 197.4h-36.7v59.9h36.7V433.1h70.5V256.5h49.2l5.2-59.1h-54.4c0 0 0-22.1 0-33.7 0-13.9 2.8-19.5 16.3-19.5 10.9 0 38.2 0 38.2 0V82.9c0 0-40.2 0-48.8 0 -52.5 0-76.1 23.1-76.1 67.3C211.9 188.8 211.9 197.4 211.9 197.4z"></path>
+    </svg></a><a href="https://www.tiktok.com/@pollaktechnikum" target="_blank" rel="noopener noreferrer" style="text-decoration:none;border:0;width:35px;height:35px;padding:2px;margin:5px;color:#ffffff;border-radius:50%;background-color:#0e0e0e;"><svg class="niftybutton-tiktok" style="display:block;fill:currentColor" data-donate="true" data-tag="tic" data-name="TikTok" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><title>TikTok social icon</title>
+         <path d="M 386.160156 141.550781 C 383.457031 140.15625 380.832031 138.625 378.285156 136.964844 C 370.878906 132.070312 364.085938 126.300781 358.058594 119.785156 C 342.976562 102.523438 337.339844 85.015625 335.265625 72.757812 L 335.351562 72.757812 C 333.617188 62.582031 334.332031 56 334.441406 56 L 265.742188 56 L 265.742188 321.648438 C 265.742188 325.214844 265.742188 328.742188 265.589844 332.226562 C 265.589844 332.660156 265.550781 333.058594 265.523438 333.523438 C 265.523438 333.714844 265.523438 333.917969 265.484375 334.117188 C 265.484375 334.167969 265.484375 334.214844 265.484375 334.265625 C 264.011719 353.621094 253.011719 370.976562 236.132812 380.566406 C 227.472656 385.496094 217.675781 388.078125 207.707031 388.066406 C 175.699219 388.066406 149.757812 361.964844 149.757812 329.734375 C 149.757812 297.5 175.699219 271.398438 207.707031 271.398438 C 213.765625 271.394531 219.789062 272.347656 225.550781 274.226562 L 225.632812 204.273438 C 190.277344 199.707031 154.621094 210.136719 127.300781 233.042969 C 115.457031 243.328125 105.503906 255.605469 97.882812 269.316406 C 94.984375 274.316406 84.042969 294.410156 82.714844 327.015625 C 81.882812 345.523438 87.441406 364.699219 90.089844 372.625 L 90.089844 372.792969 C 91.757812 377.457031 98.214844 393.382812 108.742188 406.808594 C 117.230469 417.578125 127.253906 427.035156 138.5 434.882812 L 138.5 434.714844 L 138.667969 434.882812 C 171.925781 457.484375 208.800781 456 208.800781 456 C 215.183594 455.742188 236.566406 456 260.851562 444.492188 C 287.785156 431.734375 303.117188 412.726562 303.117188 412.726562 C 312.914062 401.367188 320.703125 388.425781 326.148438 374.449219 C 332.367188 358.109375 334.441406 338.507812 334.441406 330.675781 L 334.441406 189.742188 C 335.273438 190.242188 346.375 197.582031 346.375 197.582031 C 346.375 197.582031 362.367188 207.832031 387.316406 214.507812 C 405.214844 219.257812 429.332031 220.257812 429.332031 220.257812 L 429.332031 152.058594 C 420.882812 152.976562 403.726562 150.308594 386.160156 141.550781 Z M 386.160156 141.550781"></path>
+    </svg></a><a href="https://www.instagram.com/pollak.technikum/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;border:0;width:35px;height:35px;padding:2px;margin:5px;color:#ffffff;border-radius:50%;background-color:#0e0e0e;"><svg class="niftybutton-instagram" style="display:block;fill:currentColor" data-donate="true" data-tag="ins" data-name="Instagram" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><title>Instagram social icon</title>
+        <path d="M256 109.3c47.8 0 53.4 0.2 72.3 1 17.4 0.8 26.9 3.7 33.2 6.2 8.4 3.2 14.3 7.1 20.6 13.4 6.3 6.3 10.1 12.2 13.4 20.6 2.5 6.3 5.4 15.8 6.2 33.2 0.9 18.9 1 24.5 1 72.3s-0.2 53.4-1 72.3c-0.8 17.4-3.7 26.9-6.2 33.2 -3.2 8.4-7.1 14.3-13.4 20.6 -6.3 6.3-12.2 10.1-20.6 13.4 -6.3 2.5-15.8 5.4-33.2 6.2 -18.9 0.9-24.5 1-72.3 1s-53.4-0.2-72.3-1c-17.4-0.8-26.9-3.7-33.2-6.2 -8.4-3.2-14.3-7.1-20.6-13.4 -6.3-6.3-10.1-12.2-13.4-20.6 -2.5-6.3-5.4-15.8-6.2-33.2 -0.9-18.9-1-24.5-1-72.3s0.2-53.4 1-72.3c0.8-17.4 3.7-26.9 6.2-33.2 3.2-8.4 7.1-14.3 13.4-20.6 6.3-6.3 12.2-10.1 20.6-13.4 6.3-2.5 15.8-5.4 33.2-6.2C202.6 109.5 208.2 109.3 256 109.3M256 77.1c-48.6 0-54.7 0.2-73.8 1.1 -19 0.9-32.1 3.9-43.4 8.3 -11.8 4.6-21.7 10.7-31.7 20.6 -9.9 9.9-16.1 19.9-20.6 31.7 -4.4 11.4-7.4 24.4-8.3 43.4 -0.9 19.1-1.1 25.2-1.1 73.8 0 48.6 0.2 54.7 1.1 73.8 0.9 19 3.9 32.1 8.3 43.4 4.6 11.8 10.7 21.7 20.6 31.7 9.9 9.9 19.9 16.1 31.7 20.6 11.4 4.4 24.4 7.4 43.4 8.3 19.1 0.9 25.2 1.1 73.8 1.1s54.7-0.2 73.8-1.1c19-0.9 32.1-3.9 43.4-8.3 11.8-4.6 21.7-10.7 31.7-20.6 9.9-9.9 16.1-19.9 20.6-31.7 4.4-11.4 7.4-24.4 8.3-43.4 0.9-19.1 1.1-25.2 1.1-73.8s-0.2-54.7-1.1-73.8c-0.9-19-3.9-32.1-8.3-43.4 -4.6-11.8-10.7-21.7-20.6-31.7 -9.9-9.9-19.9-16.1-31.7-20.6 -11.4-4.4-24.4-7.4-43.4-8.3C310.7 77.3 304.6 77.1 256 77.1L256 77.1z"></path>
+        <path d="M256 164.1c-50.7 0-91.9 41.1-91.9 91.9s41.1 91.9 91.9 91.9 91.9-41.1 91.9-91.9S306.7 164.1 256 164.1zM256 315.6c-32.9 0-59.6-26.7-59.6-59.6s26.7-59.6 59.6-59.6 59.6 26.7 59.6 59.6S288.9 315.6 256 315.6z"></path>
+        <circle cx="351.5" cy="160.5" r="21.5"></circle>
+    </svg></a><a href="https://www.youtube.com/@pollaktv3186" target="_blank" rel="noopener noreferrer" style="text-decoration:none;border:0;width:35px;height:35px;padding:2px;margin:5px;color:#ffffff;border-radius:50%;background-color:#0e0e0e;"><svg class="niftybutton-youtube" style="display:block;fill:currentColor" data-donate="true" data-tag="you" data-name="YouTube" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><title>YouTube social icon</title>
+        <path d="M422.6 193.6c-5.3-45.3-23.3-51.6-59-54 -50.8-3.5-164.3-3.5-215.1 0 -35.7 2.4-53.7 8.7-59 54 -4 33.6-4 91.1 0 124.8 5.3 45.3 23.3 51.6 59 54 50.9 3.5 164.3 3.5 215.1 0 35.7-2.4 53.7-8.7 59-54C426.6 284.8 426.6 227.3 422.6 193.6zM222.2 303.4v-94.6l90.7 47.3L222.2 303.4z"></path>
+    </svg></a></div>
+        </div>
       </div>
     </div>
+
+    <div class="floor-navigation">
+      <button id="floor-up" onclick="changeFloor(1)">⬆️</button>
+      <button id="floor-down" onclick="changeFloor(-1)">⬇️</button>
+  </div>
+  
     <!-- A grid ide generálódik -->
     <div class="grid" id="grid"></div>
-
     <!-- Orientation overlay – mobil portrét módban -->
     <div id="orientationOverlay">
       Fordítsa el mobilkészülékét a folytatáshoz
     </div>
-    <script>// Ezek a nyilacska emoji-k jelölik a lépcsőket
-      const allowedStairs = ["⬇️", "➡️", "⬆️", "⬅️"];
-      const presetRoomNames = ["Info I", "Játék"]; // Itt add meg a kivételként kezelt szobaneveket!
-      
-      // Frissített getNeighbors függvény, amely figyelembe veszi az emeletváltozás szabályait
-      const stairConnections = {
-        // Földszint és 1. emelet közötti lépcsőkapcsolatok
-        "0-12-2": { floor: 1, row: 4, col: 2 },
-        "0-11-19": { floor: 1, row: 3, col: 19 },
-        "1-4-2": { floor: 0, row: 12, col: 2 },
-        "1-3-19": { floor: 0, row: 11, col: 19 },
-      
-        // 1. és 2. emelet közötti lépcsőkapcsolatok
-        "1-4-2": { floor: 2, row: 4, col: 2 },
-        "1-3-19": { floor: 2, row: 3, col: 19 },
-        "2-4-2": { floor: 1, row: 4, col: 2 },
-        "2-3-19": { floor: 1, row: 3, col: 19 },
-      };
-      
-      // Emeletek: minden emelet saját sor- és oszlopszámmal, illetve cellaadatokkal
-      const floors = {
-        0: {
-          rows: 13, // például: 10 sor
-          cols: 20, // például: 20 oszlop
-      
-          "cell-0-0": "X",
-          "cell-0-1": "X",
-          "cell-0-2": "Ajtó",
-          "cell-0-3": "X",
-          "cell-0-4": "X",
-          "cell-0-5": "X",
-          "cell-0-6": "X",
-          "cell-0-7": "X",
-          "cell-0-8": "X",
-          "cell-0-9": "X",
-          "cell-0-10": "X",
-          "cell-0-11": "X",
-          "cell-0-12": "X",
-          "cell-0-13": "X",
-          "cell-0-14": "X",
-          "cell-0-15": "X",
-          "cell-0-16": "X",
-          "cell-0-17": "X",
-          "cell-0-18": "X",
-          "cell-0-19": "X",
-      
-          "cell-1-0": "X",
-          "cell-1-1": "",
-          "cell-1-2": "",
-          "cell-1-3": "X",
-          "cell-1-4": "X",
-          "cell-1-5": "X",
-          "cell-1-6": "X",
-          "cell-1-7": "X",
-          "cell-1-8": "X",
-          "cell-1-9": "X",
-          "cell-1-10": "X",
-          "cell-1-11": "X",
-          "cell-1-12": "X",
-          "cell-1-13": "X",
-          "cell-1-14": "X",
-          "cell-1-15": "X",
-          "cell-1-16": "X",
-          "cell-1-17": "X",
-          "cell-1-18": "X",
-          "cell-1-19": "X",
-      
-          "cell-2-0": "X",
-          "cell-2-1": "X",
-          "cell-2-2": "",
-          "cell-2-3": "",
-          "cell-2-4": "",
-          "cell-2-5": "",
-          "cell-2-6": "",
-          "cell-2-7": "",
-          "cell-2-8": "",
-          "cell-2-9": "",
-          "cell-2-10": "",
-          "cell-2-11": "",
-          "cell-2-12": "",
-          "cell-2-13": "",
-          "cell-2-14": "",
-          "cell-2-15": "",
-          "cell-2-16": "",
-          "cell-2-17": "",
-          "cell-2-18": "",
-          "cell-2-19": "",
-      
-          "cell-3-0": "",
-          "cell-3-1": "",
-          "cell-3-2": "",
-          "cell-3-3": "X",
-          "cell-3-4": "FérfiÖ",
-          "cell-3-5": "X",
-          "cell-3-6": "X",
-          "cell-3-7": "FérfiM",
-          "cell-3-8": "X",
-          "cell-3-9": "X",
-          "cell-3-10": "NőiÖ",
-          "cell-3-11": "X",
-          "cell-3-12": "X",
-          "cell-3-13": "X",
-          "cell-3-14": "Szert.",
-          "cell-3-15": "X",
-          "cell-3-16": "X",
-          "cell-3-17": "Torna T.",
-          "cell-3-18": "X",
-          "cell-3-19": "X",
-      
-          "cell-4-0": "",
-          "cell-4-1": "X",
-          "cell-4-2": "",
-          "cell-4-3": "X",
-          "cell-4-4": "X",
-          "cell-4-5": "X",
-          "cell-4-6": "X",
-          "cell-4-7": "X",
-          "cell-4-8": "X",
-          "cell-4-9": "X",
-          "cell-4-10": "X",
-          "cell-4-11": "X",
-          "cell-4-12": "X",
-          "cell-4-13": "X",
-          "cell-4-14": "X",
-          "cell-4-15": "X",
-          "cell-4-16": "X",
-          "cell-4-17": "X",
-          "cell-4-18": "X",
-          "cell-4-19": "X",
-      
-          "cell-5-0": "X",
-          "cell-5-1": "X",
-          "cell-5-2": "",
-          "cell-5-3": "X",
-          "cell-5-4": "X",
-          "cell-5-5": "X",
-          "cell-5-6": "X",
-          "cell-5-7": "X",
-          "cell-5-8": "X",
-          "cell-5-9": "X",
-          "cell-5-10": "X",
-          "cell-5-11": "X",
-          "cell-5-12": "X",
-          "cell-5-13": "X",
-          "cell-5-14": "X",
-          "cell-5-15": "X",
-          "cell-5-16": "X",
-          "cell-5-17": "X",
-          "cell-5-18": "X",
-          "cell-5-19": "X",
-      
-          "cell-6-0": "KAjtó",
-          "cell-6-1": "",
-          "cell-6-2": "",
-          "cell-6-3": "Ajtó",
-          "cell-6-4": "X",
-          "cell-6-5": "X",
-          "cell-6-6": "X",
-          "cell-6-7": "X",
-          "cell-6-8": "X",
-          "cell-6-9": "X",
-          "cell-6-10": "X",
-          "cell-6-11": "X",
-          "cell-6-12": "X",
-          "cell-6-13": "X",
-          "cell-6-14": "X",
-          "cell-6-15": "X",
-          "cell-6-16": "X",
-          "cell-6-17": "X",
-          "cell-6-18": "X",
-          "cell-6-19": "X",
-      
-          "cell-7-0": "X",
-          "cell-7-1": "X",
-          "cell-7-2": "",
-          "cell-7-3": "X",
-          "cell-7-4": "X",
-          "cell-7-5": "X",
-          "cell-7-6": "X",
-          "cell-7-7": "X",
-          "cell-7-8": "X",
-          "cell-7-9": "X",
-          "cell-7-10": "X",
-          "cell-7-11": "X",
-          "cell-7-12": "X",
-          "cell-7-13": "X",
-          "cell-7-14": "X",
-          "cell-7-15": "X",
-          "cell-7-16": "X",
-          "cell-7-17": "X",
-          "cell-7-18": "X",
-          "cell-7-19": "X",
-      
-          "cell-8-0": "X",
-          "cell-8-1": "Chill",
-          "cell-8-2": "",
-          "cell-8-3": "X",
-          "cell-8-4": "X",
-          "cell-8-5": "X",
-          "cell-8-6": "X",
-          "cell-8-7": "X",
-          "cell-8-8": "X",
-          "cell-8-9": "X",
-          "cell-8-10": "X",
-          "cell-8-11": "X",
-          "cell-8-12": "X",
-          "cell-8-13": "X",
-          "cell-8-14": "X",
-          "cell-8-15": "X",
-          "cell-8-16": "X",
-          "cell-8-17": "SzerT",
-          "cell-8-18": "NőiM",
-          "cell-8-19": "X",
-      
-          "cell-9-0": "X",
-          "cell-9-1": "Büfé",
-          "cell-9-2": "",
-          "cell-9-3": "",
-          "cell-9-4": "",
-          "cell-9-5": "",
-          "cell-9-6": "X",
-          "cell-9-7": "X",
-          "cell-9-8": "X",
-          "cell-9-9": "X",
-          "cell-9-10": "X",
-          "cell-9-11": "X",
-          "cell-9-12": "X",
-          "cell-9-13": "X",
-          "cell-9-14": "X",
-          "cell-9-15": "X",
-          "cell-9-16": "I. Tant.",
-          "cell-9-17": "",
-          "cell-9-18": "",
-          "cell-9-19": "HBej",
-      
-          "cell-10-0": "X",
-          "cell-10-1": "X",
-          "cell-10-2": "",
-          "cell-10-3": "",
-          "cell-10-4": "X",
-          "cell-10-5": "",
-          "cell-10-6": "X",
-          "cell-10-7": "X",
-          "cell-10-8": "X",
-          "cell-10-9": "X",
-          "cell-10-10": "X",
-          "cell-10-11": "X",
-          "cell-10-12": "X",
-          "cell-10-13": "X",
-          "cell-10-14": "X",
-          "cell-10-15": "X",
-          "cell-10-16": "X",
-          "cell-10-17": "",
-          "cell-10-18": "",
-          "cell-10-19": "X",
-      
-          "cell-11-0": "Játék",
-          "cell-11-1": "",
-          "cell-11-2": "",
-          "cell-11-3": "",
-          "cell-11-4": "",
-          "cell-11-5": "",
-          "cell-11-6": "",
-          "cell-11-7": "",
-          "cell-11-8": "",
-          "cell-11-9": "",
-          "cell-11-10": "",
-          "cell-11-11": "",
-          "cell-11-12": "",
-          "cell-11-13": "",
-          "cell-11-14": "",
-          "cell-11-15": "",
-          "cell-11-16": "",
-          "cell-11-17": "",
-          "cell-11-18": "",
-          "cell-11-19": "➡️",
-      
-          "cell-12-0": "",
-          "cell-12-1": "X",
-          "cell-12-2": "⬇️",
-          "cell-12-3": "FőBej",
-          "cell-12-4": "X",
-          "cell-12-5": "X",
-          "cell-12-6": "X",
-          "cell-12-7": "Mat2",
-          "cell-12-8": "X",
-          "cell-12-9": "Mat3",
-          "cell-12-10": "X",
-          "cell-12-11": "X",
-          "cell-12-12": "X",
-          "cell-12-13": "X",
-          "cell-12-14": "CadC",
-          "cell-12-15": "X",
-          "cell-12-16": "X",
-          "cell-12-17": "X",
-          "cell-12-18": "Info VI",
-          "cell-12-19": "X",
-        },
-        1: {
-          rows: 5,
-          cols: 20,
-          "cell-0-0": "X",
-          "cell-0-1": "X",
-          "cell-0-2": "X",
-          "cell-0-3": "X",
-          "cell-0-4": "X",
-          "cell-0-5": "X",
-          "cell-0-6": "X",
-          "cell-0-7": "X",
-          "cell-0-8": "X",
-          "cell-0-9": "X",
-          "cell-0-10": "X",
-          "cell-0-11": "X",
-          "cell-0-12": "X",
-          "cell-0-13": "X",
-          "cell-0-14": "X",
-          "cell-0-15": "X",
-          "cell-0-16": "X",
-          "cell-0-17": "X",
-          "cell-0-18": "X",
-          "cell-0-19": "X",
-      
-          "cell-1-0": "X",
-          "cell-1-1": "X",
-          "cell-1-2": "X",
-          "cell-1-3": "X",
-          "cell-1-4": "X",
-          "cell-1-5": "X",
-          "cell-1-6": "X",
-          "cell-1-7": "X",
-          "cell-1-8": "X",
-          "cell-1-9": "X",
-          "cell-1-10": "X",
-          "cell-1-11": "X",
-          "cell-1-12": "X",
-          "cell-1-13": "X",
-          "cell-1-14": "X",
-          "cell-1-15": "X",
-          "cell-1-16": "X",
-          "cell-1-17": "Info II",
-          "cell-1-18": "",
-          "cell-1-19": "X",
-      
-          "cell-2-0": "Igazg.",
-          "cell-2-1": "Titk",
-          "cell-2-2": "Tanári",
-          "cell-2-3": "X",
-          "cell-2-4": "X",
-          "cell-2-5": "Info III",
-          "cell-2-6": "X",
-          "cell-2-7": "X",
-          "cell-2-8": "X",
-          "cell-2-9": "X",
-          "cell-2-10": "X",
-          "cell-2-11": "X",
-          "cell-2-12": "X",
-          "cell-2-13": "X",
-          "cell-2-14": "X",
-          "cell-2-15": "X",
-          "cell-2-16": "X",
-          "cell-2-17": "X",
-          "cell-2-18": "Info I",
-          "cell-2-19": "X",
-      
-          "cell-3-0": "",
-          "cell-3-1": "",
-          "cell-3-2": "",
-          "cell-3-3": "",
-          "cell-3-4": "",
-          "cell-3-5": "",
-          "cell-3-6": "",
-          "cell-3-7": "",
-          "cell-3-8": "",
-          "cell-3-9": "",
-          "cell-3-10": "",
-          "cell-3-11": "",
-          "cell-3-12": "",
-          "cell-3-13": "",
-          "cell-3-14": "",
-          "cell-3-15": "",
-          "cell-3-16": "",
-          "cell-3-17": "",
-          "cell-3-18": "",
-          "cell-3-19": "➡️",
-      
-          "cell-4-0": "Nwc1",
-          "cell-4-1": "Fwc1",
-          "cell-4-2": "⬇️",
-          "cell-4-3": "Gaz.ir",
-          "cell-4-4": "V. Tant.",
-          "cell-4-5": "X",
-          "cell-4-6": "Kajtor",
-          "cell-4-7": "X",
-          "cell-4-8": "X",
-          "cell-4-9": "X",
-          "cell-4-10": "Info VII",
-          "cell-4-11": "X",
-          "cell-4-12": "X",
-          "cell-4-13": "X",
-          "cell-4-14": "Info V",
-          "cell-4-15": "X",
-          "cell-4-16": "X",
-          "cell-4-17": "X",
-          "cell-4-18": "Info IV",
-          "cell-4-19": "X",
-        },
-      
-        2: {
-          rows: 5,
-          cols: 20,
-          "cell-0-0": "X",
-          "cell-0-1": "X",
-          "cell-0-2": "X",
-          "cell-0-3": "X",
-          "cell-0-4": "X",
-          "cell-0-5": "X",
-          "cell-0-6": "X",
-          "cell-0-7": "X",
-          "cell-0-8": "X",
-          "cell-0-9": "X",
-          "cell-0-10": "X",
-          "cell-0-11": "X",
-          "cell-0-12": "X",
-          "cell-0-13": "X",
-          "cell-0-14": "X",
-          "cell-0-15": "X",
-          "cell-0-16": "X",
-          "cell-0-17": "X",
-          "cell-0-18": "X",
-          "cell-0-19": "X",
-      
-          "cell-1-0": "X",
-          "cell-1-1": "X",
-          "cell-1-2": "X",
-          "cell-1-3": "X",
-          "cell-1-4": "X",
-          "cell-1-5": "X",
-          "cell-1-6": "X",
-          "cell-1-7": "X",
-          "cell-1-8": "X",
-          "cell-1-9": "X",
-          "cell-1-10": "X",
-          "cell-1-11": "X",
-          "cell-1-12": "X",
-          "cell-1-13": "X",
-          "cell-1-14": "X",
-          "cell-1-15": "X",
-          "cell-1-16": "X",
-          "cell-1-17": "X",
-          "cell-1-18": "X",
-          "cell-1-19": "X",
-      
-          "cell-2-0": "X",
-          "cell-2-1": "X",
-          "cell-2-2": "X",
-          "cell-2-3": "X",
-          "cell-2-4": "X",
-          "cell-2-5": "X",
-          "cell-2-6": "X",
-          "cell-2-7": "X",
-          "cell-2-8": "X",
-          "cell-2-9": "X",
-          "cell-2-10": "X",
-          "cell-2-11": "X",
-          "cell-2-12": "X",
-          "cell-2-13": "X",
-          "cell-2-14": "X",
-          "cell-2-15": "X",
-          "cell-2-16": "X",
-          "cell-2-17": "X",
-          "cell-2-18": "X",
-          "cell-2-19": "X",
-      
-          "cell-3-0": "X",
-          "cell-3-1": "Játék",
-          "cell-3-2": "",
-          "cell-3-3": "",
-          "cell-3-4": "",
-          "cell-3-5": "",
-          "cell-3-6": "",
-          "cell-3-7": "",
-          "cell-3-8": "",
-          "cell-3-9": "",
-          "cell-3-10": "",
-          "cell-3-11": "",
-          "cell-3-12": "",
-          "cell-3-13": "",
-          "cell-3-14": "",
-          "cell-3-15": "",
-          "cell-3-16": "",
-          "cell-3-17": "",
-          "cell-3-18": "",
-          "cell-3-19": "➡️",
-      
-          "cell-4-0": "",
-          "cell-4-1": "Fwc2",
-          "cell-4-2": "⬇️",
-          "cell-4-3": "X",
-          "cell-4-4": "X",
-          "cell-4-5": "Mat1",
-          "cell-4-6": "X",
-          "cell-4-7": "VII. Tant.",
-          "cell-4-8": "X",
-          "cell-4-9": "X",
-          "cell-4-10": "VIII. Tant.",
-          "cell-4-11": "X",
-          "cell-4-12": "X",
-          "cell-4-13": "X",
-          "cell-4-14": "IX. Tant.",
-          "cell-4-15": "X",
-          "cell-4-16": "X",
-          "cell-4-17": "X",
-          "cell-4-18": "X. Tant.",
-          "cell-4-19": "X",
-        },
-      };
-      
-      let currentFloor = 0;
-      let grid = [];
-      
-      // Eltároljuk a jelenlegi útvonalat, hogy minden emelet váltásnál meg tudjuk jeleníteni a megfelelő részt
-      let currentPath = [];
-      
-      // Grid létrehozása az aktuális emelet beállításai szerint
-      let timeoutIds = [];
-      
-      function createGrid() {
-        const gridElement = document.getElementById("grid");
-        gridElement.innerHTML = ""; // Előző grid törlése
-        grid = [];
-        const floorData = floors[currentFloor];
-        const rows = floorData.rows;
-        const cols = floorData.cols;
-      
-        // DOM-frissítések minimalizálása
-        const fragment = document.createDocumentFragment();
-      
-        timeoutIds.forEach((id) => clearTimeout(id));
-        timeoutIds = [];
-      
-        for (let row = 0; row < rows; row++) {
-          let rowArray = [];
-          for (let col = 0; col < cols; col++) {
-            const cell = document.createElement("div");
-            const cellId = `cell-${row}-${col}`;
-            cell.id = cellId;
-            cell.setAttribute("data-row", row);
-            cell.setAttribute("data-col", col);
-            cell.style.userSelect = "none";
-      
-            const key = `cell-${row}-${col}`;
-            if (floorData[key]) {
-              const name = floorData[key];
-              if (name === "X") {
-                cell.classList.add("black");
-                cell.innerText = "";
-              } else {
-                cell.innerText = name;
-              }
-            }
-      
-            // Gyorsabb animációk az útvonalon
-            const pathIndex = currentPath.findIndex(
-              (n) => n.floor === currentFloor && n.row === row && n.col === col
-            );
-            if (pathIndex !== -1) {
-              const delay = pathIndex * 25; // 100ms helyett 50ms, hogy gyorsabb legyen
-              setTimeout(() => {
-                cell.classList.add("path");
-                cell.style.animationDelay = `${pathIndex * 0.1}s`; // 0.2s helyett 0.1s
-              }, delay);
-            }
-      
-            rowArray.push(cell);
-            fragment.appendChild(cell);
-          }
-          grid.push(rowArray);
-        }
-      
-        // Egyszerre adjuk hozzá a DOM-hoz, gyorsítva a megjelenítést
-        gridElement.appendChild(fragment);
-      }
-      
-      // Emelet váltása dropdown segítségével
-      function switchFloor(floor) {
-        if (floors[floor]) {
-          currentFloor = floor;
-          createGrid();
+    <script src="">
+      // Ezek a nyilacska emoji-k jelölik a lépcsőket
+const allowedStairs = ["⬇️", "➡️", "⬆️", "⬅️"];
+const presetRoomNames = ["Info I", "Játék"]; // Itt add meg a kivételként kezelt szobaneveket!
+
+// Frissített getNeighbors függvény, amely figyelembe veszi az emeletváltozás szabályait
+const stairConnections = {
+  // Földszint és 1. emelet közötti lépcsőkapcsolatok
+  "0-12-2": { floor: 1, row: 4, col: 2 },
+  "0-11-19": { floor: 1, row: 3, col: 19 },
+  "1-4-2": { floor: 0, row: 12, col: 2 },
+  "1-3-19": { floor: 0, row: 11, col: 19 },
+
+  // 1. és 2. emelet közötti lépcsőkapcsolatok
+  "1-4-2": { floor: 2, row: 4, col: 2 },
+  "1-3-19": { floor: 2, row: 3, col: 19 },
+  "2-4-2": { floor: 1, row: 4, col: 2 },
+  "2-3-19": { floor: 1, row: 3, col: 19 },
+};
+
+// Emeletek: minden emelet saját sor- és oszlopszámmal, illetve cellaadatokkal
+const floors = {
+  0: {
+    rows: 13,
+    cols: 20,
+
+    "cell-0-0": "X",
+    "cell-0-1": "X",
+    "cell-0-2": "Ajtó",
+    "cell-0-3": "X",
+    "cell-0-4": "X",
+    "cell-0-5": "X",
+    "cell-0-6": "X",
+    "cell-0-7": "X",
+    "cell-0-8": "X",
+    "cell-0-9": "X",
+    "cell-0-10": "X",
+    "cell-0-11": "X",
+    "cell-0-12": "X",
+    "cell-0-13": "X",
+    "cell-0-14": "X",
+    "cell-0-15": "X",
+    "cell-0-16": "X",
+    "cell-0-17": "X",
+    "cell-0-18": "X",
+    "cell-0-19": "X",
+
+    "cell-1-0": "X",
+    "cell-1-1": "",
+    "cell-1-2": "",
+    "cell-1-3": "X",
+    "cell-1-4": "X",
+    "cell-1-5": "X",
+    "cell-1-6": "X",
+    "cell-1-7": "X",
+    "cell-1-8": "X",
+    "cell-1-9": "X",
+    "cell-1-10": "X",
+    "cell-1-11": "X",
+    "cell-1-12": "X",
+    "cell-1-13": "X",
+    "cell-1-14": "X",
+    "cell-1-15": "X",
+    "cell-1-16": "X",
+    "cell-1-17": "X",
+    "cell-1-18": "X",
+    "cell-1-19": "X",
+
+    "cell-2-0": "X",
+    "cell-2-1": "X",
+    "cell-2-2": "",
+    "cell-2-3": "",
+    "cell-2-4": "",
+    "cell-2-5": "",
+    "cell-2-6": "",
+    "cell-2-7": "",
+    "cell-2-8": "",
+    "cell-2-9": "",
+    "cell-2-10": "",
+    "cell-2-11": "",
+    "cell-2-12": "",
+    "cell-2-13": "",
+    "cell-2-14": "",
+    "cell-2-15": "",
+    "cell-2-16": "",
+    "cell-2-17": "",
+    "cell-2-18": "",
+    "cell-2-19": "",
+
+    "cell-3-0": "",
+    "cell-3-1": "",
+    "cell-3-2": "",
+    "cell-3-3": "X",
+    "cell-3-4": "FérfiÖ",
+    "cell-3-5": "X",
+    "cell-3-6": "X",
+    "cell-3-7": "FérfiM1",
+    "cell-3-8": "X",
+    "cell-3-9": "X",
+    "cell-3-10": "NőiÖ",
+    "cell-3-11": "X",
+    "cell-3-12": "X",
+    "cell-3-13": "X",
+    "cell-3-14": "Szert.",
+    "cell-3-15": "X",
+    "cell-3-16": "X",
+    "cell-3-17": "Torna T.",
+    "cell-3-18": "X",
+    "cell-3-19": "X",
+
+    "cell-4-0": "",
+    "cell-4-1": "X",
+    "cell-4-2": "",
+    "cell-4-3": "X",
+    "cell-4-4": "X",
+    "cell-4-5": "X",
+    "cell-4-6": "X",
+    "cell-4-7": "X",
+    "cell-4-8": "X",
+    "cell-4-9": "X",
+    "cell-4-10": "X",
+    "cell-4-11": "X",
+    "cell-4-12": "X",
+    "cell-4-13": "X",
+    "cell-4-14": "X",
+    "cell-4-15": "X",
+    "cell-4-16": "X",
+    "cell-4-17": "X",
+    "cell-4-18": "X",
+    "cell-4-19": "X",
+
+    "cell-5-0": "X",
+    "cell-5-1": "X",
+    "cell-5-2": "",
+    "cell-5-3": "X",
+    "cell-5-4": "X",
+    "cell-5-5": "X",
+    "cell-5-6": "X",
+    "cell-5-7": "X",
+    "cell-5-8": "X",
+    "cell-5-9": "X",
+    "cell-5-10": "X",
+    "cell-5-11": "X",
+    "cell-5-12": "X",
+    "cell-5-13": "X",
+    "cell-5-14": "X",
+    "cell-5-15": "X",
+    "cell-5-16": "X",
+    "cell-5-17": "X",
+    "cell-5-18": "X",
+    "cell-5-19": "X",
+
+    "cell-6-0": "KAjtó",
+    "cell-6-1": "",
+    "cell-6-2": "",
+    "cell-6-3": "Ajtó",
+    "cell-6-4": "X",
+    "cell-6-5": "X",
+    "cell-6-6": "X",
+    "cell-6-7": "X",
+    "cell-6-8": "X",
+    "cell-6-9": "X",
+    "cell-6-10": "X",
+    "cell-6-11": "X",
+    "cell-6-12": "X",
+    "cell-6-13": "X",
+    "cell-6-14": "X",
+    "cell-6-15": "X",
+    "cell-6-16": "X",
+    "cell-6-17": "X",
+    "cell-6-18": "X",
+    "cell-6-19": "X",
+
+    "cell-7-0": "X",
+    "cell-7-1": "X",
+    "cell-7-2": "",
+    "cell-7-3": "X",
+    "cell-7-4": "X",
+    "cell-7-5": "X",
+    "cell-7-6": "X",
+    "cell-7-7": "X",
+    "cell-7-8": "X",
+    "cell-7-9": "X",
+    "cell-7-10": "X",
+    "cell-7-11": "X",
+    "cell-7-12": "X",
+    "cell-7-13": "X",
+    "cell-7-14": "X",
+    "cell-7-15": "X",
+    "cell-7-16": "X",
+    "cell-7-17": "X",
+    "cell-7-18": "X",
+    "cell-7-19": "X",
+
+    "cell-8-0": "X",
+    "cell-8-1": "Chill",
+    "cell-8-2": "",
+    "cell-8-3": "X",
+    "cell-8-4": "X",
+    "cell-8-5": "X",
+    "cell-8-6": "X",
+    "cell-8-7": "X",
+    "cell-8-8": "X",
+    "cell-8-9": "X",
+    "cell-8-10": "X",
+    "cell-8-11": "X",
+    "cell-8-12": "X",
+    "cell-8-13": "X",
+    "cell-8-14": "X",
+    "cell-8-15": "X",
+    "cell-8-16": "X",
+    "cell-8-17": "SzerT",
+    "cell-8-18": "NőiM",
+    "cell-8-19": "X",
+
+    "cell-9-0": "X",
+    "cell-9-1": "Büfé",
+    "cell-9-2": "",
+    "cell-9-3": "",
+    "cell-9-4": "",
+    "cell-9-5": "",
+    "cell-9-6": "X",
+    "cell-9-7": "X",
+    "cell-9-8": "X",
+    "cell-9-9": "X",
+    "cell-9-10": "X",
+    "cell-9-11": "X",
+    "cell-9-12": "X",
+    "cell-9-13": "X",
+    "cell-9-14": "X",
+    "cell-9-15": "X",
+    "cell-9-16": "I. Tant.",
+    "cell-9-17": "",
+    "cell-9-18": "",
+    "cell-9-19": "HBej",
+
+    "cell-10-0": "X",
+    "cell-10-1": "X",
+    "cell-10-2": "",
+    "cell-10-3": "",
+    "cell-10-4": "X",
+    "cell-10-5": "",
+    "cell-10-6": "X",
+    "cell-10-7": "X",
+    "cell-10-8": "X",
+    "cell-10-9": "X",
+    "cell-10-10": "X",
+    "cell-10-11": "X",
+    "cell-10-12": "X",
+    "cell-10-13": "X",
+    "cell-10-14": "X",
+    "cell-10-15": "X",
+    "cell-10-16": "X",
+    "cell-10-17": "",
+    "cell-10-18": "",
+    "cell-10-19": "X",
+
+    "cell-11-0": "Játék",
+    "cell-11-1": "",
+    "cell-11-2": "",
+    "cell-11-3": "",
+    "cell-11-4": "",
+    "cell-11-5": "",
+    "cell-11-6": "",
+    "cell-11-7": "",
+    "cell-11-8": "",
+    "cell-11-9": "",
+    "cell-11-10": "",
+    "cell-11-11": "",
+    "cell-11-12": "",
+    "cell-11-13": "",
+    "cell-11-14": "",
+    "cell-11-15": "",
+    "cell-11-16": "",
+    "cell-11-17": "",
+    "cell-11-18": "",
+    "cell-11-19": "➡️",
+
+    "cell-12-0": "",
+    "cell-12-1": "FérfiM2",
+    "cell-12-2": "⬇️",
+    "cell-12-3": "FőBej",
+    "cell-12-4": "X",
+    "cell-12-5": "X",
+    "cell-12-6": "X",
+    "cell-12-7": "Mat2",
+    "cell-12-8": "X",
+    "cell-12-9": "Mat3",
+    "cell-12-10": "X",
+    "cell-12-11": "X",
+    "cell-12-12": "X",
+    "cell-12-13": "X",
+    "cell-12-14": "CadC",
+    "cell-12-15": "X",
+    "cell-12-16": "X",
+    "cell-12-17": "X",
+    "cell-12-18": "Info VI",
+    "cell-12-19": "X",
+  },
+  1: {
+    rows: 5,
+    cols: 20,
+    "cell-0-0": "X",
+    "cell-0-1": "X",
+    "cell-0-2": "X",
+    "cell-0-3": "X",
+    "cell-0-4": "X",
+    "cell-0-5": "X",
+    "cell-0-6": "X",
+    "cell-0-7": "X",
+    "cell-0-8": "X",
+    "cell-0-9": "X",
+    "cell-0-10": "X",
+    "cell-0-11": "X",
+    "cell-0-12": "X",
+    "cell-0-13": "X",
+    "cell-0-14": "X",
+    "cell-0-15": "X",
+    "cell-0-16": "X",
+    "cell-0-17": "X",
+    "cell-0-18": "X",
+    "cell-0-19": "X",
+
+    "cell-1-0": "X",
+    "cell-1-1": "X",
+    "cell-1-2": "X",
+    "cell-1-3": "X",
+    "cell-1-4": "X",
+    "cell-1-5": "X",
+    "cell-1-6": "X",
+    "cell-1-7": "X",
+    "cell-1-8": "X",
+    "cell-1-9": "X",
+    "cell-1-10": "X",
+    "cell-1-11": "X",
+    "cell-1-12": "X",
+    "cell-1-13": "X",
+    "cell-1-14": "X",
+    "cell-1-15": "X",
+    "cell-1-16": "X",
+    "cell-1-17": "Info II",
+    "cell-1-18": "",
+    "cell-1-19": "X",
+
+    "cell-2-0": "Igazg.",
+    "cell-2-1": "Titk",
+    "cell-2-2": "Tanári",
+    "cell-2-3": "X",
+    "cell-2-4": "X",
+    "cell-2-5": "Info III",
+    "cell-2-6": "X",
+    "cell-2-7": "X",
+    "cell-2-8": "X",
+    "cell-2-9": "X",
+    "cell-2-10": "X",
+    "cell-2-11": "X",
+    "cell-2-12": "X",
+    "cell-2-13": "X",
+    "cell-2-14": "X",
+    "cell-2-15": "X",
+    "cell-2-16": "X",
+    "cell-2-17": "X",
+    "cell-2-18": "Info I",
+    "cell-2-19": "X",
+
+    "cell-3-0": "",
+    "cell-3-1": "",
+    "cell-3-2": "",
+    "cell-3-3": "",
+    "cell-3-4": "",
+    "cell-3-5": "",
+    "cell-3-6": "",
+    "cell-3-7": "",
+    "cell-3-8": "",
+    "cell-3-9": "",
+    "cell-3-10": "",
+    "cell-3-11": "",
+    "cell-3-12": "",
+    "cell-3-13": "",
+    "cell-3-14": "",
+    "cell-3-15": "",
+    "cell-3-16": "",
+    "cell-3-17": "",
+    "cell-3-18": "",
+    "cell-3-19": "➡️",
+
+    "cell-4-0": "Nwc1",
+    "cell-4-1": "Fwc1",
+    "cell-4-2": "⬇️",
+    "cell-4-3": "Gaz.ir",
+    "cell-4-4": "V. Tant.",
+    "cell-4-5": "X",
+    "cell-4-6": "Kajtor",
+    "cell-4-7": "X",
+    "cell-4-8": "X",
+    "cell-4-9": "X",
+    "cell-4-10": "Info VII",
+    "cell-4-11": "X",
+    "cell-4-12": "X",
+    "cell-4-13": "X",
+    "cell-4-14": "Info V",
+    "cell-4-15": "X",
+    "cell-4-16": "X",
+    "cell-4-17": "X",
+    "cell-4-18": "Info IV",
+    "cell-4-19": "X",
+  },
+
+  2: {
+    rows: 5,
+    cols: 20,
+    "cell-0-0": "X",
+    "cell-0-1": "X",
+    "cell-0-2": "X",
+    "cell-0-3": "X",
+    "cell-0-4": "X",
+    "cell-0-5": "X",
+    "cell-0-6": "X",
+    "cell-0-7": "X",
+    "cell-0-8": "X",
+    "cell-0-9": "X",
+    "cell-0-10": "X",
+    "cell-0-11": "X",
+    "cell-0-12": "X",
+    "cell-0-13": "X",
+    "cell-0-14": "X",
+    "cell-0-15": "X",
+    "cell-0-16": "X",
+    "cell-0-17": "X",
+    "cell-0-18": "X",
+    "cell-0-19": "X",
+
+    "cell-1-0": "X",
+    "cell-1-1": "X",
+    "cell-1-2": "X",
+    "cell-1-3": "X",
+    "cell-1-4": "X",
+    "cell-1-5": "X",
+    "cell-1-6": "X",
+    "cell-1-7": "X",
+    "cell-1-8": "X",
+    "cell-1-9": "X",
+    "cell-1-10": "X",
+    "cell-1-11": "X",
+    "cell-1-12": "X",
+    "cell-1-13": "X",
+    "cell-1-14": "X",
+    "cell-1-15": "X",
+    "cell-1-16": "X",
+    "cell-1-17": "X",
+    "cell-1-18": "X",
+    "cell-1-19": "X",
+
+    "cell-2-0": "X",
+    "cell-2-1": "X",
+    "cell-2-2": "X",
+    "cell-2-3": "X",
+    "cell-2-4": "X",
+    "cell-2-5": "X",
+    "cell-2-6": "X",
+    "cell-2-7": "X",
+    "cell-2-8": "X",
+    "cell-2-9": "X",
+    "cell-2-10": "X",
+    "cell-2-11": "X",
+    "cell-2-12": "X",
+    "cell-2-13": "X",
+    "cell-2-14": "X",
+    "cell-2-15": "X",
+    "cell-2-16": "X",
+    "cell-2-17": "X",
+    "cell-2-18": "X",
+    "cell-2-19": "X",
+
+    "cell-3-0": "X",
+    "cell-3-1": "Játék",
+    "cell-3-2": "",
+    "cell-3-3": "",
+    "cell-3-4": "",
+    "cell-3-5": "",
+    "cell-3-6": "",
+    "cell-3-7": "",
+    "cell-3-8": "",
+    "cell-3-9": "",
+    "cell-3-10": "",
+    "cell-3-11": "",
+    "cell-3-12": "",
+    "cell-3-13": "",
+    "cell-3-14": "",
+    "cell-3-15": "",
+    "cell-3-16": "",
+    "cell-3-17": "",
+    "cell-3-18": "",
+    "cell-3-19": "➡️",
+
+    "cell-4-0": "",
+    "cell-4-1": "Fwc2",
+    "cell-4-2": "⬇️",
+    "cell-4-3": "X",
+    "cell-4-4": "X",
+    "cell-4-5": "Mat1",
+    "cell-4-6": "X",
+    "cell-4-7": "VII. Tant.",
+    "cell-4-8": "X",
+    "cell-4-9": "X",
+    "cell-4-10": "VIII. Tant.",
+    "cell-4-11": "X",
+    "cell-4-12": "X",
+    "cell-4-13": "X",
+    "cell-4-14": "IX. Tant.",
+    "cell-4-15": "X",
+    "cell-4-16": "X",
+    "cell-4-17": "X",
+    "cell-4-18": "X. Tant.",
+    "cell-4-19": "X",
+  },
+};
+
+let currentFloor = 0;
+let grid = [];
+
+// Eltároljuk a jelenlegi útvonalat, hogy minden emelet váltásnál meg tudjuk jeleníteni a megfelelő részt
+let currentPath = [];
+
+// Grid létrehozása az aktuális emelet beállításai szerint
+let timeoutIds = [];
+
+function createGrid() {
+  const gridElement = document.getElementById("grid");
+  gridElement.innerHTML = ""; // Előző grid törlése
+  grid = [];
+  const floorData = floors[currentFloor];
+  const rows = floorData.rows;
+  const cols = floorData.cols;
+
+  // DOM-frissítések minimalizálása
+  const fragment = document.createDocumentFragment();
+
+  if (timeoutIds && timeoutIds.length > 0) {
+    timeoutIds.forEach((id) => clearTimeout(id));
+    timeoutIds = [];
+  }
+
+  for (let row = 0; row < rows; row++) {
+    let rowArray = [];
+    for (let col = 0; col < cols; col++) {
+      const cell = document.createElement("div");
+      const cellId = `cell-${row}-${col}`;
+      cell.id = cellId;
+      cell.setAttribute("data-row", row);
+      cell.setAttribute("data-col", col);
+      cell.classList.add("cell");
+      cell.style.userSelect = "none";
+
+      const key = `cell-${row}-${col}`;
+      if (floorData[key]) {
+        const name = floorData[key];
+        if (name === "X") {
+          cell.classList.add("black");
+          cell.innerText = "";
+        } else {
+          cell.innerText = name;
         }
       }
-      
-      const roomIndex = {};
-      
-      function buildRoomIndex() {
-        for (let fl in floors) {
-          const floorData = floors[fl];
-          for (let row = 0; row < floorData.rows; row++) {
-            for (let col = 0; col < floorData.cols; col++) {
-              const cellValue = getCell(parseInt(fl), row, col);
-              if (cellValue && cellValue !== "X") {
-                roomIndex[cellValue] = { floor: parseInt(fl), row, col };
-              }
-            }
-          }
+
+      // Gyorsabb animációk az útvonalon
+      const pathIndex = currentPath.findIndex(
+        (n) => n.floor === currentFloor && n.row === row && n.col === col
+      );
+      if (pathIndex !== -1) {
+        const delay = pathIndex * 25;
+        const timeoutId = setTimeout(() => {
+          cell.classList.add("path");
+          cell.style.animationDelay = `${pathIndex * 0.1}s`;
+        }, delay);
+        timeoutIds.push(timeoutId);
+      }
+
+      rowArray.push(cell);
+      fragment.appendChild(cell);
+    }
+    grid.push(rowArray);
+  }
+
+  // Egyszerre adjuk hozzá a DOM-hoz, gyorsítva a megjelenítést
+  gridElement.appendChild(fragment);
+}
+
+// Emelet váltása dropdown segítségével
+function switchFloor(floor) {
+  if (floors[floor]) {
+    currentFloor = floor;
+    gridMovedManually = false;
+    createGrid();
+    centerGrid(true);
+  }
+}
+
+function generateQRCode(start, end) {
+  const qrContainer = document.getElementById("qrcode-container");
+  const qrDiv = document.getElementById("qrcode");
+  const qrMessage = document.getElementById("qr-message");
+
+  // Előző QR-kód törlése
+  qrDiv.innerHTML = "";
+
+  // QR-kód generálása
+  const qrData = `${window.location.href}?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`;
+  new QRCode(qrDiv, {
+    text: qrData,
+    width: 128,
+    height: 128,
+  });
+
+  // Üzenet elrejtése és QR-kód megjelenítése
+  qrMessage.style.display = "none";
+  qrDiv.style.display = "block";
+
+  // Animáció indítása
+  qrContainer.classList.remove("animate");
+  void qrContainer.offsetWidth;
+  qrContainer.classList.add("animate");
+}
+
+const roomIndex = {};
+
+function buildRoomIndex() {
+  for (let fl in floors) {
+    const floorData = floors[fl];
+    for (let row = 0; row < floorData.rows; row++) {
+      for (let col = 0; col < floorData.cols; col++) {
+        const cellValue = getCell(parseInt(fl), row, col);
+        if (cellValue && cellValue !== "X") {
+          roomIndex[cellValue] = { floor: parseInt(fl), row, col };
         }
       }
+    }
+  }
+}
+
+// Az indexet egyszer felépítjük, amikor az oldal betöltődik
+document.addEventListener("DOMContentLoaded", function () {
+  buildRoomIndex();
+  createGrid();
+  
+  // Grid elhelyezése a megfelelő pozícióban betöltéskor
+  const gridElement = document.getElementById("grid");
+  if (gridElement) {
+    gridElement.style.position = "absolute";
+    gridElement.style.left = "365px";
+    gridElement.style.top = "0";
+  }
+  
+  centerGrid(true);
+  window.addEventListener("resize", () => centerGrid());
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const start = urlParams.get("start");
+  const end = urlParams.get("end");
+
+  if (start && end && roomIndex[start] && roomIndex[end]) {
+    document.getElementById("start").value = start;
+    document.getElementById("end").value = end;
+    runPathfinding();
+  } else {
+    document.getElementById("qr-message").style.display = "block";
+  }
+});
+
+setupDesktop();
+
+window.addEventListener("resize", centerGrid);
+
+function setupDesktop() {
+  const gridElement = document.getElementById("grid");
+  let isDragging = false,
+    offsetX,
+    offsetY;
+  gridElement.style.cursor = "grab";
+
+  gridElement.addEventListener("mousedown", function (event) {
+    isDragging = true;
+    offsetX = event.clientX - gridElement.offsetLeft;
+    offsetY = event.clientY - gridElement.offsetTop;
+    gridElement.style.cursor = "grabbing";
+  });
+
+  document.addEventListener("mousemove", function (event) {
+    if (isDragging) {
+      let newLeft = event.clientX - offsetX;
+      let newTop = event.clientY - offsetY;
       
-      // Az indexet egyszer felépítjük, amikor az oldal betöltődik
-      document.addEventListener("DOMContentLoaded", function () {
-        buildRoomIndex();
-        createGrid();
-        centerGrid(true);
-        window.addEventListener("resize", () => centerGrid());
-      });
-      
-      setupDesktop();
-      
-      window.addEventListener("resize", centerGrid);
-      
-      function setupDesktop() {
-        const gridElement = document.getElementById("grid");
-        let isDragging = false,
-          offsetX,
-          offsetY;
-        gridElement.style.cursor = "grab";
-      
-        gridElement.addEventListener("mousedown", function (event) {
-          isDragging = true;
-          offsetX = event.clientX - gridElement.offsetLeft;
-          offsetY = event.clientY - gridElement.offsetTop;
-          gridElement.style.cursor = "grabbing";
+      const minLeft = 365;
+      const minTop = 0;
+      const maxLeft = window.innerWidth - gridElement.offsetWidth;
+      const maxTop = window.innerHeight - gridElement.offsetHeight;
+
+      newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
+      newTop = Math.max(minTop, Math.min(newTop, maxTop));
+
+      gridElement.style.left = `${newLeft}px`;
+      gridElement.style.top = `${newTop}px`;
+    }
+  });
+
+  document.addEventListener("mouseup", function () {
+    isDragging = false;
+    gridElement.style.cursor = "grab";
+  });
+
+  window.resetGridPosition = function () {
+    gridMovedManually = false;
+    centerGrid(true);
+    currentPath = [];
+    createGrid();
+    document.getElementById("start").value = "";
+    document.getElementById("end").value = "";
+    document.getElementById("qrcode").innerHTML = "";
+    document.getElementById("qrcode").style.display = "none";
+    document.getElementById("qr-message").style.display = "block";
+  };
+}
+
+let gridMovedManually = false; // Jelzi, hogy a felhasználó mozgatta-e a gridet
+
+// Figyeljük a felhasználói mozgatást, hogy ne ugráljon vissza
+document.addEventListener("mousedown", (event) => {
+  const gridElement = document.getElementById("grid");
+  if (gridElement && gridElement.contains(event.target)) {
+    gridMovedManually = true;
+  }
+});
+
+// Segédfüggvény: adott emelet, sor, oszlop cellájának tartalma
+function getCell(floor, row, col) {
+  const key = `cell-${row}-${col}`;
+  return floors[floor] ? (floors[floor][key] || "") : "";
+}
+
+// Vizsgáljuk, hogy egy cella akadályként szerepel-e
+function isBlocked(floor, row, col, startName, endName) {
+  const cell = getCell(floor, row, col);
+  if (cell === "X") return true; // Falak továbbra is akadályok
+
+  // Ha a cella neve szerepel a presetRoomNames listában, akkor engedélyezzük az áthaladást
+  if (presetRoomNames.includes(cell)) {
+    return false;
+  }
+
+  // Alapból minden más akadály (ha nem indulási vagy célállomás)
+  if (
+    cell !== "" &&
+    !allowedStairs.includes(cell) &&
+    cell !== startName &&
+    cell !== endName
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function getNeighbors(node, startName, endName) {
+  const { floor, row, col } = node;
+  const neighbors = [];
+  const directions = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1],
+  ];
+  
+  if (!floors[floor]) return neighbors;
+  
+  const floorData = floors[floor];
+  const maxRows = floorData.rows;
+  const maxCols = floorData.cols;
+  const startPos = findNodeByName(startName);
+  const endPos = findNodeByName(endName);
+
+  if (!startPos || !endPos) {
+    console.error("Hiba: Érvénytelen kezdő- vagy célpont.");
+    return neighbors;
+  }
+
+  const sameFloor = startPos.floor === endPos.floor;
+
+  directions.forEach(([dRow, dCol]) => {
+    const nRow = row + dRow;
+    const nCol = col + dCol;
+    if (nRow >= 0 && nRow < maxRows && nCol >= 0 && nCol < maxCols) {
+      const cellValue = getCell(floor, nRow, nCol);
+
+      // Ha ugyanazon az emeleten van, akkor tiltsuk a lépcsőket
+      if (sameFloor && allowedStairs.includes(cellValue)) {
+        return;
+      }
+
+      if (!isBlocked(floor, nRow, nCol, startName, endName)) {
+        neighbors.push({ floor, row: nRow, col: nCol });
+      }
+    }
+  });
+
+  // Ha emeletváltás szükséges, biztosítsuk, hogy a lépcsőkapcsolatok mindig működjenek
+  const currentKey = `${node.floor}-${node.row}-${node.col}`;
+  if (stairConnections[currentKey]) {
+    const target = stairConnections[currentKey];
+    neighbors.push({
+      floor: target.floor,
+      row: target.row,
+      col: target.col,
+    });
+  }
+
+  // Ellenőrizzük, hogy a célpont másik emeleten van-e, és ha igen, biztosítsuk az átjárást
+  if (!sameFloor) {
+    Object.entries(stairConnections).forEach(([key, target]) => {
+      if (target.floor === floor && target.row === row && target.col === col) {
+        const parts = key.split("-");
+        neighbors.push({
+          floor: parseInt(parts[0]),
+          row: parseInt(parts[1]),
+          col: parseInt(parts[2]),
         });
-      
-        document.addEventListener("mousemove", function (event) {
-          if (isDragging) {
-            let newLeft = event.clientX - offsetX;
-            let newTop = event.clientY - offsetY;
-            // Calculate boundaries so the grid stays within the viewport
-            const minLeft = 300;
-            const minTop = 0;
-            const maxLeft = window.innerWidth - gridElement.offsetWidth;
-            const maxTop = window.innerHeight - gridElement.offsetHeight;
-      
-            newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
-            newTop = Math.max(minTop, Math.min(newTop, maxTop));
-      
-            gridElement.style.left = `${newLeft}px`;
-            gridElement.style.top = `${newTop}px`;
-          }
-        });
-      
-      
-        document.addEventListener("mouseup", function () {
-          isDragging = false;
-          gridElement.style.cursor = "grab";
-        });
-      
-        window.resetGridPosition = function () {
-          gridMovedManually = false; // Reset esetén újra középre igazítjuk
-          centerGrid(true);
-          currentPath = [];
-          createGrid();
-        };
       }
-      
-      let gridMovedManually = false; // Jelzi, hogy a felhasználó mozgatta-e a gridet
-      
-      
-      
-      // Figyeljük a felhasználói mozgatást, hogy ne ugráljon vissza
-      document.addEventListener("mousedown", (event) => {
-        const gridElement = document.getElementById("grid");
-        if (gridElement.contains(event.target)) {
-          gridMovedManually = true;
-        }
-      });
-      
-      // Segédfüggvény: adott emelet, sor, oszlop cellájának tartalma
-      function getCell(floor, row, col) {
-        const key = `cell-${row}-${col}`;
-        return floors[floor][key] || "";
-      }
-      
-      // Vizsgáljuk, hogy egy cella akadályként szerepel-e
-      function isBlocked(floor, row, col, startName, endName) {
-        const cell = getCell(floor, row, col);
-        if (cell === "X") return true; // Falak továbbra is akadályok
-      
-        // Ha a cella neve szerepel a presetRoomNames listában, akkor engedélyezzük az áthaladást
-        if (presetRoomNames.includes(cell)) {
-          return false;
-        }
-      
-        // Alapból minden más akadály (ha nem indulási vagy célállomás)
-        if (
-          cell !== "" &&
-          !allowedStairs.includes(cell) &&
-          cell !== startName &&
-          cell !== endName
-        ) {
-          return true;
-        }
-      
-        return false;
-      }
-      
-      function getNeighbors(node, startName, endName) {
-        const { floor, row, col } = node;
-        const neighbors = [];
-        const directions = [
-          [-1, 0],
-          [1, 0],
-          [0, -1],
-          [0, 1],
-        ];
-        const floorData = floors[floor];
-        const maxRows = floorData.rows;
-        const maxCols = floorData.cols;
-        const startPos = findNodeByName(startName);
-        const endPos = findNodeByName(endName);
-      
-        if (!startPos || !endPos) {
-          console.error("Hiba: Érvénytelen kezdő- vagy célpont.");
-          return [];
-        }
-      
-        const sameFloor = startPos.floor === endPos.floor;
-      
-        directions.forEach(([dRow, dCol]) => {
-          const nRow = row + dRow;
-          const nCol = col + dCol;
-          if (nRow >= 0 && nRow < maxRows && nCol >= 0 && nCol < maxCols) {
-            const cellValue = getCell(floor, nRow, nCol);
-      
-            // Ha ugyanazon az emeleten van, akkor tiltsuk a lépcsőket
-            if (sameFloor && allowedStairs.includes(cellValue)) {
-              return;
-            }
-      
-            if (!isBlocked(floor, nRow, nCol, startName, endName)) {
-              neighbors.push({ floor, row: nRow, col: nCol });
-            }
-          }
-        });
-      
-        // Ha emeletváltás szükséges, biztosítsuk, hogy a lépcsőkapcsolatok mindig működjenek
-        const currentKey = `${node.floor}-${node.row}-${node.col}`;
-        if (stairConnections[currentKey]) {
-          const target = stairConnections[currentKey];
-          neighbors.push({
-            floor: target.floor,
-            row: target.row,
-            col: target.col,
-          });
-        }
-      
-        // Ellenőrizzük, hogy a célpont másik emeleten van-e, és ha igen, biztosítsuk az átjárást
-        if (!sameFloor) {
-          Object.entries(stairConnections).forEach(([key, target]) => {
-            if (target.floor === floor && target.row === row && target.col === col) {
-              neighbors.push({
-                floor: parseInt(key.split("-")[0]),
-                row: parseInt(key.split("-")[1]),
-                col: parseInt(key.split("-")[2]),
-              });
-            }
-          });
-        }
-      
-        return neighbors;
-      }
-      
-      // Heurisztika: Manhattan távolság + emeletkülönbség
-      function heuristic(a, b) {
-        // Ha lépcsőn vagyunk, ne számoljuk a pozíciók közötti távolságot
-        if (stairConnections[`${a.floor}-${a.row}-${a.col}`]) {
-          return Math.abs(a.floor - b.floor); // Prioritizáljuk az emeletváltást
-        }
-        return (
-          Math.abs(a.row - b.row) +
-          Math.abs(a.col - b.col) +
-          Math.abs(a.floor - b.floor) * 10 // Emeljen nagyobb súllyal az emeletkülönbségre
-        );
-      }
-      
-      // Multi-floor A* algoritmus
-      function multiFloorAStar(startPos, endPos, startName, endName) {
-        const openList = [];
-        const closedSet = new Set();
-        const gScore = {};
-        const fScore = {};
-        const parent = {};
-      
-        function nodeKey(node) {
-          return `${node.floor}-${node.row}-${node.col}`;
-        }
-      
-        const startKey = nodeKey(startPos);
-        gScore[startKey] = 0;
-        fScore[startKey] = heuristic(startPos, endPos);
-        openList.push(startPos);
-      
-        while (openList.length) {
-          let current = openList.reduce((best, node) =>
-            fScore[nodeKey(node)] < fScore[nodeKey(best)] ? node : best
-          );
-          if (
-            current.floor === endPos.floor &&
-            current.row === endPos.row &&
-            current.col === endPos.col
-          ) {
-            return reconstructPath(parent, current);
-          }
-          const currentKey = nodeKey(current);
-          openList.splice(openList.indexOf(current), 1);
-          closedSet.add(currentKey);
-      
-          const neighbors = getNeighbors(current, startName, endName);
-          neighbors.forEach((neighbor) => {
-            const neighborKey = nodeKey(neighbor);
-            if (closedSet.has(neighborKey)) return;
-            const tentativeG = gScore[currentKey] + 1;
-            if (tentativeG < (gScore[neighborKey] || Infinity)) {
-              parent[neighborKey] = current;
-              gScore[neighborKey] = tentativeG;
-              fScore[neighborKey] = tentativeG + heuristic(neighbor, endPos);
-              if (!openList.some((n) => nodeKey(n) === neighborKey)) {
-                openList.push(neighbor);
-              }
-            }
-          });
-        }
-        return []; // Útvonal nem található
-      }
-      
-      function reconstructPath(parent, current) {
-        const path = [];
-        function nodeKey(node) {
-          return `${node.floor}-${node.row}-${node.col}`;
-        }
-        while (current) {
-          path.push({ floor: current.floor, row: current.row, col: current.col });
-          current = parent[nodeKey(current)];
-        }
-        return path.reverse();
-      }
-      
-      // Útvonalkeresés
-      function runPathfinding() {
-        const startName = document.getElementById("start").value;
-        const endName = document.getElementById("end").value;
-      
-        // Ellenőrizzük, hogy van-e kiválasztva kezdő- és célpont
-        if (!startName || !endName) {
-          alert("Válassz egy kezdő és/vagy célpontot!");
-          return; // Kilépünk a függvényből, ha nincs mindkettő kiválasztva
-        }
-      
-        console.log("Startname:", startName, "End:", endName);
-      
-        const startPos = findNodeByName(startName);
-        const endPos = findNodeByName(endName);
-        console.log("Startpos:", startPos, "End:", endPos);
-      
-        if (!startPos || !endPos) {
-          alert("Érvénytelen kezdő- vagy célpont.");
-          return;
-        }
-      
-        // Futtatjuk a multi-floor A* algoritmust
-        currentPath = multiFloorAStar(startPos, endPos, startName, endName);
-        console.log(currentPath);
-      
-        // Újrageneráljuk a gridet, így a currentPath alapján a megfelelő cellák ki lesznek emelve
-        createGrid();
-      
-        if (currentPath.length === 0) {
-          alert("Nincs útvonal a kiválasztott pontok között!");
+    });
+  }
+
+  return neighbors;
+}
+
+// Heurisztika: Manhattan távolság + emeletkülönbség
+function heuristic(a, b) {
+  // Ha lépcsőn vagyunk, ne számoljuk a pozíciók közötti távolságot
+  if (stairConnections[`${a.floor}-${a.row}-${a.col}`]) {
+    return Math.abs(a.floor - b.floor); // Prioritizáljuk az emeletváltást
+  }
+  return (
+    Math.abs(a.row - b.row) +
+    Math.abs(a.col - b.col) +
+    Math.abs(a.floor - b.floor) * 10 // Emeljen nagyobb súllyal az emeletkülönbségre
+  );
+}
+
+// Multi-floor A* algoritmus
+function multiFloorAStar(startPos, endPos, startName, endName) {
+  const openList = [];
+  const closedSet = new Set();
+  const gScore = {};
+  const fScore = {};
+  const parent = {};
+
+  function nodeKey(node) {
+    return `${node.floor}-${node.row}-${node.col}`;
+  }
+
+  const startKey = nodeKey(startPos);
+  gScore[startKey] = 0;
+  fScore[startKey] = heuristic(startPos, endPos);
+  openList.push(startPos);
+
+  while (openList.length) {
+    let current = openList.reduce((best, node) =>
+      fScore[nodeKey(node)] < fScore[nodeKey(best)] ? node : best
+    );
+    if (
+      current.floor === endPos.floor &&
+      current.row === endPos.row &&
+      current.col === endPos.col
+    ) {
+      return reconstructPath(parent, current);
+    }
+    const currentKey = nodeKey(current);
+    openList.splice(openList.indexOf(current), 1);
+    closedSet.add(currentKey);
+
+    const neighbors = getNeighbors(current, startName, endName);
+    neighbors.forEach((neighbor) => {
+      const neighborKey = nodeKey(neighbor);
+      if (closedSet.has(neighborKey)) return;
+      const tentativeG = gScore[currentKey] + 1;
+      if (tentativeG < (gScore[neighborKey] || Infinity)) {
+        parent[neighborKey] = current;
+        gScore[neighborKey] = tentativeG;
+        fScore[neighborKey] = tentativeG + heuristic(neighbor, endPos);
+        if (!openList.some((n) => nodeKey(n) === neighborKey)) {
+          openList.push(neighbor);
         }
       }
-      
-      // Keresés az összes emeletben
-      function findNodeByName(name) {
-        return roomIndex[name] || null;
-      }
-      
-      
-      function switchFloor(floor) {
-        if (floors[floor]) {
-          currentFloor = floor;
-          gridMovedManually = false; // Reset manual dragging flag
-          createGrid();
-          centerGrid(true); // Re-center the grid
-        }
-      }
-      
-      function centerGrid(force = false) {
-        const gridElement = document.getElementById("grid");
-        const leftPanel = document.querySelector(".left-panel");
-        if (!gridElement || !leftPanel) return;
-      
-        // Ha a felhasználó manuálisan mozgatta a gridet, ne igazítsuk újra, kivéve, ha force = true
-        if (gridMovedManually && !force) return;
-      
-      
-        if (window.innerWidth <= 768) {
-          gridElement.style.position = "relative";
-          gridElement.style.left = "0";
-          gridElement.style.top = "0";
-          return;
-        }
-        
-        const gridWidth = gridElement.offsetWidth;
-        const gridHeight = gridElement.offsetHeight;
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
-        const leftPanelWidth = leftPanel.offsetWidth;
-      
-        // Asztali vagy telefonos mód ellenőrzése
-        const isDesktop = windowWidth > 1000; // 1000px felett asztali mód
-        const panelMargin = isDesktop ? 28 : 0; // Csak asztali módban legyen 28px
-        const topOffset = isDesktop ? (windowHeight - gridHeight) / 2 : 0; // Telefonos módban top = 0
-      
-        // Biztosítjuk, hogy asztali módban a top ne legyen túl alacsony
-        const adjustedTop = isDesktop ? Math.max(20, topOffset) : 0;
-      
-        // Vízszintes középre igazítás
-        const centerX = (windowWidth - gridWidth) / 2;
-        const adjustedX = Math.max(leftPanelWidth + panelMargin, centerX);
-      
-        gridElement.style.position = "absolute";
-        gridElement.style.left = `${adjustedX}px`;
-        gridElement.style.top = `${adjustedTop}px`;
-      
-        
-      
-      
-        
-      }
-      
-      
-      </script>
+    });
+  }
+  return []; // Útvonal nem található
+}
+
+function reconstructPath(parent, current) {
+  const path = [];
+  function nodeKey(node) {
+    return `${node.floor}-${node.row}-${node.col}`;
+  }
+  while (current) {
+    path.push({ floor: current.floor, row: current.row, col: current.col });
+    current = parent[nodeKey(current)];
+  }
+  return path.reverse();
+}
+
+// Útvonalkeresés
+function runPathfinding() {
+  const startName = document.getElementById("start").value;
+  const endName = document.getElementById("end").value;
+
+  if (!startName || !endName) {
+    alert("Válassz egy kezdő és/vagy célpontot!");
+    return;
+  }
+
+  const startPos = findNodeByName(startName);
+  const endPos = findNodeByName(endName);
+
+  if (!startPos || !endPos) {
+    alert("Érvénytelen kezdő- vagy célpont.");
+    return;
+  }
+
+  currentPath = multiFloorAStar(startPos, endPos, startName, endName);
+  
+  if (currentPath.length > 0) {
+    // Ha van útvonal, váltsunk a start emeletére
+    if (startPos.floor !== currentFloor) {
+      currentFloor = startPos.floor;
+      document.getElementById("floorSelect").value = currentFloor;
+    }
+    
+    createGrid();
+    generateQRCode(startName, endName);
+    document.getElementById("qr-message").style.display = "none";
+  } else {
+    alert("Nincs útvonal a kiválasztott pontok között!");
+    document.getElementById("qr-message").style.display = "block";
+  }
+}
+
+// Keresés az összes emeletben
+function findNodeByName(name) {
+  return roomIndex[name] || null;
+}
+
+function centerGrid(force = false) {
+  const gridElement = document.getElementById("grid");
+  const leftPanel = document.querySelector(".left-panel");
+  if (!gridElement || !leftPanel) return;
+
+  // Ha a felhasználó manuálisan mozgatta a gridet, ne igazítsuk újra, kivéve, ha force = true
+  if (gridMovedManually && !force) return;
+  
+  const gridWidth = gridElement.offsetWidth;
+  const gridHeight = gridElement.offsetHeight;
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+  const leftPanelWidth = leftPanel.offsetWidth;
+
+  // Asztali vagy telefonos mód ellenőrzése
+  const isDesktop = windowWidth > 1300; // 1000px felett asztali mód
+  const panelMargin = isDesktop ? 90 : 55; // Csak asztali módban legyen 90px
+  const topOffset = isDesktop ? (windowHeight - gridHeight) / 2 : 0; // Telefonos módban top = 0
+
+  // Biztosítjuk, hogy asztali módban a top ne legyen túl alacsony
+  const adjustedTop = isDesktop ? Math.max(0, topOffset) : 0;
+
+  // Vízszintes középre igazítás
+  const adjustedX = Math.max(leftPanelWidth + panelMargin);
+
+  gridElement.style.position = "absolute";
+  gridElement.style.left = `${adjustedX}px`;
+  gridElement.style.top = `${adjustedTop}px`;
+
+  if (window.innerWidth <= 1300) {
+    gridElement.style.position = "absolute";
+    gridElement.style.left = "80";
+    gridElement.style.top = "0";
+    return;
+  }
+
+}
+
+document.addEventListener("click", function (event) {
+  const element = event.target;
+  if (element.classList.contains("cell") && element.id !== "start" && element.id !== "end" && element.innerHTML !== "X" && element.innerHTML !== "") {
+    document.getElementById("start").value = element.innerHTML;
+  }
+});
+
+document.addEventListener("contextmenu", function (event) {
+  event.preventDefault();
+  const element = event.target;
+  if (element.classList.contains("cell") && element.id !== "start" && element.id !== "end" && element.innerHTML !== "X" && element.innerHTML !== "") {
+    document.getElementById("end").value = element.innerHTML;
+  }
+});
+
+function changeFloor(direction) {
+  const newFloor = currentFloor + direction;
+  if (floors[newFloor] !== undefined) {
+    switchFloor(newFloor);
+    document.getElementById("floorSelect").value = newFloor;
+  }
+}
+
+    </script>
   </body>
 </html>
