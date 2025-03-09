@@ -1005,3 +1005,23 @@ function changeFloor(direction) {
     document.getElementById("floorSelect").value = newFloor;
   }
 }
+
+
+document.getElementById("downArrow").addEventListener("click", function() {
+  let floorSelect = document.getElementById("floorSelect");
+  if (floorSelect.selectedIndex > 0) {
+      floorSelect.selectedIndex--;
+      switchFloor(parseInt(floorSelect.value));
+  }
+});
+
+document.getElementById("upArrow").addEventListener("click", function() {
+  let floorSelect = document.getElementById("floorSelect");
+  if (floorSelect.selectedIndex < floorSelect.options.length - 1) {
+      floorSelect.selectedIndex++;
+      switchFloor(parseInt(floorSelect.value));
+  }
+});
+
+
+
