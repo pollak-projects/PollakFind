@@ -158,27 +158,27 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid #00A9FF; /* Bright cyan border */
+  border: 1px solid #00a9ff; /* Bright cyan border */
 }
 
 /* Placeholder styling */
 ::placeholder {
-  color: #00A9FF; /* Softer cyan for placeholder */
+  color: #00a9ff; /* Softer cyan for placeholder */
   opacity: 0.95;
 }
 
 /* Hover state */
 .searchable-select input:hover {
   background: #006597; /* Slightly lighter blue-gray */
-  border-color: #00A9FF; /* Brighter cyan on hover */
+  border-color: #00a9ff; /* Brighter cyan on hover */
 }
 
 /* Focus state */
 .searchable-select input:focus {
   outline: none;
-  box-shadow: 0 0 8px #00A9FF; /* Cyan glow */
+  box-shadow: 0 0 8px #00a9ff; /* Cyan glow */
   background: #00293d; /* Darker teal-cyan */
-  border-color: #00A9FF; /* Brighter cyan border */
+  border-color: #00a9ff; /* Brighter cyan border */
   color: #ffffff; /* Pure white text on focus */
 }
 
@@ -390,7 +390,7 @@ button:hover {
   align-items: center;
   gap: 10px;
   margin-top: 400px;
-  margin-left: -8px; 
+  margin-left: -8px;
 }
 
 .arrow {
@@ -518,15 +518,15 @@ button:hover {
   }
   /* Emeletenkénti fix pozíciók */
   .arrow-container.floor-0 {
-    top: -150px;  /* Földszint: jobb felső sarok */
+    top: -150px; /* Földszint: jobb felső sarok */
     right: 10px;
   }
   .arrow-container.floor-1 {
-    top: -110px;  /* 1. emelet: bal felső sarok */
+    top: -110px; /* 1. emelet: bal felső sarok */
     left: 450px;
   }
   .arrow-container.floor-2 {
-    top: -110px;  /* 1. emelet: bal felső sarok */
+    top: -110px; /* 1. emelet: bal felső sarok */
     left: 450px;
   }
   .arrow {
@@ -558,30 +558,30 @@ button:hover {
   .searchable-select-label{
     font-size: .9rem;
   }
-  .searchable-select-input{
+  .searchable-select-input {
     height: 40px;
   }
-  .floor-select-label{
-    font-size: .9rem;
+  .floor-select-label {
+    font-size: 0.9rem;
   }
-  .search-button{
+  .search-button {
     height: 40px;
-    font-size: .9rem;
+    font-size: 0.9rem;
     padding-top: 8px;
   }
-  .reset-button{
+  .reset-button {
     height: 30px;
-    font-size: .9rem;
+    font-size: 0.9rem;
     padding-top: 3px;
   }
-  .select-container{
+  .select-container {
     gap: 5px;
   }
-  .left-panel{
+  .left-panel {
     height: 100vh;
     gap: 0;
   }
-  .social-buttons{
+  .social-buttons {
     position: relative;
     top: 19px;
   }
