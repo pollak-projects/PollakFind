@@ -168,7 +168,7 @@ body {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  background: #1f3b52; /* Dark blue-gray base */
+  background: #005580; /* Dark blue-gray base */
   color: #e6f3ff; /* Light cyan-white for text */
   cursor: pointer;
   transition: all 0.3s ease;
@@ -176,27 +176,27 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid #00c6ff; /* Bright cyan border */
+  border: 1px solid #00A9FF; /* Bright cyan border */
 }
 
 /* Placeholder styling */
 ::placeholder {
-  color: #a3d8ff; /* Softer cyan for placeholder */
-  opacity: 0.8;
+  color: #00A9FF; /* Softer cyan for placeholder */
+  opacity: 0.95;
 }
 
 /* Hover state */
 .searchable-select input:hover {
-  background: #2a4a68; /* Slightly lighter blue-gray */
-  border-color: #33d1ff; /* Brighter cyan on hover */
+  background: #006597; /* Slightly lighter blue-gray */
+  border-color: #00A9FF; /* Brighter cyan on hover */
 }
 
 /* Focus state */
 .searchable-select input:focus {
   outline: none;
-  box-shadow: 0 0 8px #33d1ff; /* Cyan glow */
-  background: #0e1b25; /* Darker teal-cyan */
-  border-color: #33d1ff; /* Brighter cyan border */
+  box-shadow: 0 0 8px #00A9FF; /* Cyan glow */
+  background: #00293d; /* Darker teal-cyan */
+  border-color: #00A9FF; /* Brighter cyan border */
   color: #ffffff; /* Pure white text on focus */
 }
 
