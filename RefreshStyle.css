@@ -394,7 +394,7 @@ button:hover {
     display: none;
   }
 }
-@media screen and (min-width: 1028px) {
+@media screen and (min-width: 1028px) and (max-width:1300px) {
   .searchable-select-label{
     font-size: .9rem;
   }
