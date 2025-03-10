@@ -631,8 +631,12 @@ function switchFloor(floor) {
 
     if (fullPath.length > 0) {
       // Az aktuális emelet teljes útvonalszakaszának kiválasztása
-      const floorSegmentStart = fullPath.findIndex((n) => n.floor === currentFloor);
-      const floorSegmentEnd = fullPath.findLastIndex((n) => n.floor === currentFloor);
+      const floorSegmentStart = fullPath.findIndex(
+        (n) => n.floor === currentFloor
+      );
+      const floorSegmentEnd = fullPath.findLastIndex(
+        (n) => n.floor === currentFloor
+      );
 
       if (floorSegmentStart !== -1 && floorSegmentEnd !== -1) {
         // Az aktuális emelet teljes szakasza a kezdőponttól a lépcsőig
@@ -662,7 +666,9 @@ function generateQRCode(start, end) {
   qrDiv.innerHTML = "";
 
   // QR-kód generálása
-  const qrData = `${window.location.href}?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`;
+  const qrData = `${window.location.href}?start=${encodeURIComponent(
+    start
+  )}&end=${encodeURIComponent(end)}`;
   new QRCode(qrDiv, {
     text: qrData,
     width: 128,
@@ -700,14 +706,14 @@ function buildRoomIndex() {
 document.addEventListener("DOMContentLoaded", function () {
   buildRoomIndex();
   createGrid();
-  
+
   const gridElement = document.getElementById("grid");
   if (gridElement) {
     gridElement.style.position = "absolute";
     gridElement.style.left = "365px";
     gridElement.style.top = "0";
   }
-  
+
   centerGrid(true);
   updateFloorDisplay();
   updateArrowPosition(); // Hozzáadva a kezdeti pozícióhoz
@@ -748,7 +754,7 @@ function setupDesktop() {
     if (isDragging) {
       let newLeft = event.clientX - offsetX;
       let newTop = event.clientY - offsetY;
-      
+
       const minLeft = 365;
       const minTop = 0;
       const maxLeft = window.innerWidth - gridElement.offsetWidth;
@@ -797,7 +803,7 @@ document.addEventListener("mousedown", (event) => {
 // Segédfüggvény: adott emelet, sor, oszlop cellájának tartalma
 function getCell(floor, row, col) {
   const key = `cell-${row}-${col}`;
-  return floors[floor] ? (floors[floor][key] || "") : "";
+  return floors[floor] ? floors[floor][key] || "" : "";
 }
 
 // Vizsgáljuk, hogy egy cella akadályként szerepel-e
@@ -832,9 +838,9 @@ function getNeighbors(node, startName, endName) {
     [0, -1],
     [0, 1],
   ];
-  
+
   if (!floors[floor]) return neighbors;
-  
+
   const floorData = floors[floor];
   const maxRows = floorData.rows;
   const maxCols = floorData.cols;
@@ -1015,11 +1021,16 @@ function runPathfinding() {
 
   if (fullPath.length > 0) {
     // Az aktuális emelet teljes szakaszát állítjuk be induláskor
-    const floorSegmentStart = fullPath.findIndex((n) => n.floor === currentFloor);
-    const floorSegmentEnd = fullPath.findLastIndex((n) => n.floor === currentFloor);
-    currentPath = floorSegmentStart !== -1 && floorSegmentEnd !== -1
-      ? fullPath.slice(floorSegmentStart, floorSegmentEnd + 1)
-      : [];
+    const floorSegmentStart = fullPath.findIndex(
+      (n) => n.floor === currentFloor
+    );
+    const floorSegmentEnd = fullPath.findLastIndex(
+      (n) => n.floor === currentFloor
+    );
+    currentPath =
+      floorSegmentStart !== -1 && floorSegmentEnd !== -1
+        ? fullPath.slice(floorSegmentStart, floorSegmentEnd + 1)
+        : [];
 
     createGrid();
     generateQRCode(startName, endName);
@@ -1035,11 +1046,12 @@ function updateFloorDisplay() {
   const floorNames = {
     0: "Földszint",
     1: "1. Emelet",
-    2: "2. Emelet"
+    2: "2. Emelet",
   };
   const currentFloorElement = document.getElementById("currentFloor");
   if (currentFloorElement) {
-    currentFloorElement.textContent = floorNames[currentFloor] || "Ismeretlen emelet";
+    currentFloorElement.textContent =
+      floorNames[currentFloor] || "Ismeretlen emelet";
   }
 }
 
@@ -1090,7 +1102,13 @@ function centerGrid(force = false) {
 
 document.addEventListener("click", function (event) {
   const element = event.target;
-  if (element.classList.contains("cell") && element.id !== "start" && element.id !== "end" && element.innerHTML !== "X" && element.innerHTML !== "") {
+  if (
+    element.classList.contains("cell") &&
+    element.id !== "start" &&
+    element.id !== "end" &&
+    element.innerHTML !== "X" &&
+    element.innerHTML !== ""
+  ) {
     document.getElementById("start").value = element.innerHTML;
   }
 });
@@ -1098,7 +1116,13 @@ document.addEventListener("click", function (event) {
 document.addEventListener("contextmenu", function (event) {
   event.preventDefault();
   const element = event.target;
-  if (element.classList.contains("cell") && element.id !== "start" && element.id !== "end" && element.innerHTML !== "X" && element.innerHTML !== "") {
+  if (
+    element.classList.contains("cell") &&
+    element.id !== "start" &&
+    element.id !== "end" &&
+    element.innerHTML !== "X" &&
+    element.innerHTML !== ""
+  ) {
     document.getElementById("end").value = element.innerHTML;
   }
 });
@@ -1111,16 +1135,18 @@ function changeFloor(direction) {
   }
 }
 
-document.getElementById("downArrow").addEventListener("click", function() {
-  if (currentFloor > 0) { // Ellenőrizzük, hogy lefelé tudunk-e menni
+document.getElementById("downArrow").addEventListener("click", function () {
+  if (currentFloor > 0) {
+    // Ellenőrizzük, hogy lefelé tudunk-e menni
     currentFloor--;
     switchFloor(currentFloor);
     updateArrowBlink();
   }
 });
 
-document.getElementById("upArrow").addEventListener("click", function() {
-  if (currentFloor < 2) { // Ellenőrizzük, hogy felfelé tudunk-e menni (max 2. emelet)
+document.getElementById("upArrow").addEventListener("click", function () {
+  if (currentFloor < 2) {
+    // Ellenőrizzük, hogy felfelé tudunk-e menni (max 2. emelet)
     currentFloor++;
     switchFloor(currentFloor);
     updateArrowBlink();
