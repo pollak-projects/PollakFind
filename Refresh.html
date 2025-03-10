@@ -142,12 +142,8 @@
             <option value="UAjtó">Udvari Ajtó</option>
           </datalist>
         </div>
-        <label class="floor-select-label" for="floorSelect">Emelet választás:</label>
-        <select id="floorSelect" onchange="switchFloor(parseInt(this.value))">
-          <option value="0">Földszint</option>
-          <option value="1">1. Emelet</option>
-          <option value="2">2.Emelet</option>
-        </select>
+        <label class="floor-select-label" for="currentFloor">Jelenlegi emelet:</label>
+        <div id="currentFloor" class="current-floor-display">Földszint</div>
         <!-- Kereső gomb -->
         <button class="search-button" onclick="runPathfinding()">
           Tanterem keresése
@@ -178,17 +174,19 @@
         </div>
       </div>
     </div>
-
+  
+    <!-- Emeletváltó gombok a sidebar mellett, középen -->
     <div class="arrow-container">
       <span id="upArrow" class="arrow">&#8593;</span>
       <span id="downArrow" class="arrow">&#8595;</span>
-  </div>
+    </div>
   
-    <!-- A grid ide generálódik -->
+    <!-- A grid középre igazítva -->
     <div class="grid" id="grid"></div>
-    <!-- Orientation overlay – mobil portrét módban -->
+  
     <div id="orientationOverlay">
       Fordítsa el mobilkészülékét a folytatáshoz
     </div>
   </body>
 </html>
+

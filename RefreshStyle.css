@@ -145,6 +145,23 @@ body {
   padding: 12.5px;
 }
 
+.current-floor-display {
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  color: white;
+  background: rgba(35, 35, 35, 0.5);
+  border: 1px solid rgba(45, 45, 45, 0.75);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  text-align: center;
+}
+
 .searchable-select input {
   font-family: "Poppins", sans-serif;
   padding: 10px 15px;
@@ -500,10 +517,6 @@ button:hover {
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
   border: 1px solid rgba(45, 45, 45, 0.75);
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 }
 
 .arrow:hover {
