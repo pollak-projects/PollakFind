@@ -42,24 +42,6 @@ body {
   animation: containerBorderPulse 2s alternate;
 }
 
-@keyframes containerBorderPulse {
-  0% {
-    border-color: rgba(45, 45, 45, 0.75);
-  }
-  25% {
-    border-color: #0084a5;
-  }
-  50% {
-    border-color: rgba(57, 57, 57, 0.75);
-  }
-  75% {
-    border-color: rgba(51, 51, 51, 0.75);
-  }
-  100% {
-    border-color: rgba(45, 45, 45, 0.75);
-  }
-}
-
 .message-separator {
   align-self: center;
   border: 0;
@@ -237,28 +219,6 @@ select option {
   -ms-user-select: none;
 }
 
-@keyframes yellowBlink {
-  0% {
-    background: rgba(45, 45, 45, 0.5);
-    border: 1px solid rgba(45, 45, 45, 0.75);
-  }
-  50% {
-    background: rgba(255, 215, 0, 0.5);
-    border: 1px solid rgba(255, 225, 35, 0.5);
-  }
-  100% {
-    background: rgba(45, 45, 45, 0.5);
-  }
-}
-
-.arrow.blink {
-  animation: yellowBlink 1s infinite;
-}
-
-.arrow.blink {
-  animation: yellowBlink 1s infinite;
-}
-
 .select-container {
   display: flex;
   flex-direction: column;
@@ -276,6 +236,52 @@ select option {
   border: 1px solid rgba(45, 45, 45, 0.75);
 }
 
+
+
+/* Egész térképnek a kinézete ---------------------------------------------------------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(20, 50px);
+  gap: 5px;
+  padding: 10px;
+  position: absolute;
+  cursor: grab;
+  top: 0px; /* 50px helyett 0px */
+  left: 365px;
+  background: rgba(25, 25, 25, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75);
+}
+
+.grid div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 7.5px;
+  font-weight: bold;
+  text-align: center;
+  color: rgb(25, 25, 25);
+  min-height: 50px;
+  min-width: 50px;
+}
+
+.grid .black {
+  background: rgba(255, 255, 255, 0.05);
+  color: transparent;
+}
+
+.grid .path {
+  animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+
+
+/* tanterem keresése és visszaállítás gombok style ------------------------------------------------------------------- */
 select,
 button {
   padding: 10px;
@@ -308,37 +314,76 @@ button:hover {
   border: 1px solid #005822;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(20, 50px);
-  gap: 5px;
-  padding: 10px;
-  position: absolute;
-  cursor: grab;
-  top: 0px; /* 50px helyett 0px */
-  left: 365px;
-  background: rgba(25, 25, 25, 0.5);
-  border-radius: 16px;
+
+
+/* Reset gomb style ------------------------------------------------------------------- */
+.reset-button {
+  background: #45000f;
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 15px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid rgba(45, 45, 45, 0.75);
+  border: 1px solid #cf0034;
 }
 
-.grid div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 7.5px;
-  font-weight: bold;
+.reset-button:hover {
+  background-color: #3b000f;
+  color: #cf0034;
+  text-shadow: #45000f 1px 1px 1px;
+  border: 1px solid #58000f;
+}
+
+
+ /* Fordítsa el a telefont! szöveg -------------------------------------------------- */
+#orientationOverlay {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  color: rgb(25, 25, 25);
-  min-height: 50px;
-  min-width: 50px;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
 }
 
 
+
+/* jelenlegi emelet style --------------------------------------------------------- */
+.floor-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-top: 350px;
+}
+
+.floor-navigation button {
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  background: #0084a5;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.floor-navigation button:hover {
+  background: #005f7a;
+}
+
+
+
+/*  emeletek közötti navigáció nyilakkal ------------------------------------------------------- */
 .arrow-container {
   display: flex;
   flex-direction: column;
@@ -361,20 +406,45 @@ button:hover {
   justify-content: center;
   transition: background 0.3s;
   background: rgba(45, 45, 45, 0.5);
+  border: 1px solid rgba(45, 45, 45, 0.75);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid rgba(45, 45, 45, 0.75);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .arrow:hover {
   background: rgba(15, 15, 15, 0.5);
 }
 
-.grid .black {
-  background: rgba(255, 255, 255, 0.05);
-  color: transparent;
+.arrow.blink {
+  animation: yellowBlink 1s infinite;
+}
+
+.arrow.blink {
+  animation: yellowBlink 1s infinite;
+}
+
+
+
+/* Keyframes ------------------------------------------------------------------------ */
+
+@keyframes yellowBlink {
+  0% {
+    background: rgba(45, 45, 45, 0.5);
+    border: 1px solid rgba(45, 45, 45, 0.75);
+  }
+  50% {
+    background: rgba(255, 215, 0, 0.5);
+    border: 1px solid rgba(255, 225, 35, 0.5);
+  }
+  100% {
+    background: rgba(45, 45, 45, 0.5);
+  }
 }
 
 @keyframes glow {
@@ -398,47 +468,27 @@ button:hover {
   }
 }
 
-.grid .path {
-  animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-  box-sizing: border-box;
+@keyframes containerBorderPulse {
+  0% {
+    border-color: rgba(45, 45, 45, 0.75);
+  }
+  25% {
+    border-color: #0084a5;
+  }
+  50% {
+    border-color: rgba(57, 57, 57, 0.75);
+  }
+  75% {
+    border-color: rgba(51, 51, 51, 0.75);
+  }
+  100% {
+    border-color: rgba(45, 45, 45, 0.75);
+  }
 }
 
-.reset-button {
-  background: #45000f;
-  font-family: "Poppins", sans-serif;
-  color: #ffffff;
-  cursor: pointer;
-  transition: 0.3s;
-  border-radius: 15px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(7.4px);
-  -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid #cf0034;
-}
 
-.reset-button:hover {
-  background-color: #3b000f;
-  color: #cf0034;
-  text-shadow: #45000f 1px 1px 1px;
-  border: 1px solid #58000f;
-}
 
-#orientationOverlay {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: white;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 20px;
-  border-radius: 10px;
-}
-
-/* Tájkép nézet, kisebb kijelzőkön - csak ezt a blokkot módosítom */
+/* Tájkép nézet, telefonon ------------------------------------------------------- */
 @media screen and (orientation: landscape) and (max-width: 1200px) {
   .left-panel {
     display: none;
@@ -486,7 +536,9 @@ button:hover {
   }
 }
 
-/* Portré nézet, kisebb kijelzőkön */
+
+
+/* Portré nézet, telefonos nézetben ---------------------------------------------------- */
 @media screen and (orientation: portrait) and (max-width: 768px) {
   .left-panel,
   .grid,
@@ -499,7 +551,10 @@ button:hover {
   }
 }
 
-@media screen and (min-width: 1028px) and (max-width:1300px) {
+
+
+/* Laptopos nézet ---------------------------------------------------------------*/
+@media screen and (max-width:1300px) {
   .searchable-select-label{
     font-size: .9rem;
   }
@@ -530,69 +585,6 @@ button:hover {
     position: relative;
     top: 19px;
   }
-}
-
-.floor-navigation {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-  margin-top: 350px;
-}
-
-.floor-navigation button {
-  width: 50px;
-  height: 50px;
-  font-size: 1.5rem;
-  background: #0084a5;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.floor-navigation button:hover {
-  background: #005f7a;
-}
-
-
-
-.arrow-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-top: 400px;
-  margin-left: -8px; 
-}
-
-.arrow {
-  font-size: 24px;
-  cursor: pointer;
-  padding: 10px;
-  color: white;
-  text-align: center;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s;
-  background: rgba(45, 45, 45, 0.5);
-  border: 1px solid rgba(45, 45, 45, 0.75);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(7.4px);
-  -webkit-backdrop-filter: blur(7.4px);
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-.arrow:hover {
-  background: rgba(15, 15, 15, 0.5);
 }
 
 
