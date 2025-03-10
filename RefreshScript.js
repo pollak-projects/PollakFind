@@ -45,7 +45,7 @@ const floors = {
     "cell-0-19": "X",
 
     "cell-1-0": "X",
-    "cell-1-1": "",
+    "cell-1-1": "Ipari Elektro",
     "cell-1-2": "",
     "cell-1-3": "X",
     "cell-1-4": "X",
