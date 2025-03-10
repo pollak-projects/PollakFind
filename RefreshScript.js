@@ -25,7 +25,7 @@ const floors = {
 
     "cell-0-0": "X",
     "cell-0-1": "X",
-    "cell-0-2": "Ajtó",
+    "cell-0-2": "HAjtó",
     "cell-0-3": "X",
     "cell-0-4": "X",
     "cell-0-5": "X",
@@ -152,7 +152,7 @@ const floors = {
     "cell-6-0": "KAjtó",
     "cell-6-1": "",
     "cell-6-2": "",
-    "cell-6-3": "Ajtó",
+    "cell-6-3": "UAjtó",
     "cell-6-4": "X",
     "cell-6-5": "X",
     "cell-6-6": "X",
