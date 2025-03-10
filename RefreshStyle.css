@@ -151,25 +151,43 @@ body {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  background: #0084a5;
-  color: white;
+  background: #1f3b52; /* Dark blue-gray base */
+  color: #e6f3ff; /* Light cyan-white for text */
   cursor: pointer;
   transition: all 0.3s ease;
   border-radius: 15px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid #00c6ff;
+  border: 1px solid #00c6ff; /* Bright cyan border */
 }
 
+/* Placeholder styling */
 ::placeholder {
-  color: white;
+  color: #a3d8ff; /* Softer cyan for placeholder */
+  opacity: 0.8;
 }
 
+/* Hover state */
+.searchable-select input:hover {
+  background: #2a4a68; /* Slightly lighter blue-gray */
+  border-color: #33d1ff; /* Brighter cyan on hover */
+}
+
+/* Focus state */
 .searchable-select input:focus {
   outline: none;
-  box-shadow: 0 0 8px #00c6ff;
-  background: #00222b;
+  box-shadow: 0 0 8px #00c6ff; /* Cyan glow */
+  background: #00222b; /* Darker teal-cyan */
+  border-color: #33d1ff; /* Brighter cyan border */
+  color: #ffffff; /* Pure white text on focus */
+}
+
+/* Active/clicked state (optional) */
+.searchable-select input:active {
+  background: #001a22; /* Even darker teal */
+  box-shadow: 0 0 12px rgba(0, 198, 255, 0.5); /* Stronger cyan glow */
+  border-color: #00c6ff;
 }
 
 #floorSelect {
