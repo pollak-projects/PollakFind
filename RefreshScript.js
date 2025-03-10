@@ -592,11 +592,10 @@ function switchFloor(floor) {
     gridMovedManually = false;
     createGrid();
     centerGrid(true);
+    document.getElementById("floorSelect").value = currentFloor;
 
-    const upArrow = document.getElementById("upArrow");
-    const downArrow = document.getElementById("downArrow");
-    upArrow.classList.remove("blink");
-    downArrow.classList.remove("blink");
+    // Villogás frissítése az új emelet alapján
+    updateArrowBlink();
   }
 }
 
@@ -723,10 +722,9 @@ function setupDesktop() {
     document.getElementById("qrcode").style.display = "none";
     document.getElementById("qr-message").style.display = "block";
   
-    const upArrow = document.getElementById("upArrow");
-    const downArrow = document.getElementById("downArrow");
-    upArrow.classList.remove("blink");
-    downArrow.classList.remove("blink");
+    // Cél emelet törlése és villogás eltávolítása
+    targetFloor = null;
+    updateArrowBlink();
   };
 }
 
@@ -914,6 +912,27 @@ function reconstructPath(parent, current) {
   return path.reverse();
 }
 
+let targetFloor = null; // Tárolja a cél emeletét
+
+function updateArrowBlink() {
+  const upArrow = document.getElementById("upArrow");
+  const downArrow = document.getElementById("downArrow");
+
+  // Előző villogás eltávolítása
+  upArrow.classList.remove("blink");
+  downArrow.classList.remove("blink");
+
+  // Ha nincs cél emelet (pl. reset után), ne villogjon semmi
+  if (targetFloor === null) return;
+
+  // Villogás frissítése az aktuális emelet és a cél emelete alapján
+  if (targetFloor > currentFloor) {
+    upArrow.classList.add("blink"); // Felfelé kell menni
+  } else if (targetFloor < currentFloor) {
+    downArrow.classList.add("blink"); // Lefelé kell menni
+  }
+}
+
 // Útvonalkeresés
 function runPathfinding() {
   const startName = document.getElementById("start").value;
@@ -932,28 +951,17 @@ function runPathfinding() {
     return;
   }
 
-  const upArrow = document.getElementById("upArrow");
-  const downArrow = document.getElementById("downArrow");
+  // Cél emelet tárolása
+  targetFloor = endPos.floor;
 
-  upArrow.classList.remove("blink");
-  downArrow.classList.remove("blink");
-
-  if (endPos.floor !== currentFloor) {
-    if (endPos.floor > currentFloor) {
-      upArrow.classList.add("blink");
-    } else if (endPos.floor < currentFloor) {
-      downArrow.classList.add("blink");
-    }
-  }
+  // Villogás frissítése
+  updateArrowBlink();
 
   currentPath = multiFloorAStar(startPos, endPos, startName, endName);
 
   if (currentPath.length > 0) {
-    if (startPos.floor !== currentFloor) {
-      currentFloor = startPos.floor;
-      document.getElementById("floorSelect").value = currentFloor;
-    }
-    createGrid();
+    // Nem váltunk automatikusan a startPos.floor-ra, marad az aktuális emelet
+    createGrid(); // Frissítjük a gridet az aktuális emeleten
     generateQRCode(startName, endName);
     document.getElementById("qr-message").style.display = "none";
   } else {
@@ -1032,16 +1040,18 @@ function changeFloor(direction) {
 document.getElementById("downArrow").addEventListener("click", function() {
   let floorSelect = document.getElementById("floorSelect");
   if (floorSelect.selectedIndex > 0) {
-      floorSelect.selectedIndex--;
-      switchFloor(parseInt(floorSelect.value));
+    floorSelect.selectedIndex--;
+    switchFloor(parseInt(floorSelect.value));
+    updateArrowBlink(); // Frissítjük a villogást
   }
 });
 
 document.getElementById("upArrow").addEventListener("click", function() {
   let floorSelect = document.getElementById("floorSelect");
   if (floorSelect.selectedIndex < floorSelect.options.length - 1) {
-      floorSelect.selectedIndex++;
-      switchFloor(parseInt(floorSelect.value));
+    floorSelect.selectedIndex++;
+    switchFloor(parseInt(floorSelect.value));
+    updateArrowBlink(); // Frissítjük a villogást
   }
 });
 
