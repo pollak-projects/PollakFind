@@ -194,8 +194,8 @@ body {
 /* Focus state */
 .searchable-select input:focus {
   outline: none;
-  box-shadow: 0 0 8px #00c6ff; /* Cyan glow */
-  background: #00222b; /* Darker teal-cyan */
+  box-shadow: 0 0 8px #33d1ff; /* Cyan glow */
+  background: #0e1b25; /* Darker teal-cyan */
   border-color: #33d1ff; /* Brighter cyan border */
   color: #ffffff; /* Pure white text on focus */
 }
