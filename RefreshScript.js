@@ -13,7 +13,7 @@ const stairConnections = {
   // 1. és 2. emelet közötti lépcsőkapcsolatok
   "1-4-2": { floor: 2, row: 4, col: 2 },
   "1-3-19": { floor: 2, row: 3, col: 19 },
-  "2-4-2": { floor: 1, row: 4, col: 2 },
+  "2-3-2": { floor: 1, row: 4, col: 2 },
   "2-3-19": { floor: 1, row: 3, col: 19 },
 };
 
