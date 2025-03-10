@@ -202,6 +202,22 @@ select option {
   -ms-user-select: none;
 }
 
+@keyframes yellowBlink {
+  0% {
+    background-color: #0084a5;
+  }
+  50% {
+    background-color: #ffeb3b;
+  }
+  100% {
+    background-color: #0084a5;
+  }
+}
+
+.arrow.blink {
+  animation: yellowBlink 1s infinite;
+}
+
 .select-container {
   display: flex;
   flex-direction: column;

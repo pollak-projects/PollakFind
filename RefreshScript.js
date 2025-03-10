@@ -592,6 +592,11 @@ function switchFloor(floor) {
     gridMovedManually = false;
     createGrid();
     centerGrid(true);
+
+    const upArrow = document.getElementById("upArrow");
+    const downArrow = document.getElementById("downArrow");
+    upArrow.classList.remove("blink");
+    downArrow.classList.remove("blink");
   }
 }
 
@@ -717,6 +722,11 @@ function setupDesktop() {
     document.getElementById("qrcode").innerHTML = "";
     document.getElementById("qrcode").style.display = "none";
     document.getElementById("qr-message").style.display = "block";
+  
+    const upArrow = document.getElementById("upArrow");
+    const downArrow = document.getElementById("downArrow");
+    upArrow.classList.remove("blink");
+    downArrow.classList.remove("blink");
   };
 }
 
@@ -922,15 +932,27 @@ function runPathfinding() {
     return;
   }
 
+  const upArrow = document.getElementById("upArrow");
+  const downArrow = document.getElementById("downArrow");
+
+  upArrow.classList.remove("blink");
+  downArrow.classList.remove("blink");
+
+  if (endPos.floor !== currentFloor) {
+    if (endPos.floor > currentFloor) {
+      upArrow.classList.add("blink");
+    } else if (endPos.floor < currentFloor) {
+      downArrow.classList.add("blink");
+    }
+  }
+
   currentPath = multiFloorAStar(startPos, endPos, startName, endName);
-  
+
   if (currentPath.length > 0) {
-    // Ha van útvonal, váltsunk a start emeletére
     if (startPos.floor !== currentFloor) {
       currentFloor = startPos.floor;
       document.getElementById("floorSelect").value = currentFloor;
     }
-    
     createGrid();
     generateQRCode(startName, endName);
     document.getElementById("qr-message").style.display = "none";
