@@ -471,8 +471,8 @@ const floors = {
     "cell-1-18": "X",
     "cell-1-19": "X",
 
-    "cell-2-0": "X",
-    "cell-2-1": "Játék",
+    "cell-2-0": "Játék",
+    "cell-2-1": "",
     "cell-2-2": "",
     "cell-2-3": "",
     "cell-2-4": "",
@@ -492,7 +492,7 @@ const floors = {
     "cell-2-18": "",
     "cell-2-19": "➡️",
 
-    "cell-3-0": "",
+    "cell-3-0": "X",
     "cell-3-1": "Fwc2",
     "cell-3-2": "⬇️",
     "cell-3-3": "X",
