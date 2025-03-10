@@ -427,7 +427,7 @@ const floors = {
   },
 
   2: {
-    rows: 5,
+    rows: 6,
     cols: 20,
     "cell-0-0": "X",
     "cell-0-1": "X",
@@ -472,67 +472,88 @@ const floors = {
     "cell-1-19": "X",
 
     "cell-2-0": "X",
-    "cell-2-1": "X",
-    "cell-2-2": "X",
-    "cell-2-3": "X",
-    "cell-2-4": "X",
-    "cell-2-5": "X",
-    "cell-2-6": "X",
-    "cell-2-7": "X",
-    "cell-2-8": "X",
-    "cell-2-9": "X",
-    "cell-2-10": "X",
-    "cell-2-11": "X",
-    "cell-2-12": "X",
-    "cell-2-13": "X",
-    "cell-2-14": "X",
-    "cell-2-15": "X",
-    "cell-2-16": "X",
-    "cell-2-17": "X",
-    "cell-2-18": "X",
-    "cell-2-19": "X",
+    "cell-2-1": "Játék",
+    "cell-2-2": "",
+    "cell-2-3": "",
+    "cell-2-4": "",
+    "cell-2-5": "",
+    "cell-2-6": "",
+    "cell-2-7": "",
+    "cell-2-8": "",
+    "cell-2-9": "",
+    "cell-2-10": "",
+    "cell-2-11": "",
+    "cell-2-12": "",
+    "cell-2-13": "",
+    "cell-2-14": "",
+    "cell-2-15": "",
+    "cell-2-16": "",
+    "cell-2-17": "",
+    "cell-2-18": "",
+    "cell-2-19": "➡️",
 
-    "cell-3-0": "X",
-    "cell-3-1": "Játék",
-    "cell-3-2": "",
-    "cell-3-3": "",
-    "cell-3-4": "",
-    "cell-3-5": "",
-    "cell-3-6": "",
-    "cell-3-7": "",
-    "cell-3-8": "",
-    "cell-3-9": "",
-    "cell-3-10": "",
-    "cell-3-11": "",
-    "cell-3-12": "",
-    "cell-3-13": "",
-    "cell-3-14": "",
-    "cell-3-15": "",
-    "cell-3-16": "",
-    "cell-3-17": "",
-    "cell-3-18": "",
-    "cell-3-19": "➡️",
+    "cell-3-0": "",
+    "cell-3-1": "Fwc2",
+    "cell-3-2": "⬇️",
+    "cell-3-3": "X",
+    "cell-3-4": "X",
+    "cell-3-5": "Mat1",
+    "cell-3-6": "X",
+    "cell-3-7": "VII. Tant.",
+    "cell-3-8": "X",
+    "cell-3-9": "X",
+    "cell-3-10": "VIII. Tant.",
+    "cell-3-11": "X",
+    "cell-3-12": "X",
+    "cell-3-13": "X",
+    "cell-3-14": "IX. Tant.",
+    "cell-3-15": "X",
+    "cell-3-16": "X",
+    "cell-3-17": "X",
+    "cell-3-18": "X. Tant.",
+    "cell-3-19": "X",
 
-    "cell-4-0": "",
-    "cell-4-1": "Fwc2",
-    "cell-4-2": "⬇️",
+    "cell-4-0": "X",
+    "cell-4-1": "X",
+    "cell-4-2": "X",
     "cell-4-3": "X",
     "cell-4-4": "X",
-    "cell-4-5": "Mat1",
+    "cell-4-5": "X",
     "cell-4-6": "X",
-    "cell-4-7": "VII. Tant.",
+    "cell-4-7": "X",
     "cell-4-8": "X",
     "cell-4-9": "X",
-    "cell-4-10": "VIII. Tant.",
+    "cell-4-10": "X",
     "cell-4-11": "X",
     "cell-4-12": "X",
     "cell-4-13": "X",
-    "cell-4-14": "IX. Tant.",
+    "cell-4-14": "X",
     "cell-4-15": "X",
     "cell-4-16": "X",
     "cell-4-17": "X",
-    "cell-4-18": "X. Tant.",
+    "cell-4-18": "X",
     "cell-4-19": "X",
+
+    "cell-5-0": "X",
+    "cell-5-1": "X",
+    "cell-5-2": "X",
+    "cell-5-3": "X",
+    "cell-5-4": "X",
+    "cell-5-5": "X",
+    "cell-5-6": "X",
+    "cell-5-7": "X",
+    "cell-5-8": "X",
+    "cell-5-9": "X",
+    "cell-5-10": "X",
+    "cell-5-11": "X",
+    "cell-5-12": "X",
+    "cell-5-13": "X",
+    "cell-5-14": "X",
+    "cell-5-15": "X",
+    "cell-5-16": "X",
+    "cell-5-17": "X",
+    "cell-5-18": "X",
+    "cell-5-19": "X",
   },
 };
 
@@ -602,6 +623,7 @@ function createGrid() {
 }
 
 // Emelet váltása dropdown segítségével
+// Eredeti switchFloor függvény minimális módosítással
 function switchFloor(floor) {
   if (floors[floor]) {
     currentFloor = floor;
@@ -627,6 +649,7 @@ function switchFloor(floor) {
     centerGrid(true);
     updateFloorDisplay();
     updateArrowBlink();
+    updateArrowPosition(); // Csak ezt adtam hozzá
   }
 }
 
@@ -673,6 +696,7 @@ function buildRoomIndex() {
 }
 
 // Az indexet egyszer felépítjük, amikor az oldal betöltődik
+// DOM betöltésekor az eredeti kódhoz hozzáadom a kezdeti pozíció beállítását
 document.addEventListener("DOMContentLoaded", function () {
   buildRoomIndex();
   createGrid();
@@ -685,7 +709,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   
   centerGrid(true);
-  updateFloorDisplay(); // Kezdeti emelet megjelenítése
+  updateFloorDisplay();
+  updateArrowPosition(); // Hozzáadva a kezdeti pozícióhoz
   window.addEventListener("resize", () => centerGrid());
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -1031,23 +1056,36 @@ function centerGrid(force = false) {
   // Ha a felhasználó manuálisan mozgatta a gridet, ne igazítsuk újra, kivéve, ha force = true
   if (gridMovedManually && !force) return;
 
-  const gridWidth = gridElement.offsetWidth;
-  const gridHeight = gridElement.offsetHeight;
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
-  const leftPanelWidth = leftPanel.offsetWidth; // 275px
-  const arrowContainerWidth = 40 + 10; // Nyíl szélessége (40px) + margók (10px)
+  // Alapértelmezett értékek definiálása, hogy ne legyen undefined
+  let adjustedLeft = 0;
+  let adjustedTop = 0;
 
-  // A bal oldali eltolás: sidebar + nyilak
-  const leftOffset = leftPanelWidth + arrowContainerWidth + 15; // +15 a sidebar margin miatt
+  // Csak akkor számoljuk a pozíciót, ha a képernyő szélessége >= 1300px
+  if (window.innerWidth >= 1300) {
+    const gridWidth = gridElement.offsetWidth;
+    const gridHeight = gridElement.offsetHeight;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const leftPanelWidth = leftPanel.offsetWidth; // 275px
+    const arrowContainerWidth = 40 + 10; // Nyíl szélessége (40px) + margók (10px)
 
-  // Középre igazítás, figyelembe véve az eltolást
-  const adjustedLeft = (windowWidth - gridWidth) / 2 + leftOffset / 2;
-  const adjustedTop = (windowHeight - gridHeight) / 2;
+    // A bal oldali eltolás: sidebar + nyilak
+    const leftOffset = leftPanelWidth + arrowContainerWidth + 15; // +15 a sidebar margin miatt
 
-  gridElement.style.position = "absolute";
-  gridElement.style.left = `${adjustedLeft}px`;
-  gridElement.style.top = `${adjustedTop}px`;
+    // Középre igazítás, figyelembe véve az eltolást
+    adjustedLeft = (windowWidth - gridWidth) / 2 + leftOffset / 2;
+    adjustedTop = (windowHeight - gridHeight) / 2;
+
+    // Stílusok alkalmazása
+    gridElement.style.position = "absolute";
+    gridElement.style.left = `${adjustedLeft}px`;
+    gridElement.style.top = `${adjustedTop}px`;
+  } else {
+    // Mobilos nézetben (pl. < 1300px) visszaállítjuk az alapértelmezett pozíciót
+    gridElement.style.position = ""; // Vagy "static", attól függ, mi az alapértelmezett
+    gridElement.style.left = "";
+    gridElement.style.top = "";
+  }
 }
 
 document.addEventListener("click", function (event) {
@@ -1088,3 +1126,11 @@ document.getElementById("upArrow").addEventListener("click", function() {
     updateArrowBlink();
   }
 });
+// Új függvény a gombok pozíciójának frissítésére
+function updateArrowPosition() {
+  const arrowContainer = document.querySelector(".arrow-container");
+  if (arrowContainer) {
+    arrowContainer.classList.remove("floor-0", "floor-1", "floor-2");
+    arrowContainer.classList.add(`floor-${currentFloor}`);
+  }
+}
