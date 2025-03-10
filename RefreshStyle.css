@@ -168,7 +168,7 @@ body {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  background: #1f3b52; /* Dark blue-gray base */
+  background: #005580; /* Dark blue-gray base */
   color: #e6f3ff; /* Light cyan-white for text */
   cursor: pointer;
   transition: all 0.3s ease;
@@ -176,27 +176,27 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid #00c6ff; /* Bright cyan border */
+  border: 1px solid #00A9FF; /* Bright cyan border */
 }
 
 /* Placeholder styling */
 ::placeholder {
-  color: #a3d8ff; /* Softer cyan for placeholder */
-  opacity: 0.8;
+  color: #00A9FF; /* Softer cyan for placeholder */
+  opacity: 0.95;
 }
 
 /* Hover state */
 .searchable-select input:hover {
-  background: #2a4a68; /* Slightly lighter blue-gray */
-  border-color: #33d1ff; /* Brighter cyan on hover */
+  background: #006597; /* Slightly lighter blue-gray */
+  border-color: #00A9FF; /* Brighter cyan on hover */
 }
 
 /* Focus state */
 .searchable-select input:focus {
   outline: none;
-  box-shadow: 0 0 8px #00c6ff; /* Cyan glow */
-  background: #00222b; /* Darker teal-cyan */
-  border-color: #33d1ff; /* Brighter cyan border */
+  box-shadow: 0 0 8px #00A9FF; /* Cyan glow */
+  background: #00293d; /* Darker teal-cyan */
+  border-color: #00A9FF; /* Brighter cyan border */
   color: #ffffff; /* Pure white text on focus */
 }
 
@@ -240,9 +240,11 @@ select option {
 @keyframes yellowBlink {
   0% {
     background: rgba(45, 45, 45, 0.5);
+    border: 1px solid rgba(45, 45, 45, 0.75);
   }
   50% {
-    background-color: #ffeb3b;
+    background: rgba(255, 215, 0, 0.5);
+    border: 1px solid rgba(255, 225, 35, 0.5);
   }
   100% {
     background: rgba(45, 45, 45, 0.5);
@@ -336,6 +338,40 @@ button:hover {
   min-width: 50px;
 }
 
+
+.arrow-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 400px;
+  margin-left: -8px; 
+}
+
+.arrow {
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  color: white;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+  background: rgba(45, 45, 45, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75);
+}
+
+.arrow:hover {
+  background: rgba(15, 15, 15, 0.5);
+}
+
 .grid .black {
   background: rgba(255, 255, 255, 0.05);
   color: transparent;
@@ -402,7 +438,7 @@ button:hover {
   border-radius: 10px;
 }
 
-/* Tájkép nézet, kisebb kijelzőkön */
+/* Tájkép nézet, kisebb kijelzőkön - csak ezt a blokkot módosítom */
 @media screen and (orientation: landscape) and (max-width: 1200px) {
   .left-panel {
     display: none;
@@ -421,34 +457,48 @@ button:hover {
     min-height: 40px;
     font-size: 0.8rem;
   }
-  .floor-navigation{
-    position: relative;
-    bottom: 180px;
+  .arrow-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10; /* A térkép felett legyen */
+    top: 0;
+    left: 0;
+  }
+  /* Emeletenkénti fix pozíciók */
+  .arrow-container.floor-0 {
+    top: -150px;  /* Földszint: jobb felső sarok */
+    right: 10px;
+  }
+  .arrow-container.floor-1 {
+    top: -110px;  /* 1. emelet: bal felső sarok */
+    left: 450px;
+  }
+  .arrow-container.floor-2 {
+    top: -150px;  /* 1. emelet: bal felső sarok */
+    left: 450px;
+  }
+  .arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 25px;
   }
 }
 
-
 /* Portré nézet, kisebb kijelzőkön */
 @media screen and (orientation: portrait) and (max-width: 768px) {
-  body {
-    width: 100%;
-    height: 100vh;
-  }
   .left-panel,
-  .grid {
-    display: none !important;
+  .grid,
+  .arrow-container {
+    display: none !important; /* Nyilak is eltűnnek portréban */
   }
   #orientationOverlay {
     display: block;
     width: 80%;
   }
-  #floor-up{
-    display: none;
-  }
-  #floor-down{
-    display: none;
-  }
 }
+
 @media screen and (min-width: 1028px) and (max-width:1300px) {
   .searchable-select-label{
     font-size: .9rem;
@@ -530,11 +580,15 @@ button:hover {
   justify-content: center;
   transition: background 0.3s;
   background: rgba(45, 45, 45, 0.5);
+  border: 1px solid rgba(45, 45, 45, 0.75);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid rgba(45, 45, 45, 0.75);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .arrow:hover {

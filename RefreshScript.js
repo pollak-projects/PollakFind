@@ -45,7 +45,7 @@ const floors = {
     "cell-0-19": "X",
 
     "cell-1-0": "X",
-    "cell-1-1": "",
+    "cell-1-1": "IpElek",
     "cell-1-2": "",
     "cell-1-3": "X",
     "cell-1-4": "X",
@@ -107,7 +107,7 @@ const floors = {
     "cell-3-18": "X",
     "cell-3-19": "X",
 
-    "cell-4-0": "",
+    "cell-4-0": "Elektro",
     "cell-4-1": "X",
     "cell-4-2": "",
     "cell-4-3": "X",
@@ -297,7 +297,7 @@ const floors = {
     "cell-12-19": "X",
   },
   1: {
-    rows: 5,
+    rows: 6,
     cols: 20,
     "cell-0-0": "X",
     "cell-0-1": "X",
@@ -403,6 +403,27 @@ const floors = {
     "cell-4-17": "X",
     "cell-4-18": "Info IV",
     "cell-4-19": "X",
+
+    "cell-5-0": "X",
+    "cell-5-1": "X",
+    "cell-5-2": "X",
+    "cell-5-3": "X",
+    "cell-5-4": "X",
+    "cell-5-5": "X",
+    "cell-5-6": "X",
+    "cell-5-7": "X",
+    "cell-5-8": "X",
+    "cell-5-9": "X",
+    "cell-5-10": "X",
+    "cell-5-11": "X",
+    "cell-5-12": "X",
+    "cell-5-13": "X",
+    "cell-5-14": "X",
+    "cell-5-15": "X",
+    "cell-5-16": "X",
+    "cell-5-17": "X",
+    "cell-5-18": "X",
+    "cell-5-19": "X",
   },
 
   2: {
@@ -518,9 +539,6 @@ const floors = {
 let currentFloor = 0;
 let grid = [];
 
-// Eltároljuk a jelenlegi útvonalat, hogy minden emelet váltásnál meg tudjuk jeleníteni a megfelelő részt
-let currentPath = [];
-
 // Grid létrehozása az aktuális emelet beállításai szerint
 let timeoutIds = [];
 
@@ -532,7 +550,6 @@ function createGrid() {
   const rows = floorData.rows;
   const cols = floorData.cols;
 
-  // DOM-frissítések minimalizálása
   const fragment = document.createDocumentFragment();
 
   if (timeoutIds && timeoutIds.length > 0) {
@@ -562,12 +579,12 @@ function createGrid() {
         }
       }
 
-      // Gyorsabb animációk az útvonalon
+      // Csak az aktuális emelet útvonalát rendereljük
       const pathIndex = currentPath.findIndex(
         (n) => n.floor === currentFloor && n.row === row && n.col === col
       );
       if (pathIndex !== -1) {
-        const delay = pathIndex * 25;
+        const delay = pathIndex * 25; // Kis késleltetés az animációhoz
         const timeoutId = setTimeout(() => {
           cell.classList.add("path");
           cell.style.animationDelay = `${pathIndex * 0.1}s`;
@@ -581,19 +598,37 @@ function createGrid() {
     grid.push(rowArray);
   }
 
-  // Egyszerre adjuk hozzá a DOM-hoz, gyorsítva a megjelenítést
   gridElement.appendChild(fragment);
 }
 
 // Emelet váltása dropdown segítségével
+// Eredeti switchFloor függvény minimális módosítással
 function switchFloor(floor) {
   if (floors[floor]) {
     currentFloor = floor;
     gridMovedManually = false;
+
+    if (fullPath.length > 0) {
+      // Az aktuális emelet teljes útvonalszakaszának kiválasztása
+      const floorSegmentStart = fullPath.findIndex((n) => n.floor === currentFloor);
+      const floorSegmentEnd = fullPath.findLastIndex((n) => n.floor === currentFloor);
+
+      if (floorSegmentStart !== -1 && floorSegmentEnd !== -1) {
+        // Az aktuális emelet teljes szakasza a kezdőponttól a lépcsőig
+        currentPath = fullPath.slice(floorSegmentStart, floorSegmentEnd + 1);
+      } else {
+        // Ha az emeleten nincs útvonal (pl. csak áthaladás), üres
+        currentPath = [];
+      }
+    } else {
+      currentPath = [];
+    }
+
     createGrid();
     centerGrid(true);
-    updateFloorDisplay(); // Frissítjük a kijelzőt
-    updateArrowBlink();   // Frissítjük a villogást
+    updateFloorDisplay();
+    updateArrowBlink();
+    updateArrowPosition(); // Csak ezt adtam hozzá
   }
 }
 
@@ -640,6 +675,7 @@ function buildRoomIndex() {
 }
 
 // Az indexet egyszer felépítjük, amikor az oldal betöltődik
+// DOM betöltésekor az eredeti kódhoz hozzáadom a kezdeti pozíció beállítását
 document.addEventListener("DOMContentLoaded", function () {
   buildRoomIndex();
   createGrid();
@@ -652,7 +688,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   
   centerGrid(true);
-  updateFloorDisplay(); // Kezdeti emelet megjelenítése
+  updateFloorDisplay();
+  updateArrowPosition(); // Hozzáadva a kezdeti pozícióhoz
   window.addEventListener("resize", () => centerGrid());
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -712,6 +749,7 @@ function setupDesktop() {
   window.resetGridPosition = function () {
     gridMovedManually = false;
     centerGrid(true);
+    fullPath = [];
     currentPath = [];
     createGrid();
     document.getElementById("start").value = "";
@@ -719,10 +757,9 @@ function setupDesktop() {
     document.getElementById("qrcode").innerHTML = "";
     document.getElementById("qrcode").style.display = "none";
     document.getElementById("qr-message").style.display = "block";
-  
     targetFloor = null;
     updateArrowBlink();
-    updateFloorDisplay(); // Frissítjük a kijelzőt
+    updateFloorDisplay();
   };
 }
 
@@ -932,6 +969,9 @@ function updateArrowBlink() {
 }
 
 // Útvonalkeresés
+let fullPath = []; // Teljes útvonal tárolása
+let currentPath = []; // Aktuális emelet útvonala
+
 function runPathfinding() {
   const startName = document.getElementById("start").value;
   const endName = document.getElementById("end").value;
@@ -950,13 +990,20 @@ function runPathfinding() {
   }
 
   targetFloor = endPos.floor;
-  updateArrowBlink();
-  currentPath = multiFloorAStar(startPos, endPos, startName, endName);
+  fullPath = multiFloorAStar(startPos, endPos, startName, endName);
 
-  if (currentPath.length > 0) {
+  if (fullPath.length > 0) {
+    // Az aktuális emelet teljes szakaszát állítjuk be induláskor
+    const floorSegmentStart = fullPath.findIndex((n) => n.floor === currentFloor);
+    const floorSegmentEnd = fullPath.findLastIndex((n) => n.floor === currentFloor);
+    currentPath = floorSegmentStart !== -1 && floorSegmentEnd !== -1
+      ? fullPath.slice(floorSegmentStart, floorSegmentEnd + 1)
+      : [];
+
     createGrid();
     generateQRCode(startName, endName);
     document.getElementById("qr-message").style.display = "none";
+    updateArrowBlink();
   } else {
     alert("Nincs útvonal a kiválasztott pontok között!");
     document.getElementById("qr-message").style.display = "block";
@@ -988,23 +1035,36 @@ function centerGrid(force = false) {
   // Ha a felhasználó manuálisan mozgatta a gridet, ne igazítsuk újra, kivéve, ha force = true
   if (gridMovedManually && !force) return;
 
-  const gridWidth = gridElement.offsetWidth;
-  const gridHeight = gridElement.offsetHeight;
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
-  const leftPanelWidth = leftPanel.offsetWidth; // 275px
-  const arrowContainerWidth = 40 + 10; // Nyíl szélessége (40px) + margók (10px)
+  // Alapértelmezett értékek definiálása, hogy ne legyen undefined
+  let adjustedLeft = 0;
+  let adjustedTop = 0;
 
-  // A bal oldali eltolás: sidebar + nyilak
-  const leftOffset = leftPanelWidth + arrowContainerWidth + 15; // +15 a sidebar margin miatt
+  // Csak akkor számoljuk a pozíciót, ha a képernyő szélessége >= 1300px
+  if (window.innerWidth >= 1300) {
+    const gridWidth = gridElement.offsetWidth;
+    const gridHeight = gridElement.offsetHeight;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const leftPanelWidth = leftPanel.offsetWidth; // 275px
+    const arrowContainerWidth = 40 + 10; // Nyíl szélessége (40px) + margók (10px)
 
-  // Középre igazítás, figyelembe véve az eltolást
-  const adjustedLeft = (windowWidth - gridWidth) / 2 + leftOffset / 2;
-  const adjustedTop = (windowHeight - gridHeight) / 2;
+    // A bal oldali eltolás: sidebar + nyilak
+    const leftOffset = leftPanelWidth + arrowContainerWidth + 15; // +15 a sidebar margin miatt
 
-  gridElement.style.position = "absolute";
-  gridElement.style.left = `${adjustedLeft}px`;
-  gridElement.style.top = `${adjustedTop}px`;
+    // Középre igazítás, figyelembe véve az eltolást
+    adjustedLeft = (windowWidth - gridWidth) / 2 + leftOffset / 2;
+    adjustedTop = (windowHeight - gridHeight) / 2;
+
+    // Stílusok alkalmazása
+    gridElement.style.position = "absolute";
+    gridElement.style.left = `${adjustedLeft}px`;
+    gridElement.style.top = `${adjustedTop}px`;
+  } else {
+    // Mobilos nézetben (pl. < 1300px) visszaállítjuk az alapértelmezett pozíciót
+    gridElement.style.position = ""; // Vagy "static", attól függ, mi az alapértelmezett
+    gridElement.style.left = "";
+    gridElement.style.top = "";
+  }
 }
 
 document.addEventListener("click", function (event) {
@@ -1045,3 +1105,11 @@ document.getElementById("upArrow").addEventListener("click", function() {
     updateArrowBlink();
   }
 });
+// Új függvény a gombok pozíciójának frissítésére
+function updateArrowPosition() {
+  const arrowContainer = document.querySelector(".arrow-container");
+  if (arrowContainer) {
+    arrowContainer.classList.remove("floor-0", "floor-1", "floor-2");
+    arrowContainer.classList.add(`floor-${currentFloor}`);
+  }
+}
