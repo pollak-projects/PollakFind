@@ -240,9 +240,11 @@ select option {
 @keyframes yellowBlink {
   0% {
     background: rgba(45, 45, 45, 0.5);
+    border: 1px solid rgba(45, 45, 45, 0.75);
   }
   50% {
-    background-color: #ffeb3b;
+    background: rgba(255, 215, 0, 0.5);
+    border: 1px solid rgba(255, 225, 35, 0.5);
   }
   100% {
     background: rgba(45, 45, 45, 0.5);
@@ -530,11 +532,11 @@ button:hover {
   justify-content: center;
   transition: background 0.3s;
   background: rgba(45, 45, 45, 0.5);
+  border: 1px solid rgba(45, 45, 45, 0.75);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid rgba(45, 45, 45, 0.75);
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;

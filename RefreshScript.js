@@ -560,9 +560,6 @@ const floors = {
 let currentFloor = 0;
 let grid = [];
 
-// Eltároljuk a jelenlegi útvonalat, hogy minden emelet váltásnál meg tudjuk jeleníteni a megfelelő részt
-let currentPath = [];
-
 // Grid létrehozása az aktuális emelet beállításai szerint
 let timeoutIds = [];
 
@@ -574,7 +571,6 @@ function createGrid() {
   const rows = floorData.rows;
   const cols = floorData.cols;
 
-  // DOM-frissítések minimalizálása
   const fragment = document.createDocumentFragment();
 
   if (timeoutIds && timeoutIds.length > 0) {
@@ -604,12 +600,12 @@ function createGrid() {
         }
       }
 
-      // Gyorsabb animációk az útvonalon
+      // Csak az aktuális emelet útvonalát rendereljük
       const pathIndex = currentPath.findIndex(
         (n) => n.floor === currentFloor && n.row === row && n.col === col
       );
       if (pathIndex !== -1) {
-        const delay = pathIndex * 25;
+        const delay = pathIndex * 25; // Kis késleltetés az animációhoz
         const timeoutId = setTimeout(() => {
           cell.classList.add("path");
           cell.style.animationDelay = `${pathIndex * 0.1}s`;
@@ -623,7 +619,6 @@ function createGrid() {
     grid.push(rowArray);
   }
 
-  // Egyszerre adjuk hozzá a DOM-hoz, gyorsítva a megjelenítést
   gridElement.appendChild(fragment);
 }
 
@@ -632,10 +627,27 @@ function switchFloor(floor) {
   if (floors[floor]) {
     currentFloor = floor;
     gridMovedManually = false;
+
+    if (fullPath.length > 0) {
+      // Az aktuális emelet teljes útvonalszakaszának kiválasztása
+      const floorSegmentStart = fullPath.findIndex((n) => n.floor === currentFloor);
+      const floorSegmentEnd = fullPath.findLastIndex((n) => n.floor === currentFloor);
+
+      if (floorSegmentStart !== -1 && floorSegmentEnd !== -1) {
+        // Az aktuális emelet teljes szakasza a kezdőponttól a lépcsőig
+        currentPath = fullPath.slice(floorSegmentStart, floorSegmentEnd + 1);
+      } else {
+        // Ha az emeleten nincs útvonal (pl. csak áthaladás), üres
+        currentPath = [];
+      }
+    } else {
+      currentPath = [];
+    }
+
     createGrid();
     centerGrid(true);
-    updateFloorDisplay(); // Frissítjük a kijelzőt
-    updateArrowBlink();   // Frissítjük a villogást
+    updateFloorDisplay();
+    updateArrowBlink();
   }
 }
 
@@ -754,6 +766,7 @@ function setupDesktop() {
   window.resetGridPosition = function () {
     gridMovedManually = false;
     centerGrid(true);
+    fullPath = [];
     currentPath = [];
     createGrid();
     document.getElementById("start").value = "";
@@ -761,10 +774,9 @@ function setupDesktop() {
     document.getElementById("qrcode").innerHTML = "";
     document.getElementById("qrcode").style.display = "none";
     document.getElementById("qr-message").style.display = "block";
-  
     targetFloor = null;
     updateArrowBlink();
-    updateFloorDisplay(); // Frissítjük a kijelzőt
+    updateFloorDisplay();
   };
 }
 
@@ -974,6 +986,9 @@ function updateArrowBlink() {
 }
 
 // Útvonalkeresés
+let fullPath = []; // Teljes útvonal tárolása
+let currentPath = []; // Aktuális emelet útvonala
+
 function runPathfinding() {
   const startName = document.getElementById("start").value;
   const endName = document.getElementById("end").value;
@@ -992,13 +1007,20 @@ function runPathfinding() {
   }
 
   targetFloor = endPos.floor;
-  updateArrowBlink();
-  currentPath = multiFloorAStar(startPos, endPos, startName, endName);
+  fullPath = multiFloorAStar(startPos, endPos, startName, endName);
 
-  if (currentPath.length > 0) {
+  if (fullPath.length > 0) {
+    // Az aktuális emelet teljes szakaszát állítjuk be induláskor
+    const floorSegmentStart = fullPath.findIndex((n) => n.floor === currentFloor);
+    const floorSegmentEnd = fullPath.findLastIndex((n) => n.floor === currentFloor);
+    currentPath = floorSegmentStart !== -1 && floorSegmentEnd !== -1
+      ? fullPath.slice(floorSegmentStart, floorSegmentEnd + 1)
+      : [];
+
     createGrid();
     generateQRCode(startName, endName);
     document.getElementById("qr-message").style.display = "none";
+    updateArrowBlink();
   } else {
     alert("Nincs útvonal a kiválasztott pontok között!");
     document.getElementById("qr-message").style.display = "block";
