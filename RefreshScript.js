@@ -623,6 +623,7 @@ function createGrid() {
 }
 
 // Emelet váltása dropdown segítségével
+// Eredeti switchFloor függvény minimális módosítással
 function switchFloor(floor) {
   if (floors[floor]) {
     currentFloor = floor;
@@ -648,6 +649,7 @@ function switchFloor(floor) {
     centerGrid(true);
     updateFloorDisplay();
     updateArrowBlink();
+    updateArrowPosition(); // Csak ezt adtam hozzá
   }
 }
 
@@ -694,6 +696,7 @@ function buildRoomIndex() {
 }
 
 // Az indexet egyszer felépítjük, amikor az oldal betöltődik
+// DOM betöltésekor az eredeti kódhoz hozzáadom a kezdeti pozíció beállítását
 document.addEventListener("DOMContentLoaded", function () {
   buildRoomIndex();
   createGrid();
@@ -706,7 +709,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   
   centerGrid(true);
-  updateFloorDisplay(); // Kezdeti emelet megjelenítése
+  updateFloorDisplay();
+  updateArrowPosition(); // Hozzáadva a kezdeti pozícióhoz
   window.addEventListener("resize", () => centerGrid());
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -1052,23 +1056,36 @@ function centerGrid(force = false) {
   // Ha a felhasználó manuálisan mozgatta a gridet, ne igazítsuk újra, kivéve, ha force = true
   if (gridMovedManually && !force) return;
 
-  const gridWidth = gridElement.offsetWidth;
-  const gridHeight = gridElement.offsetHeight;
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
-  const leftPanelWidth = leftPanel.offsetWidth; // 275px
-  const arrowContainerWidth = 40 + 10; // Nyíl szélessége (40px) + margók (10px)
+  // Alapértelmezett értékek definiálása, hogy ne legyen undefined
+  let adjustedLeft = 0;
+  let adjustedTop = 0;
 
-  // A bal oldali eltolás: sidebar + nyilak
-  const leftOffset = leftPanelWidth + arrowContainerWidth + 15; // +15 a sidebar margin miatt
+  // Csak akkor számoljuk a pozíciót, ha a képernyő szélessége >= 1300px
+  if (window.innerWidth >= 1300) {
+    const gridWidth = gridElement.offsetWidth;
+    const gridHeight = gridElement.offsetHeight;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const leftPanelWidth = leftPanel.offsetWidth; // 275px
+    const arrowContainerWidth = 40 + 10; // Nyíl szélessége (40px) + margók (10px)
 
-  // Középre igazítás, figyelembe véve az eltolást
-  const adjustedLeft = (windowWidth - gridWidth) / 2 + leftOffset / 2;
-  const adjustedTop = (windowHeight - gridHeight) / 2;
+    // A bal oldali eltolás: sidebar + nyilak
+    const leftOffset = leftPanelWidth + arrowContainerWidth + 15; // +15 a sidebar margin miatt
 
-  gridElement.style.position = "absolute";
-  gridElement.style.left = `${adjustedLeft}px`;
-  gridElement.style.top = `${adjustedTop}px`;
+    // Középre igazítás, figyelembe véve az eltolást
+    adjustedLeft = (windowWidth - gridWidth) / 2 + leftOffset / 2;
+    adjustedTop = (windowHeight - gridHeight) / 2;
+
+    // Stílusok alkalmazása
+    gridElement.style.position = "absolute";
+    gridElement.style.left = `${adjustedLeft}px`;
+    gridElement.style.top = `${adjustedTop}px`;
+  } else {
+    // Mobilos nézetben (pl. < 1300px) visszaállítjuk az alapértelmezett pozíciót
+    gridElement.style.position = ""; // Vagy "static", attól függ, mi az alapértelmezett
+    gridElement.style.left = "";
+    gridElement.style.top = "";
+  }
 }
 
 document.addEventListener("click", function (event) {
@@ -1109,3 +1126,11 @@ document.getElementById("upArrow").addEventListener("click", function() {
     updateArrowBlink();
   }
 });
+// Új függvény a gombok pozíciójának frissítésére
+function updateArrowPosition() {
+  const arrowContainer = document.querySelector(".arrow-container");
+  if (arrowContainer) {
+    arrowContainer.classList.remove("floor-0", "floor-1", "floor-2");
+    arrowContainer.classList.add(`floor-${currentFloor}`);
+  }
+}
