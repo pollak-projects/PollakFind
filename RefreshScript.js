@@ -62,7 +62,7 @@ const floors = {
     "cell-1-15": "DKA",
     "cell-1-16": "X",
     "cell-1-17": "X",
-    "cell-1-18": "",
+    "cell-1-18": "Mech",
     "cell-1-19": "X",
 
     "cell-2-0": "X",
