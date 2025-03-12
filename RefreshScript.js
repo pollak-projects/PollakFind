@@ -1036,6 +1036,7 @@ function runPathfinding() {
     generateQRCode(startName, endName);
     document.getElementById("qr-message").style.display = "none";
     updateArrowBlink();
+    intervallStart();
   } else {
     alert("Nincs útvonal a kiválasztott pontok között!");
     document.getElementById("qr-message").style.display = "block";
@@ -1158,5 +1159,41 @@ function updateArrowPosition() {
   if (arrowContainer) {
     arrowContainer.classList.remove("floor-0", "floor-1", "floor-2");
     arrowContainer.classList.add(`floor-${currentFloor}`);
+  }
+}
+
+
+let pressed = 0;
+let intervalId = null;
+
+function intervallStart() {
+  document.addEventListener('keydown', (event) => {
+    const pressedKey = event.key;
+    if (pressedKey === "á") {
+      pressed++;
+      if (pressed % 2 == 1) {
+        intervalId = setInterval(() => {
+          autoChangeFloor();
+        }, 5000);
+      } else {
+        clearInterval(intervalId);
+      }
+    }
+  });
+}
+
+function autoChangeFloor() {
+  console.log(currentFloor);
+  
+  switch (currentFloor) {
+    case 2:
+      currentFloor = 0;
+      switchFloor(currentFloor);
+      break;
+  
+    default:
+      currentFloor++;
+      switchFloor(currentFloor);
+      break;
   }
 }
