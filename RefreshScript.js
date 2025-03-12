@@ -93,7 +93,7 @@ const floors = {
     "cell-3-4": "FérfiÖ",
     "cell-3-5": "X",
     "cell-3-6": "X",
-    "cell-3-7": "FérfiM1",
+    "cell-3-7": "FwcT",
     "cell-3-8": "X",
     "cell-3-9": "X",
     "cell-3-10": "NőiÖ",
@@ -107,7 +107,7 @@ const floors = {
     "cell-3-18": "X",
     "cell-3-19": "X",
 
-    "cell-4-0": "Elektro",
+    "cell-4-0": "Elektr",
     "cell-4-1": "X",
     "cell-4-2": "",
     "cell-4-3": "X",
@@ -276,7 +276,7 @@ const floors = {
     "cell-11-19": "➡️",
 
     "cell-12-0": "",
-    "cell-12-1": "FérfiM2",
+    "cell-12-1": "Fwc0",
     "cell-12-2": "⬇️",
     "cell-12-3": "FőBej",
     "cell-12-4": "X",
