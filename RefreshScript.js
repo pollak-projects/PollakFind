@@ -666,18 +666,21 @@ function generateQRCode(start, end) {
   qrDiv.innerHTML = "";
 
   // QR-kód generálása
-  const qrData = `${window.location.href}?start=${encodeURIComponent(
-    start
-  )}&end=${encodeURIComponent(end)}`;
+
   new QRCode(qrDiv, {
-    text: qrData,
-    width: 128,
-    height: 128,
+    text: `${window.location.href}?start=${encodeURIComponent(
+      start
+    )}&end=${encodeURIComponent(end)}`,
+    width: 156,
+    height: 156,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.L,
   });
 
   // Üzenet elrejtése és QR-kód megjelenítése
   qrMessage.style.display = "none";
-  qrDiv.style.display = "block";
+  qrDiv.style.display = "flex";
 
   // Animáció indítása
   qrContainer.classList.remove("animate");
@@ -755,9 +758,12 @@ function setupDesktop() {
       let newLeft = event.clientX - offsetX;
       let newTop = event.clientY - offsetY;
 
-      const minLeft = 365;
+      const minLeft = 300;
+
+      console.log(minLeft);
+
       const minTop = 0;
-      const maxLeft = window.innerWidth - gridElement.offsetWidth;
+      const maxLeft = window.innerWidth - gridElement.offsetWidth + 200;
       const maxTop = window.innerHeight - gridElement.offsetHeight;
 
       newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
@@ -1162,12 +1168,11 @@ function updateArrowPosition() {
   }
 }
 
-
 let pressed = 0;
 let intervalId = null;
 
 function intervallStart() {
-  document.addEventListener('keydown', (event) => {
+  document.addEventListener("keydown", (event) => {
     const pressedKey = event.key;
     if (pressedKey === "á") {
       pressed++;
@@ -1184,16 +1189,65 @@ function intervallStart() {
 
 function autoChangeFloor() {
   console.log(currentFloor);
-  
+
   switch (currentFloor) {
     case 2:
       currentFloor = 0;
       switchFloor(currentFloor);
       break;
-  
+
     default:
       currentFloor++;
       switchFloor(currentFloor);
       break;
   }
 }
+let scale = 0.5;
+let isZooming = false;
+
+document.querySelector(".grid").style.transform = `scale(${0.7})`;
+
+document.addEventListener(
+  "wheel",
+  (e) => {
+    if (!e.ctrlKey) return; // Only zoom with Ctrl/Cmd + wheel
+
+    e.preventDefault();
+    const delta = -Math.sign(e.deltaY);
+
+    // Limit zoom scale
+    const minScale = 0.5;
+    const maxScale = 3;
+
+    scale += delta * 0.1;
+    scale = Math.max(minScale, Math.min(maxScale, scale));
+
+    document.querySelector(".grid").style.transform = `scale(${scale})`;
+  },
+  { passive: false }
+);
+
+// Maintain zoom on mobile devices
+document.addEventListener(
+  "touchmove",
+  (e) => {
+    if (!e.ctrlKey && e.touches.length === 2) {
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      const dist = Math.hypot(
+        touch2.clientX - touch1.clientX,
+        touch2.clientY - touch1.clientY
+      );
+
+      // Calculate new scale based on pinch distance
+      const newScale = dist / initialDistance;
+      scale *= newScale;
+      scale = Math.max(minScale, Math.min(maxScale, scale));
+
+      document.querySelector(".grid").style.transform = `scale(${scale})`;
+
+      initialDistance = dist;
+    }
+  },
+  { passive: false }
+);

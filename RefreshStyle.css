@@ -19,23 +19,25 @@ body {
   flex-direction: column;
   align-items: center;
   height: 200px;
-  background: rgba(45, 45, 45, 0.5);
+  background: rgba(0, 86, 129, 0);
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid rgba(45, 45, 45, 0.75);
 }
 
 #qr-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 128px;
 }
 
 #qrcode {
   display: none;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 #qrcode-container.animate {
@@ -236,17 +238,16 @@ select option {
   border: 1px solid rgba(45, 45, 45, 0.75);
 }
 
-
-
 /* Egész térképnek a kinézete ---------------------------------------------------------- */
 .grid {
+  /* Your existing properties */
   display: grid;
   grid-template-columns: repeat(20, 50px);
   gap: 5px;
   padding: 10px;
   position: absolute;
   cursor: grab;
-  top: 0px; /* 50px helyett 0px */
+  top: 0px;
   left: 365px;
   background: rgba(25, 25, 25, 0.5);
   border-radius: 16px;
@@ -254,6 +255,18 @@ select option {
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
   border: 1px solid rgba(45, 45, 45, 0.75);
+
+  /* New properties for zoom */
+  transform-origin: center;
+  transition: transform 0.1s ease-out;
+}
+
+.grid.zooming {
+  cursor: grab;
+}
+
+.grid.zooming.active {
+  cursor: grabbing;
 }
 
 .grid div {
@@ -278,8 +291,6 @@ select option {
   animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
 }
-
-
 
 /* tanterem keresése és visszaállítás gombok style ------------------------------------------------------------------- */
 select,
@@ -314,8 +325,6 @@ button:hover {
   border: 1px solid #005822;
 }
 
-
-
 /* Reset gomb style ------------------------------------------------------------------- */
 .reset-button {
   background: #45000f;
@@ -337,8 +346,7 @@ button:hover {
   border: 1px solid #58000f;
 }
 
-
- /* Fordítsa el a telefont! szöveg -------------------------------------------------- */
+/* Fordítsa el a telefont! szöveg -------------------------------------------------- */
 #orientationOverlay {
   display: none;
   position: fixed;
@@ -354,15 +362,12 @@ button:hover {
   border-radius: 10px;
 }
 
-
-
 /* jelenlegi emelet style --------------------------------------------------------- */
 .floor-navigation {
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: center;
-  margin-top: 350px;
 }
 
 .floor-navigation button {
@@ -381,16 +386,15 @@ button:hover {
   background: #005f7a;
 }
 
-
-
 /*  emeletek közötti navigáció nyilakkal ------------------------------------------------------- */
 .arrow-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  margin-top: 400px;
+
   margin-left: -8px;
+  z-index: 100;
 }
 
 .arrow {
@@ -428,8 +432,6 @@ button:hover {
 .arrow.blink {
   animation: yellowBlink 1s infinite;
 }
-
-
 
 /* Keyframes ------------------------------------------------------------------------ */
 
@@ -486,8 +488,6 @@ button:hover {
   }
 }
 
-
-
 /* Tájkép nézet, telefonon ------------------------------------------------------- */
 @media screen and (orientation: landscape) and (max-width: 1200px) {
   .left-panel {
@@ -495,8 +495,8 @@ button:hover {
   }
   .grid {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -20%;
+    left: 0%;
     grid-template-columns: repeat(20, 40px);
     justify-content: center;
   }
@@ -508,45 +508,32 @@ button:hover {
     font-size: 0.8rem;
   }
   .arrow-container {
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 10px;
     z-index: 10; /* A térkép felett legyen */
-    top: 0;
-    left: 0;
+    bottom: 50%;
+    left: 50px;
     width: 80px;
     height: 140px;
     border-radius: 10px;
-    background: #626466
+    background: #626466;
   }
   /* Emeletenkénti fix pozíciók */
-  .arrow-container.floor-0 {
-    top: -150px; /* Földszint: jobb felső sarok */
-    left: 450px;
-  }
-  .arrow-container.floor-1 {
-    top: -110px; /* 1. emelet: bal felső sarok */
-    left: 450px;
-  }
-  .arrow-container.floor-2 {
-    top: -110px; /* 1. emelet: bal felső sarok */
-    left: 450px;
-  }
+
   .arrow {
     width: 40px;
     height: 40px;
     font-size: 25px;
     background-color: rgb(45, 45, 45, 1);
   }
-  .arrow:hover{
-    background: rgba(15, 15, 15, 1)
+  .arrow:hover {
+    background: rgba(15, 15, 15, 1);
   }
 }
-
-
 
 /* Portré nézet, telefonos nézetben ---------------------------------------------------- */
 @media screen and (orientation: portrait) and (max-width: 768px) {
@@ -561,12 +548,10 @@ button:hover {
   }
 }
 
-
-
 /* Laptopos nézet ---------------------------------------------------------------*/
-@media screen and (max-width:1300px) {
-  .searchable-select-label{
-    font-size: .9rem;
+@media screen and (max-width: 1300px) {
+  .searchable-select-label {
+    font-size: 0.9rem;
   }
   .searchable-select-input {
     height: 40px;
@@ -597,6 +582,63 @@ button:hover {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .grid {
+    /* Fix blur and centering */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    position: absolute;
 
+    /* Ensure proper sizing */
+    width: calc(100vw - 40px);
+    height: calc(100vh - 120px);
+    margin: 0;
 
- 
+    /* Maintain grid layout */
+    display: grid;
+    grid-template-columns: repeat(20, 60px);
+    gap: 10px;
+    padding: 20px;
+
+    /* Improve visibility */
+    background: rgba(25, 25, 25, 0.8);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(45, 45, 45, 0.75);
+  }
+
+  .grid div {
+    /* Grid cell styling */
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    min-width: 60px;
+    min-height: 60px;
+    font-size: 1.2rem;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .arrow-container {
+    /* Make navigation arrows more accessible */
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    margin-left: 0;
+  }
+
+  .arrow {
+    /* Increase touch target size for navigation */
+    width: 60px;
+    height: 60px;
+    padding: 15px;
+    border-radius: 20px;
+  }
+}
+
+/* only in dekstop view */
+@@media screen and (min-width: 768px) {
+  .arrow-container {
+    top: 50%;
+    left: 50%;
+  }
+}
