@@ -12,6 +12,7 @@ body {
   );
   background-size: 30px 30px;
   background-position: -5px -5px;
+  overflow-x: hidden; /* Megakadályozza a vízszintes görgetést */
 }
 
 #qrcode-container {
@@ -19,25 +20,23 @@ body {
   flex-direction: column;
   align-items: center;
   height: 200px;
-  background: rgba(0, 86, 129, 0);
+  background: rgba(25, 25, 25, 0.5);
   border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75);
 }
 
 #qr-content {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 128px;
 }
 
 #qrcode {
   display: none;
-  margin: 0 auto;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
 }
 
 #qrcode-container.animate {
@@ -238,35 +237,28 @@ select option {
   border: 1px solid rgba(45, 45, 45, 0.75);
 }
 
-/* Egész térképnek a kinézete ---------------------------------------------------------- */
+
+
+/* Egész térképnek a kinézete */
 .grid {
-  /* Your existing properties */
   display: grid;
-  grid-template-columns: repeat(20, 50px);
-  gap: 5px;
-  padding: 10px;
+  grid-template-columns: repeat(20, minmax(30px, 60px)); /* Larger size for desktop */
+  gap: 4px;
+  padding: 5px;
   position: absolute;
   cursor: grab;
-  top: 0px;
-  left: 365px;
   background: rgba(25, 25, 25, 0.5);
-  border-radius: 16px;
+  border-radius: 10px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
   border: 1px solid rgba(45, 45, 45, 0.75);
-
-  /* New properties for zoom */
-  transform-origin: center;
-  transition: transform 0.1s ease-out;
-}
-
-.grid.zooming {
-  cursor: grab;
-}
-
-.grid.zooming.active {
-  cursor: grabbing;
+  box-sizing: border-box;
+  width: fit-content;
+  height: fit-content;
+  top: 50%;
+  left: calc(50% + 137.5px);
+  transform: translate(-50%, -50%);
 }
 
 .grid div {
@@ -274,12 +266,18 @@ select option {
   justify-content: center;
   align-items: center;
   background: rgba(255, 255, 255, 0.5);
-  border-radius: 7.5px;
+  border-radius: 5px;
   font-weight: bold;
   text-align: center;
   color: rgb(25, 25, 25);
-  min-height: 50px;
-  min-width: 50px;
+  min-height: clamp(30px, 6vw, 60px);
+  min-width: clamp(30px, 6vw, 60px);
+  font-size: clamp(0.6rem, 1.8vw, 1rem);
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 2px;
 }
 
 .grid .black {
@@ -291,6 +289,8 @@ select option {
   animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
 }
+
+
 
 /* tanterem keresése és visszaállítás gombok style ------------------------------------------------------------------- */
 select,
@@ -325,6 +325,8 @@ button:hover {
   border: 1px solid #005822;
 }
 
+
+
 /* Reset gomb style ------------------------------------------------------------------- */
 .reset-button {
   background: #45000f;
@@ -346,7 +348,10 @@ button:hover {
   border: 1px solid #58000f;
 }
 
-/* Fordítsa el a telefont! szöveg -------------------------------------------------- */
+
+
+
+ /* Fordítsa el a telefont! szöveg -------------------------------------------------- */
 #orientationOverlay {
   display: none;
   position: fixed;
@@ -362,12 +367,15 @@ button:hover {
   border-radius: 10px;
 }
 
+
+
 /* jelenlegi emelet style --------------------------------------------------------- */
 .floor-navigation {
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: center;
+  margin-top: 350px;
 }
 
 .floor-navigation button {
@@ -386,39 +394,35 @@ button:hover {
   background: #005f7a;
 }
 
+
+
 /*  emeletek közötti navigáció nyilakkal ------------------------------------------------------- */
 .arrow-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-
-  margin-left: -8px;
-  z-index: 100;
+  position: absolute;
+  z-index: 10; /* A grid felett legyen */
 }
 
 .arrow {
-  font-size: 24px;
-  cursor: pointer;
-  padding: 10px;
-  color: white;
-  text-align: center;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s;
+  font-size: clamp(20px, 4vw, 24px); /* Rugalmas nyíl méret */
+  padding: 8px;
+  width: clamp(30px, 6vw, 40px);
+  height: clamp(30px, 6vw, 40px);
   background: rgba(45, 45, 45, 0.5);
   border: 1px solid rgba(45, 45, 45, 0.75);
-  border-radius: 16px;
+  border-radius: 10px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
 .arrow:hover {
@@ -432,6 +436,8 @@ button:hover {
 .arrow.blink {
   animation: yellowBlink 1s infinite;
 }
+
+
 
 /* Keyframes ------------------------------------------------------------------------ */
 
@@ -488,59 +494,53 @@ button:hover {
   }
 }
 
-/* Tájkép nézet, telefonon ------------------------------------------------------- */
+
+
+/* Mobile landscape view */
 @media screen and (orientation: landscape) and (max-width: 1200px) {
   .left-panel {
     display: none;
   }
   .grid {
     position: absolute;
-    top: -20%;
-    left: 0%;
-    grid-template-columns: repeat(20, 40px);
-    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the grid */
+    grid-template-columns: repeat(20, clamp(15px, 3vw, 30px)); /* Smaller size for mobile */
+    gap: 2px;
+    padding: 5px;
+    width: fit-content;
+    height: fit-content;
   }
   .grid div {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    min-height: 40px;
-    font-size: 0.8rem;
+    min-height: clamp(15px, 3vw, 30px); /* Smaller size for mobile */
+    min-width: clamp(15px, 3vw, 30px);
+    font-size: clamp(0.4rem, 1.2vw, 0.7rem); /* Adjusted font size for smaller cells */
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 1px;
   }
   .arrow-container {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    z-index: 10; /* A térkép felett legyen */
-    bottom: 50%;
-    left: 50px;
-    width: 80px;
-    height: 140px;
-    border-radius: 10px;
-    background: #626466;
-  }
-  /* Emeletenkénti fix pozíciók */
-
-  .arrow {
+    left: 45px !important;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 0;
     width: 40px;
-    height: 40px;
-    font-size: 25px;
-    background-color: rgb(45, 45, 45, 1);
-  }
-  .arrow:hover {
-    background: rgba(15, 15, 15, 1);
+    z-index: 10;
+    position: absolute !important;
   }
 }
+
+
 
 /* Portré nézet, telefonos nézetben ---------------------------------------------------- */
 @media screen and (orientation: portrait) and (max-width: 768px) {
   .left-panel,
   .grid,
   .arrow-container {
-    display: none !important; /* Nyilak is eltűnnek portréban */
+    display: none !important;
   }
   #orientationOverlay {
     display: block;
@@ -548,97 +548,41 @@ button:hover {
   }
 }
 
-/* Laptopos nézet ---------------------------------------------------------------*/
-@media screen and (max-width: 1300px) {
-  .searchable-select-label {
-    font-size: 0.9rem;
-  }
-  .searchable-select-input {
-    height: 40px;
-  }
-  .floor-select-label {
-    font-size: 0.9rem;
-  }
-  .search-button {
-    height: 40px;
-    font-size: 0.9rem;
-    padding-top: 8px;
-  }
-  .reset-button {
-    height: 30px;
-    font-size: 0.9rem;
-    padding-top: 3px;
-  }
-  .select-container {
-    gap: 5px;
-  }
-  .left-panel {
-    height: 100vh;
-    gap: 0;
-  }
-  .social-buttons {
-    position: relative;
-    top: 19px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .grid {
-    /* Fix blur and centering */
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    position: absolute;
-
-    /* Ensure proper sizing */
-    width: calc(100vw - 40px);
-    height: calc(100vh - 120px);
-    margin: 0;
-
-    /* Maintain grid layout */
-    display: grid;
-    grid-template-columns: repeat(20, 60px);
-    gap: 10px;
-    padding: 20px;
-
-    /* Improve visibility */
-    background: rgba(25, 25, 25, 0.8);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(45, 45, 45, 0.75);
-  }
-
-  .grid div {
-    /* Grid cell styling */
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    min-width: 60px;
-    min-height: 60px;
-    font-size: 1.2rem;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
+/* Tablet view */
+@media screen and (min-width: 768px) and (max-width: 1299px) {
   .arrow-container {
-    /* Make navigation arrows more accessible */
-    width: 60px;
-    height: 60px;
-    font-size: 30px;
-    margin-left: 0;
-  }
-
-  .arrow {
-    /* Increase touch target size for navigation */
-    width: 60px;
-    height: 60px;
-    padding: 15px;
-    border-radius: 20px;
-  }
-}
-
-/* only in dekstop view */
-@@media screen and (min-width: 768px) {
-  .arrow-container {
+    left: 320px;
     top: 50%;
-    left: 50%;
+    transform: translateY(-50%);
+  }
+  .grid {
+    top: 50%;
+    left: calc(50% + 137.5px);
+    transform: translate(-50%, -50%);
   }
 }
+
+/* PC view */
+@media screen and (min-width: 1300px) {
+  .left-panel {
+    width: 275px;
+    margin: 15px;
+    height: calc(100vh - 50px);
+  }
+  .grid {
+    top: 50%;
+    left: calc(50% + 137.5px);
+    transform: translate(-50%, -50%);
+  }
+  .arrow-container {
+    left: 360px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    z-index: 10;
+  }
+}
+
+
+
+ 
