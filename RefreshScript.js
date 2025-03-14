@@ -1135,6 +1135,7 @@ function changeFloor(direction) {
   }
 }
 
+
 document.getElementById("downArrow").addEventListener("click", function () {
   if (currentFloor > 0) {
     // Ellenőrizzük, hogy lefelé tudunk-e menni
