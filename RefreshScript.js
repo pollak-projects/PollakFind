@@ -662,10 +662,12 @@ function generateQRCode(start, end) {
 
   // QR-kód generálása
 
+  const url = window.location.href.split("?")[0];
+
   new QRCode(qrDiv, {
-    text: `${window.location.href}?start=${encodeURIComponent(
-      start
-    )}&end=${encodeURIComponent(end)}`,
+    text: `${url}?start=${encodeURIComponent(start)}&end=${encodeURIComponent(
+      end
+    )}`,
     width: 156,
     height: 156,
     colorDark: "#000000",
