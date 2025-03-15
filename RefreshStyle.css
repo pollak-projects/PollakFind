@@ -251,18 +251,21 @@ button {
     background-color: rgba(0, 132, 165, 0.4);
     border: 1px solid rgba(0, 132, 165, 0.8);
     color: white;
+    -webkit-box-shadow: 0 0 5px rgba(0, 132, 165, 0.5);
   }
   50% {
     box-shadow: 0 0 15px rgba(0, 132, 165, 1);
     background-color: rgba(0, 132, 165, 0.9);
     border: 1px solid rgba(0, 132, 165, 1);
     color: white;
+    -webkit-box-shadow: 0 0 15px rgba(0, 132, 165, 1);
   }
   100% {
     box-shadow: 0 0 5px rgba(0, 132, 165, 0.5);
     background-color: rgba(0, 132, 165, 0.4);
     border: 1px solid rgba(0, 132, 165, 0.8);
     color: white;
+    -webkit-box-shadow: 0 0 5px rgba(0, 132, 165, 0.5);
   }
 }
 
@@ -304,6 +307,7 @@ button {
   background: rgba(25, 25, 25, 0.5);
   border-radius: 15px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+
   backdrop-filter: blur(7.4px);
   -webkit-backdrop-filter: blur(7.4px);
   border: 1px solid rgba(45, 45, 45, 0.75);
