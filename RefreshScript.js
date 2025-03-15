@@ -1,6 +1,5 @@
-// Ezek a nyilacska emoji-k jelölik a lépcsőket
-const allowedStairs = ["⬇️", "➡️", "⬆️", "⬅️"];
-const presetRoomNames = ["Info I", "Játék"]; // Itt add meg a kivételként kezelt szobaneveket!
+const allowedStairs = [`<img src="stair-white.png" class="stair">`];
+const presetRoomNames = ["Info I", "Játék"];
 
 // Frissített getNeighbors függvény, amely figyelembe veszi az emeletváltozás szabályait
 const stairConnections = {
@@ -12,9 +11,9 @@ const stairConnections = {
 
   // 1. és 2. emelet közötti lépcsőkapcsolatok
   "1-4-2": { floor: 2, row: 4, col: 2 },
-  "1-3-19": { floor: 2, row: 3, col: 19 },
+  "1-3-19": { floor: 2, row: 2, col: 19 },
   "2-3-2": { floor: 1, row: 4, col: 2 },
-  "2-3-19": { floor: 1, row: 3, col: 19 },
+  "2-2-19": { floor: 1, row: 3, col: 19 },
 };
 
 // Emeletek: minden emelet saját sor- és oszlopszámmal, illetve cellaadatokkal
@@ -93,7 +92,7 @@ const floors = {
     "cell-3-4": "FérfiÖ",
     "cell-3-5": "X",
     "cell-3-6": "X",
-    "cell-3-7": "FérfiM1",
+    "cell-3-7": "FwcT",
     "cell-3-8": "X",
     "cell-3-9": "X",
     "cell-3-10": "NőiÖ",
@@ -107,7 +106,7 @@ const floors = {
     "cell-3-18": "X",
     "cell-3-19": "X",
 
-    "cell-4-0": "Elektro",
+    "cell-4-0": "Elektr",
     "cell-4-1": "X",
     "cell-4-2": "",
     "cell-4-3": "X",
@@ -273,11 +272,11 @@ const floors = {
     "cell-11-16": "",
     "cell-11-17": "",
     "cell-11-18": "",
-    "cell-11-19": "➡️",
+    "cell-11-19": `<img src="stair-white.png" class="stair">`,
 
     "cell-12-0": "",
-    "cell-12-1": "FérfiM2",
-    "cell-12-2": "⬇️",
+    "cell-12-1": "Fwc0",
+    "cell-12-2": `<img src="stair-white.png" class="stair">`,
     "cell-12-3": "FőBej",
     "cell-12-4": "X",
     "cell-12-5": "X",
@@ -381,11 +380,11 @@ const floors = {
     "cell-3-16": "",
     "cell-3-17": "",
     "cell-3-18": "",
-    "cell-3-19": "➡️",
+    "cell-3-19": `<img src="stair-white.png" class="stair">`,
 
-    "cell-4-0": "Nwc1",
+    "cell-4-0": "X",
     "cell-4-1": "Fwc1",
-    "cell-4-2": "⬇️",
+    "cell-4-2": `<img src="stair-white.png" class="stair">`,
     "cell-4-3": "Gaz.ir",
     "cell-4-4": "V. Tant.",
     "cell-4-5": "X",
@@ -490,11 +489,11 @@ const floors = {
     "cell-2-16": "",
     "cell-2-17": "",
     "cell-2-18": "",
-    "cell-2-19": "➡️",
+    "cell-2-19": `<img src="stair-white.png" class="stair">`,
 
-    "cell-3-0": "X",
+    "cell-3-0": "Nwc2",
     "cell-3-1": "Fwc2",
-    "cell-3-2": "⬇️",
+    "cell-3-2": `<img src="stair-white.png" class="stair">`,
     "cell-3-3": "X",
     "cell-3-4": "X",
     "cell-3-5": "Mat1",
@@ -565,6 +564,7 @@ let timeoutIds = [];
 
 function createGrid() {
   const gridElement = document.getElementById("grid");
+
   gridElement.innerHTML = ""; // Előző grid törlése
   grid = [];
   const floorData = floors[currentFloor];
@@ -572,11 +572,6 @@ function createGrid() {
   const cols = floorData.cols;
 
   const fragment = document.createDocumentFragment();
-
-  if (timeoutIds && timeoutIds.length > 0) {
-    timeoutIds.forEach((id) => clearTimeout(id));
-    timeoutIds = [];
-  }
 
   for (let row = 0; row < rows; row++) {
     let rowArray = [];
@@ -594,9 +589,9 @@ function createGrid() {
         const name = floorData[key];
         if (name === "X") {
           cell.classList.add("black");
-          cell.innerText = "";
+          cell.innerHTML = "";
         } else {
-          cell.innerText = name;
+          cell.innerHTML = name;
         }
       }
 
@@ -666,18 +661,21 @@ function generateQRCode(start, end) {
   qrDiv.innerHTML = "";
 
   // QR-kód generálása
-  const qrData = `${window.location.href}?start=${encodeURIComponent(
-    start
-  )}&end=${encodeURIComponent(end)}`;
+
   new QRCode(qrDiv, {
-    text: qrData,
-    width: 128,
-    height: 128,
+    text: `${window.location.href}?start=${encodeURIComponent(
+      start
+    )}&end=${encodeURIComponent(end)}`,
+    width: 156,
+    height: 156,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.L,
   });
 
   // Üzenet elrejtése és QR-kód megjelenítése
   qrMessage.style.display = "none";
-  qrDiv.style.display = "block";
+  qrDiv.style.display = "flex";
 
   // Animáció indítása
   qrContainer.classList.remove("animate");
@@ -707,17 +705,8 @@ document.addEventListener("DOMContentLoaded", function () {
   buildRoomIndex();
   createGrid();
 
-  const gridElement = document.getElementById("grid");
-  if (gridElement) {
-    gridElement.style.position = "absolute";
-    gridElement.style.left = "365px";
-    gridElement.style.top = "0";
-  }
-
-  centerGrid(true);
   updateFloorDisplay();
   updateArrowPosition(); // Hozzáadva a kezdeti pozícióhoz
-  window.addEventListener("resize", () => centerGrid());
 
   const urlParams = new URLSearchParams(window.location.search);
   const start = urlParams.get("start");
@@ -738,65 +727,8 @@ window.addEventListener("resize", centerGrid);
 
 function setupDesktop() {
   const gridElement = document.getElementById("grid");
-  const arrowContainer = document.querySelector(".arrow-container");
-  const leftPanel = document.querySelector(".left-panel");
-  let isDragging = false,
-    offsetX,
-    offsetY;
-  gridElement.style.cursor = "grab";
-
-  gridElement.addEventListener("mousedown", function (event) {
-    isDragging = true;
-    offsetX = event.clientX - gridElement.offsetLeft;
-    offsetY = event.clientY - gridElement.offsetTop;
-    gridElement.style.cursor = "grabbing";
-  });
-
-  document.addEventListener("mousemove", function (event) {
-    if (isDragging) {
-      let newLeft = event.clientX - offsetX;
-      let newTop = event.clientY - offsetY;
-
-      // Get the bounding rectangles for accurate positioning
-      const arrowRect = arrowContainer.getBoundingClientRect();
-      const sidebarRect = leftPanel ? leftPanel.getBoundingClientRect() : null;
-      const arrowRightEdge = arrowRect.right;
-
-      // Calculate the actual gap between sidebar and arrow container
-      let gap = 0;
-      if (sidebarRect) {
-        const sidebarRightEdge = sidebarRect.right;
-        const arrowLeftEdge = arrowRect.left;
-        gap = arrowLeftEdge - sidebarRightEdge; // Actual distance between sidebar and arrows
-        if (gap < 0) gap = 0; // Ensure gap is not negative
-      } else {
-        // Default gap if sidebar is hidden (e.g., mobile)
-        gap = 45; // Matches mobile landscape arrow position (45px)
-      }
-
-      // Define boundaries
-      const minLeft = arrowRightEdge + gap; // Grid can't go left of this (arrow right edge + gap)
-      const minTop = 0; // Top boundary (window top)
-      const maxLeft = window.innerWidth - gridElement.offsetWidth; // Right boundary (window width - grid width)
-      const maxTop = window.innerHeight - gridElement.offsetHeight; // Bottom boundary (window height - grid height)
-
-      // Restrict movement within boundaries
-      newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
-      newTop = Math.max(minTop, Math.min(newTop, maxTop));
-
-      gridElement.style.left = `${newLeft}px`;
-      gridElement.style.top = `${newTop}px`;
-    }
-  });
-
-  document.addEventListener("mouseup", function () {
-    isDragging = false;
-    gridElement.style.cursor = "grab";
-  });
 
   window.resetGridPosition = function () {
-    gridMovedManually = false;
-    centerGrid(true);
     fullPath = [];
     currentPath = [];
     createGrid();
@@ -812,14 +744,6 @@ function setupDesktop() {
 }
 
 let gridMovedManually = false; // Jelzi, hogy a felhasználó mozgatta-e a gridet
-
-// Figyeljük a felhasználói mozgatást, hogy ne ugráljon vissza
-document.addEventListener("mousedown", (event) => {
-  const gridElement = document.getElementById("grid");
-  if (gridElement && gridElement.contains(event.target)) {
-    gridMovedManually = true;
-  }
-});
 
 // Segédfüggvény: adott emelet, sor, oszlop cellájának tartalma
 function getCell(floor, row, col) {
@@ -1057,6 +981,15 @@ function runPathfinding() {
     generateQRCode(startName, endName);
     document.getElementById("qr-message").style.display = "none";
     updateArrowBlink();
+    intervallStart();
+
+    //add text to currentFloorText: A célállomásod a X emeleten található
+    let currentFloord = document.getElementById("currentFloorText");
+    let text =
+      endPos.floor > 0
+        ? `A célállomásod a ${endPos.floor}. emeleten található`
+        : "A célállomásod a földszinten található";
+    currentFloord.textContent = text;
   } else {
     alert("Nincs útvonal a kiválasztott pontok között!");
     document.getElementById("qr-message").style.display = "block";
@@ -1082,136 +1015,74 @@ function findNodeByName(name) {
 }
 
 function centerGrid(force = false) {
-  const gridElement = document.getElementById("grid");
-  const leftPanel = document.querySelector(".left-panel");
-  if (!gridElement || !leftPanel) return;
-
-  if (gridMovedManually && !force) return;
-
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
-
-  if (windowWidth >= 1300) {
-    const gridWidth = gridElement.offsetWidth;
-    const gridHeight = gridElement.offsetHeight;
-    const leftPanelWidth = leftPanel.offsetWidth;
-
-    const leftOffset = leftPanelWidth / 2;
-    const adjustedLeft = (windowWidth - gridWidth) / 2 + leftOffset;
-    const adjustedTop = (windowHeight - gridHeight) / 2;
-
-    gridElement.style.left = `${adjustedLeft}px`;
-    gridElement.style.top = `${adjustedTop}px`;
-    gridElement.style.transform = "none";
-    gridElement.style.right = "auto";
-    gridElement.style.width = "fit-content";
-  } else if (windowWidth > 768 && windowWidth < 1300) {
-    gridElement.style.left = "270px";
-    gridElement.style.top = "50%";
-    gridElement.style.transform = "translateY(-50%)";
-    gridElement.style.right = "auto";
-    gridElement.style.width = "fit-content";
-  } else {
-    // Mobile landscape view (≤ 1200px)
-    const gridWidth = gridElement.offsetWidth;
-    const gridHeight = gridElement.offsetHeight;
-    gridElement.style.left = "50%";
-    gridElement.style.top = "50%";
-    gridElement.style.transform = "translate(-50%, -50%)"; // Center both horizontally and vertically
-    gridElement.style.right = "auto";
-    gridElement.style.width = "fit-content";
-  }
+  // const gridElement = document.getElementById("grid");
+  // const leftPanel = document.querySelector(".left-panel");
+  // if (!gridElement || !leftPanel) return;
+  // // Ha a felhasználó manuálisan mozgatta a gridet, ne igazítsuk újra, kivéve, ha force = true
+  // if (gridMovedManually && !force) return;
+  // // Alapértelmezett értékek definiálása, hogy ne legyen undefined
+  // let adjustedLeft = 0;
+  // let adjustedTop = 0;
+  // // Csak akkor számoljuk a pozíciót, ha a képernyő szélessége >= 1300px
+  // if (window.innerWidth >= 1300) {
+  //   const gridWidth = gridElement.offsetWidth;
+  //   const gridHeight = gridElement.offsetHeight;
+  //   const windowWidth = window.innerWidth;
+  //   const windowHeight = window.innerHeight;
+  //   const leftPanelWidth = leftPanel.offsetWidth; // 275px
+  //   const arrowContainerWidth = 40 + 10; // Nyíl szélessége (40px) + margók (10px)
+  //   // A bal oldali eltolás: sidebar + nyilak
+  //   const leftOffset = leftPanelWidth + arrowContainerWidth + 15; // +15 a sidebar margin miatt
+  //   // Középre igazítás, figyelembe véve az eltolást
+  //   adjustedLeft = (windowWidth - gridWidth) / 2 + leftOffset / 2;
+  //   adjustedTop = (windowHeight - gridHeight) / 2;
+  //   // Stílusok alkalmazása
+  //   gridElement.style.position = "absolute";
+  //   gridElement.style.left = `${adjustedLeft}px`;
+  //   gridElement.style.top = `${adjustedTop}px`;
+  // } else {
+  //   // Mobilos nézetben (pl. < 1300px) visszaállítjuk az alapértelmezett pozíciót
+  //   gridElement.style.position = ""; // Vagy "static", attól függ, mi az alapértelmezett
+  //   gridElement.style.left = "";
+  //   gridElement.style.top = "";
+  // }
 }
 
-// Ellenőrizzük az updateArrowPosition függvényt
-function updateArrowPosition() {
-  const arrowContainer = document.querySelector(".arrow-container");
-  if (!arrowContainer) return;
-
-  arrowContainer.classList.remove("floor-0", "floor-1", "floor-2");
-  arrowContainer.classList.add(`floor-${currentFloor}`);
-
-  const windowWidth = window.innerWidth;
-  if (windowWidth <= 1200 && window.matchMedia("(orientation: landscape)").matches) {
-    // Mobil landscape nézetben a bal oldalra rögzítjük
-    arrowContainer.style.left = "45px"; // Növelve 15px-ről 45px-re
-    arrowContainer.style.top = "50%";
-    arrowContainer.style.transform = "translateY(-50%)";
-    arrowContainer.style.right = "auto";
-  } else if (windowWidth >= 1300) {
-    arrowContainer.style.left = "315px"; // Növelve 330px-ről 360px-re
-    arrowContainer.style.top = "50%";
-    arrowContainer.style.transform = "translateY(-50%)";
-  } else if (windowWidth > 768) {
-    arrowContainer.style.left = "320px"; // Növelve 290px-ről 320px-re
-    arrowContainer.style.top = "50%";
-    arrowContainer.style.transform = "translateY(-50%)";
-  }
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  buildRoomIndex();
-  createGrid();
-
-  const gridElement = document.getElementById("grid");
-  if (gridElement) {
-    gridElement.style.position = "absolute";
-    gridElement.style.left = "365px";
-    gridElement.style.top = "0";
-  }
-
-  centerGrid(true);
-  updateFloorDisplay();
-  updateArrowPosition();
-  window.addEventListener("resize", () => centerGrid());
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const start = urlParams.get("start");
-  const end = urlParams.get("end");
-
-  if (start && end && roomIndex[start] && roomIndex[end]) {
-    document.getElementById("start").value = start;
-    document.getElementById("end").value = end;
-    runPathfinding();
-  } else {
-    document.getElementById("qr-message").style.display = "block";
-  }
-
-  // Add left-click event listener for starting point selection
-  gridElement.addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent any default behavior
-    const element = event.target;
-    if (
-      element.classList.contains("cell") &&
-      element.id !== "start" &&
-      element.id !== "end" &&
-      element.innerHTML !== "X" &&
-      element.innerHTML !== ""
-    ) {
-      document.getElementById("start").value = element.innerHTML;
+document.addEventListener("click", function (event) {
+  /*change floor with click on the floor number*/
+  console.log(event.target);
+  if (event.target.classList.contains("stair")) {
+    console.log("stairs");
+    switch (currentFloor) {
+      case 0:
+        switchFloor(1);
+        break;
+      case 1:
+        switchFloor(2);
+        break;
+      case 2:
+        switchFloor(0);
+        break;
     }
-  });
-
-  // Existing right-click event listener for endpoint selection
-  document.addEventListener("contextmenu", function (event) {
-    event.preventDefault();
-    const element = event.target;
-    if (
-      element.classList.contains("cell") &&
-      element.id !== "start" &&
-      element.id !== "end" &&
-      element.innerHTML !== "X" &&
-      element.innerHTML !== ""
-    ) {
-      document.getElementById("end").value = element.innerHTML;
-    }
-  });
+  }
 });
 
-setupDesktop();
-
-window.addEventListener("resize", centerGrid);
-
+/*
+document.addEventListener("contextmenu", function (event) {
+  console.log(event.target);
+  event.preventDefault();
+  const element = event.target;
+  if (
+    element.classList.contains("cell") &&
+    element.id !== "start" &&
+    element.id !== "end" &&
+    element.innerHTML !== "X" &&
+    element.innerHTML !== ""
+  ) {
+    document.getElementById("end").value = element.innerHTML;
+  }
+});
+*/
 function changeFloor(direction) {
   const newFloor = currentFloor + direction;
   if (floors[newFloor] !== undefined) {
@@ -1219,7 +1090,6 @@ function changeFloor(direction) {
     document.getElementById("floorSelect").value = newFloor;
   }
 }
-
 
 document.getElementById("downArrow").addEventListener("click", function () {
   if (currentFloor > 0) {
@@ -1238,3 +1108,73 @@ document.getElementById("upArrow").addEventListener("click", function () {
     updateArrowBlink();
   }
 });
+// Új függvény a gombok pozíciójának frissítésére
+function updateArrowPosition() {
+  const arrowContainer = document.querySelector(".arrow-container");
+  if (arrowContainer) {
+    arrowContainer.classList.remove("floor-0", "floor-1", "floor-2");
+    arrowContainer.classList.add(`floor-${currentFloor}`);
+  }
+}
+
+let pressed = 0;
+let intervalId = null;
+
+function intervallStart() {
+  document.addEventListener("keydown", (event) => {
+    const pressedKey = event.key;
+    if (pressedKey === "á") {
+      pressed++;
+      if (pressed % 2 == 1) {
+        intervalId = setInterval(() => {
+          autoChangeFloor();
+        }, 5000);
+      } else {
+        clearInterval(intervalId);
+      }
+    }
+  });
+}
+
+function autoChangeFloor() {
+  console.log(currentFloor);
+
+  switch (currentFloor) {
+    case 2:
+      currentFloor = 0;
+      switchFloor(currentFloor);
+      break;
+
+    default:
+      currentFloor++;
+      switchFloor(currentFloor);
+      break;
+  }
+}
+
+$(function () {
+  $("#grid").draggable({});
+});
+
+const localData = localStorage.getItem("sidebar");
+
+if (localData === "active") {
+  const sidebar = document.getElementById("sidenav");
+  sidebar.classList.add("active");
+  document.getElementById("openbtn").style.display = "none";
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById("sidenav");
+  sidebar.classList.toggle("active");
+
+  //toggle #openbtn based on class
+  const openbtn = document.getElementById("openbtn");
+  if (sidebar.classList.contains("active")) {
+    openbtn.style.display = "none";
+    localStorage.setItem("sidebar", "active");
+  } else {
+    openbtn.style.display = "block";
+    localStorage.setItem("sidebar", "inactive");
+  }
+}
