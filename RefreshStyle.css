@@ -246,8 +246,7 @@ button {
 
 /* Keyframes */
 @keyframes glow {
-  0%,
-  100% {
+  0% {
     box-shadow: 0 0 5px rgba(0, 132, 165, 0.5);
     background-color: rgba(0, 132, 165, 0.4);
     border: 1px solid rgba(0, 132, 165, 0.8);
@@ -259,11 +258,16 @@ button {
     border: 1px solid rgba(0, 132, 165, 1);
     color: white;
   }
+  100% {
+    box-shadow: 0 0 5px rgba(0, 132, 165, 0.5);
+    background-color: rgba(0, 132, 165, 0.4);
+    border: 1px solid rgba(0, 132, 165, 0.8);
+    color: white;
+  }
 }
 
 @keyframes containerBorderPulse {
-  0%,
-  100% {
+  0% {
     border-color: var(--border-color);
   }
   25% {
@@ -274,6 +278,9 @@ button {
   }
   75% {
     border-color: rgba(51, 51, 51, 0.75);
+  }
+  100% {
+    border-color: var(--border-color);
   }
 }
 

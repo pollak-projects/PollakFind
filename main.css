@@ -76,6 +76,9 @@
   50% {
     background-color: rgb(52, 179, 252);
   }
+  100% {
+    background-color: rgba(53, 52, 52, 0.89);
+  }
 }
 
 #openbtn {
