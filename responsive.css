@@ -1,0 +1,78 @@
+@media screen and (orientation: landscape) and (max-width: 1200px) {
+  .left-panel,
+  #qrcode-container,
+  .bottom-elements {
+    display: none;
+  }
+  .grid {
+    top: 0%;
+
+    grid-template-columns: repeat(20, calc(3em * 0.8));
+    zoom: 0.6;
+  }
+  .grid div {
+    min-width: 3em;
+    min-height: 3em;
+    font-size: 0.8rem;
+  }
+  .grid {
+    left: 10%;
+  }
+  .current-floor-display {
+    font-size: 1rem;
+  }
+
+  .left-panel.active {
+    height: 80dvh !important;
+    scale: 0.8;
+  }
+  #arrow-container {
+    left: 0%;
+    right: auto;
+  }
+}
+
+@media screen and (orientation: portrait) and (max-width: 768px) {
+  .grid,
+  .current-floor-display,
+  #arrow-container {
+    display: none !important;
+  }
+  #orientationOverlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .searchable-select-label,
+  .floor-select-label {
+    font-size: 0.9rem;
+  }
+  .searchable-select-input,
+  .search-button,
+  .reset-button {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (orientation: landscape) and (max-height: 400px) {
+  .bottom-elements {
+    display: none;
+  }
+  button {
+    padding: 5px;
+  }
+  #arrow-container {
+    left: 0%;
+    right: auto;
+  }
+}

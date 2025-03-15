@@ -1,28 +1,44 @@
+:root {
+  --font-family: "Poppins", sans-serif;
+  --primary-color: #151515;
+  --secondary-color: #0084a5;
+  --text-color: white;
+  --accent-color: #00a9ff;
+  --border-color: rgba(45, 45, 45, 0.75);
+  --blur-effect: blur(7.4px);
+  --box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+}
+
 body {
-  font-family: "Poppins", sans-serif;
-  margin: 0;
-  display: flex;
-  height: 100vh;
-  color: white;
-  position: relative;
-  background-color: #151515;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  height: 100dvh;
+  background-color: var(--primary-color);
   background-image: radial-gradient(
-    rgba(115, 115, 115, 0.171) 2px,
+    rgba(115, 115, 115, 0.06) 2px,
     transparent 0
   );
   background-size: 30px 30px;
   background-position: -5px -5px;
+  overflow: hidden;
+  margin: 0;
+  padding: 5px;
 }
 
+/* QR Code Container */
 #qrcode-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 200px;
-  background: rgba(0, 86, 129, 0);
-  border-radius: 12px;
-  backdrop-filter: blur(7.4px);
-  -webkit-backdrop-filter: blur(7.4px);
+  margin: 0 auto;
+  width: fit-content;
+
+  padding: 10px;
+  backdrop-filter: var(--blur-effect);
+  -webkit-backdrop-filter: var(--blur-effect);
+}
+
+#qrcode-container.animate {
+  animation: containerBorderPulse 2s alternate;
 }
 
 #qr-content {
@@ -38,12 +54,12 @@ body {
   height: 100%;
   justify-content: center;
   align-items: center;
+  background: rgb(255, 255, 255);
+  border-radius: 12px;
+  padding: 10px;
 }
 
-#qrcode-container.animate {
-  animation: containerBorderPulse 2s alternate;
-}
-
+/* Messages */
 .message-separator {
   align-self: center;
   border: 0;
@@ -53,28 +69,21 @@ body {
   width: 80%;
 }
 
-.tuto-message {
+.tuto-message,
+.tuto-message-center,
+#qr-message {
   font-size: 0.9rem;
   color: #ccc;
   margin-top: -2.5px;
   margin-bottom: 5px;
 }
 
-.tuto-message-center {
-  font-size: 0.9rem;
-  color: #ccc;
-  margin-top: -2.5px;
-  margin-bottom: 4px;
-  text-align: center;
-}
-
+.tuto-message-center,
 #qr-message {
-  font-size: 0.9rem;
-  color: #ccc;
-  margin-top: 5px;
   text-align: center;
 }
 
+/* Logo Container */
 .logo-container {
   display: flex;
   align-items: center;
@@ -91,26 +100,7 @@ body {
   margin: 0;
 }
 
-/* Sidebar és egyéb desktop elemek */
-.left-panel {
-  width: 275px;
-  padding: 10px;
-  margin: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: calc(100vh - 50px);
-  background: rgba(25, 25, 25, 0.5);
-  border-radius: 25px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(7.4px);
-  -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid rgba(45, 45, 45, 0.75);
-  box-sizing: border-box;
-  align-self: center;
-  justify-content: space-between;
-}
-
+/* Bottom Elements */
 .bottom-elements {
   position: absolute;
   bottom: 15px;
@@ -118,6 +108,7 @@ body {
   text-align: center;
 }
 
+/* Searchable Select */
 .searchable-select {
   width: 100%;
   box-sizing: border-box;
@@ -125,161 +116,123 @@ body {
   margin-bottom: 15px;
 }
 
-.search-button {
-  padding: 12.5px;
-}
-
-.current-floor-display {
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 600;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  color: white;
-  background: rgba(35, 35, 35, 0.5);
-  border: 1px solid rgba(45, 45, 45, 0.75);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(7.4px);
-  -webkit-backdrop-filter: blur(7.4px);
-  text-align: center;
-}
-
 .searchable-select input {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-family);
   padding: 10px 15px;
   width: 100%;
-  max-width: 100%;
   box-sizing: border-box;
-  background: #005580; /* Dark blue-gray base */
-  color: #e6f3ff; /* Light cyan-white for text */
+  background: #005580;
+  color: #e6f3ff;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 15px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(7.4px);
-  -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid #00a9ff; /* Bright cyan border */
+  transition: var(--transition);
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  backdrop-filter: var(--blur-effect);
+  -webkit-backdrop-filter: var(--blur-effect);
+  border: 1px solid var(--accent-color);
 }
 
-/* Placeholder styling */
-::placeholder {
-  color: #00a9ff; /* Softer cyan for placeholder */
-  opacity: 0.95;
-}
-
-/* Hover state */
 .searchable-select input:hover {
-  background: #006597; /* Slightly lighter blue-gray */
-  border-color: #00a9ff; /* Brighter cyan on hover */
+  background: #006597;
+  border-color: var(--accent-color);
 }
 
-/* Focus state */
 .searchable-select input:focus {
   outline: none;
-  box-shadow: 0 0 8px #00a9ff; /* Cyan glow */
-  background: #00293d; /* Darker teal-cyan */
-  border-color: #00a9ff; /* Brighter cyan border */
-  color: #ffffff; /* Pure white text on focus */
+  box-shadow: 0 0 8px var(--accent-color);
+  background: #00293d;
+  border-color: var(--accent-color);
+  color: #ffffff;
 }
 
-/* Active/clicked state (optional) */
 .searchable-select input:active {
-  background: #001a22; /* Even darker teal */
-  box-shadow: 0 0 12px rgba(0, 198, 255, 0.5); /* Stronger cyan glow */
+  background: #001a22;
+  box-shadow: 0 0 12px rgba(0, 198, 255, 0.5);
   border-color: #00c6ff;
 }
 
-#floorSelect {
-  padding: 7.5px;
-  border-radius: 10px;
-  border: none;
-  font-size: 1rem;
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  width: 100%;
-  color: white;
-  background: rgba(35, 35, 35, 0.5);
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(7.4px);
-  -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid rgba(45, 45, 45, 0.75);
+::placeholder {
+  color: var(--accent-color);
+  opacity: 0.95;
 }
 
-select option {
-  background: #0084a5;
+button,
+.reset-button {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  backdrop-filter: var(--blur-effect);
+  -webkit-backdrop-filter: var(--blur-effect);
+  border: 1px solid;
 }
 
-.left-panel,
-.grid,
-.grid div {
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+.search-button {
+  background: #00451a;
+  border-color: #00cf4f;
 }
 
-.select-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 15px;
-  width: 100%;
-  box-sizing: border-box;
-  flex-grow: 1;
-  overflow: hidden;
-  background: rgba(45, 45, 45, 0.5);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(7.4px);
-  -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid rgba(45, 45, 45, 0.75);
+.search-button:hover {
+  background: #003b17;
+  color: #00cf4f;
+  text-shadow: #00451a 1px 1px 1px;
+  border-color: #005822;
 }
 
-/* Egész térképnek a kinézete ---------------------------------------------------------- */
+button:hover {
+  background: #373d3a;
+  color: #7a7e7b;
+}
+
+button {
+  background: #3d3537;
+  border-color: #66595c;
+}
+
+.reset-button {
+  background: #45000f;
+  border-color: #cf0034;
+}
+
+.reset-button:hover {
+  background: #3b000f;
+  color: #cf0034;
+  text-shadow: #45000f 1px 1px 1px;
+  border-color: #58000f;
+}
+
+/* Grid and Map */
 .grid {
-  /* Your existing properties */
   display: grid;
-  grid-template-columns: repeat(20, 50px);
+  grid-template-columns: repeat(20, 3em);
   gap: 5px;
   padding: 10px;
   position: absolute;
   cursor: grab;
-  top: 0px;
-  left: 365px;
+  top: 10%;
+  left: calc(15% + 10em);
   background: rgba(25, 25, 25, 0.5);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(7.4px);
-  -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid rgba(45, 45, 45, 0.75);
-
-  /* New properties for zoom */
+  box-shadow: var(--box-shadow);
+  backdrop-filter: var(--blur-effect);
+  -webkit-backdrop-filter: var(--blur-effect);
+  border: 1px solid var(--border-color);
   transform-origin: center;
   transition: transform 0.1s ease-out;
-}
-
-.grid.zooming {
-  cursor: grab;
-}
-
-.grid.zooming.active {
-  cursor: grabbing;
 }
 
 .grid div {
   display: flex;
   justify-content: center;
+  width: 3em;
+  height: 3em;
   align-items: center;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 7.5px;
   font-weight: bold;
   text-align: center;
   color: rgb(25, 25, 25);
-  min-height: 50px;
-  min-width: 50px;
 }
 
 .grid .black {
@@ -289,168 +242,12 @@ select option {
 
 .grid .path {
   animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-  box-sizing: border-box;
 }
 
-/* tanterem keresése és visszaállítás gombok style ------------------------------------------------------------------- */
-select,
-button {
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  font-size: 1rem;
-  font-weight: 600;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-button {
-  background: #00451a;
-  color: #ffffff;
-  cursor: pointer;
-  font-family: "Poppins", sans-serif;
-  transition: 0.3s;
-  border-radius: 15px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(7.4px);
-  -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid #00cf4f;
-}
-
-button:hover {
-  background: #003b17;
-  color: #00cf4f;
-  text-shadow: #00451a 1px 1px 1px;
-  border: 1px solid #005822;
-}
-
-/* Reset gomb style ------------------------------------------------------------------- */
-.reset-button {
-  background: #45000f;
-  font-family: "Poppins", sans-serif;
-  color: #ffffff;
-  cursor: pointer;
-  transition: 0.3s;
-  border-radius: 15px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(7.4px);
-  -webkit-backdrop-filter: blur(7.4px);
-  border: 1px solid #cf0034;
-}
-
-.reset-button:hover {
-  background-color: #3b000f;
-  color: #cf0034;
-  text-shadow: #45000f 1px 1px 1px;
-  border: 1px solid #58000f;
-}
-
-/* Fordítsa el a telefont! szöveg -------------------------------------------------- */
-#orientationOverlay {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: white;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 20px;
-  border-radius: 10px;
-}
-
-/* jelenlegi emelet style --------------------------------------------------------- */
-.floor-navigation {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-}
-
-.floor-navigation button {
-  width: 50px;
-  height: 50px;
-  font-size: 1.5rem;
-  background: #0084a5;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.floor-navigation button:hover {
-  background: #005f7a;
-}
-
-/*  emeletek közötti navigáció nyilakkal ------------------------------------------------------- */
-.arrow-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-
-  margin-left: -8px;
-  z-index: 100;
-}
-
-.arrow {
-  font-size: 24px;
-  cursor: pointer;
-  padding: 10px;
-  color: white;
-  text-align: center;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s;
-  background: rgba(45, 45, 45, 0.5);
-  border: 1px solid rgba(45, 45, 45, 0.75);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(7.4px);
-  -webkit-backdrop-filter: blur(7.4px);
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-.arrow:hover {
-  background: rgba(15, 15, 15, 0.5);
-}
-
-.arrow.blink {
-  animation: yellowBlink 1s infinite;
-}
-
-.arrow.blink {
-  animation: yellowBlink 1s infinite;
-}
-
-/* Keyframes ------------------------------------------------------------------------ */
-
-@keyframes yellowBlink {
-  0% {
-    background: rgba(45, 45, 45, 0.5);
-    border: 1px solid rgba(45, 45, 45, 0.75);
-  }
-  50% {
-    background: rgba(255, 215, 0, 0.5);
-    border: 1px solid rgba(255, 225, 35, 0.5);
-  }
-  100% {
-    background: rgba(45, 45, 45, 0.5);
-  }
-}
-
+/* Keyframes */
 @keyframes glow {
-  0% {
+  0%,
+  100% {
     box-shadow: 0 0 5px rgba(0, 132, 165, 0.5);
     background-color: rgba(0, 132, 165, 0.4);
     border: 1px solid rgba(0, 132, 165, 0.8);
@@ -462,20 +259,15 @@ button:hover {
     border: 1px solid rgba(0, 132, 165, 1);
     color: white;
   }
-  100% {
-    box-shadow: 0 0 5px rgba(0, 132, 165, 0.5);
-    background-color: rgba(0, 132, 165, 0.4);
-    border: 1px solid rgba(0, 132, 165, 0.8);
-    color: white;
-  }
 }
 
 @keyframes containerBorderPulse {
-  0% {
-    border-color: rgba(45, 45, 45, 0.75);
+  0%,
+  100% {
+    border-color: var(--border-color);
   }
   25% {
-    border-color: #0084a5;
+    border-color: var(--secondary-color);
   }
   50% {
     border-color: rgba(57, 57, 57, 0.75);
@@ -483,162 +275,41 @@ button:hover {
   75% {
     border-color: rgba(51, 51, 51, 0.75);
   }
+}
+
+/* Media Queries */
+
+#orientationOverlay {
+  display: none;
+}
+
+.left-panel {
+  display: none;
+}
+
+.left-panel.active {
+  display: flex;
+
+  padding: 10px;
+  flex-direction: column;
+  gap: 10px;
+  height: calc(100dvh - 10px);
+  background: rgba(25, 25, 25, 0.5);
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(45, 45, 45, 0.75);
+  box-sizing: border-box;
+  align-self: center;
+  animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
   100% {
-    border-color: rgba(45, 45, 45, 0.75);
-  }
-}
-
-/* Tájkép nézet, telefonon ------------------------------------------------------- */
-@media screen and (orientation: landscape) and (max-width: 1200px) {
-  .left-panel {
-    display: none;
-  }
-  .grid {
-    position: absolute;
-    top: -20%;
-    left: 0%;
-    grid-template-columns: repeat(20, 40px);
-    justify-content: center;
-  }
-  .grid div {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    min-height: 40px;
-    font-size: 0.8rem;
-  }
-  .arrow-container {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    z-index: 10; /* A térkép felett legyen */
-    bottom: 50%;
-    left: 50px;
-    width: 80px;
-    height: 140px;
-    border-radius: 10px;
-    background: #626466;
-  }
-  /* Emeletenkénti fix pozíciók */
-
-  .arrow {
-    width: 40px;
-    height: 40px;
-    font-size: 25px;
-    background-color: rgb(45, 45, 45, 1);
-  }
-  .arrow:hover {
-    background: rgba(15, 15, 15, 1);
-  }
-}
-
-/* Portré nézet, telefonos nézetben ---------------------------------------------------- */
-@media screen and (orientation: portrait) and (max-width: 768px) {
-  .left-panel,
-  .grid,
-  .arrow-container {
-    display: none !important; /* Nyilak is eltűnnek portréban */
-  }
-  #orientationOverlay {
-    display: block;
-    width: 80%;
-  }
-}
-
-/* Laptopos nézet ---------------------------------------------------------------*/
-@media screen and (max-width: 1300px) {
-  .searchable-select-label {
-    font-size: 0.9rem;
-  }
-  .searchable-select-input {
-    height: 40px;
-  }
-  .floor-select-label {
-    font-size: 0.9rem;
-  }
-  .search-button {
-    height: 40px;
-    font-size: 0.9rem;
-    padding-top: 8px;
-  }
-  .reset-button {
-    height: 30px;
-    font-size: 0.9rem;
-    padding-top: 3px;
-  }
-  .select-container {
-    gap: 5px;
-  }
-  .left-panel {
-    height: 100vh;
-    gap: 0;
-  }
-  .social-buttons {
-    position: relative;
-    top: 19px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .grid {
-    /* Fix blur and centering */
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    position: absolute;
-
-    /* Ensure proper sizing */
-    width: calc(100vw - 40px);
-    height: calc(100vh - 120px);
-    margin: 0;
-
-    /* Maintain grid layout */
-    display: grid;
-    grid-template-columns: repeat(20, 60px);
-    gap: 10px;
-    padding: 20px;
-
-    /* Improve visibility */
-    background: rgba(25, 25, 25, 0.8);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(45, 45, 45, 0.75);
-  }
-
-  .grid div {
-    /* Grid cell styling */
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    min-width: 60px;
-    min-height: 60px;
-    font-size: 1.2rem;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  .arrow-container {
-    /* Make navigation arrows more accessible */
-    width: 60px;
-    height: 60px;
-    font-size: 30px;
-    margin-left: 0;
-  }
-
-  .arrow {
-    /* Increase touch target size for navigation */
-    width: 60px;
-    height: 60px;
-    padding: 15px;
-    border-radius: 20px;
-  }
-}
-
-/* only in dekstop view */
-@@media screen and (min-width: 768px) {
-  .arrow-container {
-    top: 50%;
-    left: 50%;
+    opacity: 1;
   }
 }

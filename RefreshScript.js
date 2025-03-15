@@ -1,6 +1,5 @@
-// Ezek a nyilacska emoji-k jelölik a lépcsőket
-const allowedStairs = ["⬇️", "➡️", "⬆️", "⬅️"];
-const presetRoomNames = ["Info I", "Játék"]; // Itt add meg a kivételként kezelt szobaneveket!
+const allowedStairs = [`<img src="stair-white.png" class="stair">`];
+const presetRoomNames = ["Info I", "Játék"];
 
 // Frissített getNeighbors függvény, amely figyelembe veszi az emeletváltozás szabályait
 const stairConnections = {
@@ -273,11 +272,11 @@ const floors = {
     "cell-11-16": "",
     "cell-11-17": "",
     "cell-11-18": "",
-    "cell-11-19": "➡️",
+    "cell-11-19": `<img src="stair-white.png" class="stair">`,
 
     "cell-12-0": "",
     "cell-12-1": "Fwc0",
-    "cell-12-2": "⬇️",
+    "cell-12-2": `<img src="stair-white.png" class="stair">`,
     "cell-12-3": "FőBej",
     "cell-12-4": "X",
     "cell-12-5": "X",
@@ -381,11 +380,11 @@ const floors = {
     "cell-3-16": "",
     "cell-3-17": "",
     "cell-3-18": "",
-    "cell-3-19": "➡️",
+    "cell-3-19": `<img src="stair-white.png" class="stair">`,
 
     "cell-4-0": "X",
     "cell-4-1": "Fwc1",
-    "cell-4-2": "⬇️",
+    "cell-4-2": `<img src="stair-white.png" class="stair">`,
     "cell-4-3": "Gaz.ir",
     "cell-4-4": "V. Tant.",
     "cell-4-5": "X",
@@ -490,11 +489,11 @@ const floors = {
     "cell-2-16": "",
     "cell-2-17": "",
     "cell-2-18": "",
-    "cell-2-19": "➡️",
+    "cell-2-19": `<img src="stair-white.png" class="stair">`,
 
     "cell-3-0": "Nwc2",
     "cell-3-1": "Fwc2",
-    "cell-3-2": "⬇️",
+    "cell-3-2": `<img src="stair-white.png" class="stair">`,
     "cell-3-3": "X",
     "cell-3-4": "X",
     "cell-3-5": "Mat1",
@@ -565,6 +564,7 @@ let timeoutIds = [];
 
 function createGrid() {
   const gridElement = document.getElementById("grid");
+
   gridElement.innerHTML = ""; // Előző grid törlése
   grid = [];
   const floorData = floors[currentFloor];
@@ -572,11 +572,6 @@ function createGrid() {
   const cols = floorData.cols;
 
   const fragment = document.createDocumentFragment();
-
-  if (timeoutIds && timeoutIds.length > 0) {
-    timeoutIds.forEach((id) => clearTimeout(id));
-    timeoutIds = [];
-  }
 
   for (let row = 0; row < rows; row++) {
     let rowArray = [];
@@ -594,9 +589,9 @@ function createGrid() {
         const name = floorData[key];
         if (name === "X") {
           cell.classList.add("black");
-          cell.innerText = "";
+          cell.innerHTML = "";
         } else {
-          cell.innerText = name;
+          cell.innerHTML = name;
         }
       }
 
@@ -710,17 +705,8 @@ document.addEventListener("DOMContentLoaded", function () {
   buildRoomIndex();
   createGrid();
 
-  const gridElement = document.getElementById("grid");
-  if (gridElement) {
-    gridElement.style.position = "absolute";
-    gridElement.style.left = "365px";
-    gridElement.style.top = "0";
-  }
-
-  centerGrid(true);
   updateFloorDisplay();
   updateArrowPosition(); // Hozzáadva a kezdeti pozícióhoz
-  window.addEventListener("resize", () => centerGrid());
 
   const urlParams = new URLSearchParams(window.location.search);
   const start = urlParams.get("start");
@@ -741,47 +727,8 @@ window.addEventListener("resize", centerGrid);
 
 function setupDesktop() {
   const gridElement = document.getElementById("grid");
-  let isDragging = false,
-    offsetX,
-    offsetY;
-  gridElement.style.cursor = "grab";
-
-  gridElement.addEventListener("mousedown", function (event) {
-    isDragging = true;
-    offsetX = event.clientX - gridElement.offsetLeft;
-    offsetY = event.clientY - gridElement.offsetTop;
-    gridElement.style.cursor = "grabbing";
-  });
-
-  document.addEventListener("mousemove", function (event) {
-    if (isDragging) {
-      let newLeft = event.clientX - offsetX;
-      let newTop = event.clientY - offsetY;
-
-      const minLeft = 300;
-
-      console.log(minLeft);
-
-      const minTop = 0;
-      const maxLeft = window.innerWidth - gridElement.offsetWidth + 200;
-      const maxTop = window.innerHeight - gridElement.offsetHeight;
-
-      newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
-      newTop = Math.max(minTop, Math.min(newTop, maxTop));
-
-      gridElement.style.left = `${newLeft}px`;
-      gridElement.style.top = `${newTop}px`;
-    }
-  });
-
-  document.addEventListener("mouseup", function () {
-    isDragging = false;
-    gridElement.style.cursor = "grab";
-  });
 
   window.resetGridPosition = function () {
-    gridMovedManually = false;
-    centerGrid(true);
     fullPath = [];
     currentPath = [];
     createGrid();
@@ -797,14 +744,6 @@ function setupDesktop() {
 }
 
 let gridMovedManually = false; // Jelzi, hogy a felhasználó mozgatta-e a gridet
-
-// Figyeljük a felhasználói mozgatást, hogy ne ugráljon vissza
-document.addEventListener("mousedown", (event) => {
-  const gridElement = document.getElementById("grid");
-  if (gridElement && gridElement.contains(event.target)) {
-    gridMovedManually = true;
-  }
-});
 
 // Segédfüggvény: adott emelet, sor, oszlop cellájának tartalma
 function getCell(floor, row, col) {
@@ -1043,6 +982,14 @@ function runPathfinding() {
     document.getElementById("qr-message").style.display = "none";
     updateArrowBlink();
     intervallStart();
+
+    //add text to currentFloorText: A célállomásod a X emeleten található
+    let currentFloord = document.getElementById("currentFloorText");
+    let text =
+      endPos.floor > 0
+        ? `A célállomásod a ${endPos.floor}. emeleten található`
+        : "A célállomásod a földszinten található";
+    currentFloord.textContent = text;
   } else {
     alert("Nincs útvonal a kiválasztott pontok között!");
     document.getElementById("qr-message").style.display = "block";
@@ -1068,59 +1015,61 @@ function findNodeByName(name) {
 }
 
 function centerGrid(force = false) {
-  const gridElement = document.getElementById("grid");
-  const leftPanel = document.querySelector(".left-panel");
-  if (!gridElement || !leftPanel) return;
-
-  // Ha a felhasználó manuálisan mozgatta a gridet, ne igazítsuk újra, kivéve, ha force = true
-  if (gridMovedManually && !force) return;
-
-  // Alapértelmezett értékek definiálása, hogy ne legyen undefined
-  let adjustedLeft = 0;
-  let adjustedTop = 0;
-
-  // Csak akkor számoljuk a pozíciót, ha a képernyő szélessége >= 1300px
-  if (window.innerWidth >= 1300) {
-    const gridWidth = gridElement.offsetWidth;
-    const gridHeight = gridElement.offsetHeight;
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    const leftPanelWidth = leftPanel.offsetWidth; // 275px
-    const arrowContainerWidth = 40 + 10; // Nyíl szélessége (40px) + margók (10px)
-
-    // A bal oldali eltolás: sidebar + nyilak
-    const leftOffset = leftPanelWidth + arrowContainerWidth + 15; // +15 a sidebar margin miatt
-
-    // Középre igazítás, figyelembe véve az eltolást
-    adjustedLeft = (windowWidth - gridWidth) / 2 + leftOffset / 2;
-    adjustedTop = (windowHeight - gridHeight) / 2;
-
-    // Stílusok alkalmazása
-    gridElement.style.position = "absolute";
-    gridElement.style.left = `${adjustedLeft}px`;
-    gridElement.style.top = `${adjustedTop}px`;
-  } else {
-    // Mobilos nézetben (pl. < 1300px) visszaállítjuk az alapértelmezett pozíciót
-    gridElement.style.position = ""; // Vagy "static", attól függ, mi az alapértelmezett
-    gridElement.style.left = "";
-    gridElement.style.top = "";
-  }
+  // const gridElement = document.getElementById("grid");
+  // const leftPanel = document.querySelector(".left-panel");
+  // if (!gridElement || !leftPanel) return;
+  // // Ha a felhasználó manuálisan mozgatta a gridet, ne igazítsuk újra, kivéve, ha force = true
+  // if (gridMovedManually && !force) return;
+  // // Alapértelmezett értékek definiálása, hogy ne legyen undefined
+  // let adjustedLeft = 0;
+  // let adjustedTop = 0;
+  // // Csak akkor számoljuk a pozíciót, ha a képernyő szélessége >= 1300px
+  // if (window.innerWidth >= 1300) {
+  //   const gridWidth = gridElement.offsetWidth;
+  //   const gridHeight = gridElement.offsetHeight;
+  //   const windowWidth = window.innerWidth;
+  //   const windowHeight = window.innerHeight;
+  //   const leftPanelWidth = leftPanel.offsetWidth; // 275px
+  //   const arrowContainerWidth = 40 + 10; // Nyíl szélessége (40px) + margók (10px)
+  //   // A bal oldali eltolás: sidebar + nyilak
+  //   const leftOffset = leftPanelWidth + arrowContainerWidth + 15; // +15 a sidebar margin miatt
+  //   // Középre igazítás, figyelembe véve az eltolást
+  //   adjustedLeft = (windowWidth - gridWidth) / 2 + leftOffset / 2;
+  //   adjustedTop = (windowHeight - gridHeight) / 2;
+  //   // Stílusok alkalmazása
+  //   gridElement.style.position = "absolute";
+  //   gridElement.style.left = `${adjustedLeft}px`;
+  //   gridElement.style.top = `${adjustedTop}px`;
+  // } else {
+  //   // Mobilos nézetben (pl. < 1300px) visszaállítjuk az alapértelmezett pozíciót
+  //   gridElement.style.position = ""; // Vagy "static", attól függ, mi az alapértelmezett
+  //   gridElement.style.left = "";
+  //   gridElement.style.top = "";
+  // }
 }
 
 document.addEventListener("click", function (event) {
-  const element = event.target;
-  if (
-    element.classList.contains("cell") &&
-    element.id !== "start" &&
-    element.id !== "end" &&
-    element.innerHTML !== "X" &&
-    element.innerHTML !== ""
-  ) {
-    document.getElementById("start").value = element.innerHTML;
+  /*change floor with click on the floor number*/
+  console.log(event.target);
+  if (event.target.classList.contains("stair")) {
+    console.log("stairs");
+    switch (currentFloor) {
+      case 0:
+        switchFloor(1);
+        break;
+      case 1:
+        switchFloor(2);
+        break;
+      case 2:
+        switchFloor(0);
+        break;
+    }
   }
 });
 
+/*
 document.addEventListener("contextmenu", function (event) {
+  console.log(event.target);
   event.preventDefault();
   const element = event.target;
   if (
@@ -1133,7 +1082,7 @@ document.addEventListener("contextmenu", function (event) {
     document.getElementById("end").value = element.innerHTML;
   }
 });
-
+*/
 function changeFloor(direction) {
   const newFloor = currentFloor + direction;
   if (floors[newFloor] !== undefined) {
@@ -1202,52 +1151,30 @@ function autoChangeFloor() {
       break;
   }
 }
-let scale = 0.5;
-let isZooming = false;
 
-document.querySelector(".grid").style.transform = `scale(${0.7})`;
+$(function () {
+  $("#grid").draggable({});
+});
 
-document.addEventListener(
-  "wheel",
-  (e) => {
-    if (!e.ctrlKey) return; // Only zoom with Ctrl/Cmd + wheel
+const localData = localStorage.getItem("sidebar");
 
-    e.preventDefault();
-    const delta = -Math.sign(e.deltaY);
+if (localData === "active") {
+  const sidebar = document.getElementById("sidenav");
+  sidebar.classList.add("active");
+  document.getElementById("openbtn").style.display = "none";
+}
 
-    // Limit zoom scale
-    const minScale = 0.5;
-    const maxScale = 3;
+function toggleSidebar() {
+  const sidebar = document.getElementById("sidenav");
+  sidebar.classList.toggle("active");
 
-    scale += delta * 0.1;
-    scale = Math.max(minScale, Math.min(maxScale, scale));
-
-    document.querySelector(".grid").style.transform = `scale(${scale})`;
-  },
-  { passive: false }
-);
-
-// Maintain zoom on mobile devices
-document.addEventListener(
-  "touchmove",
-  (e) => {
-    if (!e.ctrlKey && e.touches.length === 2) {
-      const touch1 = e.touches[0];
-      const touch2 = e.touches[1];
-      const dist = Math.hypot(
-        touch2.clientX - touch1.clientX,
-        touch2.clientY - touch1.clientY
-      );
-
-      // Calculate new scale based on pinch distance
-      const newScale = dist / initialDistance;
-      scale *= newScale;
-      scale = Math.max(minScale, Math.min(maxScale, scale));
-
-      document.querySelector(".grid").style.transform = `scale(${scale})`;
-
-      initialDistance = dist;
-    }
-  },
-  { passive: false }
-);
+  //toggle #openbtn based on class
+  const openbtn = document.getElementById("openbtn");
+  if (sidebar.classList.contains("active")) {
+    openbtn.style.display = "none";
+    localStorage.setItem("sidebar", "active");
+  } else {
+    openbtn.style.display = "block";
+    localStorage.setItem("sidebar", "inactive");
+  }
+}

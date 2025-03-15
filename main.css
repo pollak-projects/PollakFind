@@ -1,0 +1,89 @@
+#container {
+  display: flex;
+}
+
+#arrow-container {
+  position: absolute;
+  top: 40%;
+  right: 5dvw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+#arrows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+#arrows span {
+  background-color: rgba(44, 44, 44, 0.89);
+  padding: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid rgb(68, 68, 68);
+}
+#working-area {
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.left-panel {
+  z-index: 100;
+}
+.current-floor-display {
+  display: flex;
+
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+  z-index: 100;
+  font-size: 1.2rem;
+  height: fit-content;
+  background-color: rgba(53, 52, 52, 0.89);
+  border-radius: 10px;
+}
+.current-floor-display span {
+  color: rgb(52, 179, 252);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+.current-floor-display p {
+  margin: 0;
+  color: white;
+}
+
+#grid {
+  margin: auto;
+}
+
+#action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    background-color: rgb(52, 179, 252);
+  }
+}
+
+#openbtn {
+  z-index: 100;
+}
+
+.stair {
+  width: 2em;
+
+  height: 2em;
+}
